@@ -1,0 +1,12 @@
+ end
+ |
+{Error: Illegal use of reserved keyword "end".
+} 
+{Error using copyfile
+cp: cannot stat
+‘/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/29358/20190905_U-ID46106/Series_023_cmmr_ep2d_bold_1.5x1.5x1_run1/run1.nii’:
+No such file or directory
+
+Error in ENCRYPT_preprocess_mainfunc_7T (line 38)
+                copyfile(rawfilePath,outfilePath);
+} 

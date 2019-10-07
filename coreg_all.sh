@@ -1,6 +1,6 @@
 #!/bin/bash
 # script to coregister masks in T2 space to EPI space - creates right/left/both EC only masks and right/left MTL masks
-
+#! Addition to check github
 #!declare -a mysubjs=("27734/20190902_U-ID46027
 #!28061/20190911_U-ID46160
 #!28428/20190903_U-ID46074

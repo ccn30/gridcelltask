@@ -88,9 +88,10 @@ subjID=${3}
 #! Work directory (i.e. where the job will run):
 workdir="$scriptdir/slurmoutputs"
 
-application=${scriptdir}/coreg_all.sh ${pathstem} ${subjID}
+cd ${scriptdir}
+application="${scriptdir}/coreg_all.sh ${pathstem} ${subjID}"
 
-CMD=${application}
+CMD="${application}"
 
 ###############################################################
 ### You should not have to change anything below this line ####

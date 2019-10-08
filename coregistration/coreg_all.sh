@@ -46,7 +46,7 @@ module load fsl/5.0.10
 	do
 
 		# initial rigid body coregsitration to initialise BBR later (use skullstripped)
-		flirt -in ${T2} -ref ${T1path}/n4mag0000_PSIR_skulled_std_struc_brain.nii -dof 6 -searchrx -180 180 -searchry -180 180 -searchz -180 180 -out ${coregdir}/t22t1_CorRatio_${this_run}.nii -omat ${coregdir}/t22t1_CorRatio_${this_run}.mat
+		flirt -in ${T2} -ref ${T1path}/n4mag0000_PSIR_skulled_std_struc_brain.nii -dof 6 -searchrx -180 180 -searchry -180 180 -searchrz -180 180 -out ${coregdir}/t22t1_CorRatio_${this_run}.nii -omat ${coregdir}/t22t1_CorRatio_${this_run}.mat
 		if [ $? -eq 0 ]; then
     			echo ">> CORR_RATIO COREG OK: subject ${subj}/run ${this_run}"	
 		else

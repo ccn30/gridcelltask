@@ -6,22 +6,17 @@
 #!module load freesurfer/6.0.0
 #!module load spm/spm12_6906
 module unload fsl
-module load fsl/5.0.11
+module load fsl/5.0.10
 #!export FREESURFER_HOME=/applications/freesurfer/freesurfer_6.0.0
 #!source $FREESURFER_HOME/SetUpFreeSurfer.sh
 #!export FSF_OUTPUT_FORMAT=nii
 
-###START###
-
-pathstem=/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot
-mysubjs=${pathstem}/mysubjs_deflist.txt
-
-for subjID in `cat $mysubjs`
-do
+	pathstem=${1}
+	subjID=${2}
 	
 	subj="$(cut -d'/' -f1 <<<"$subjID")"
-	echo $subjID
 	echo $subj
+	
 	imagedirpath=${pathstem}/preprocessed_data/images/${subj}
 	T1path=${pathstem}/raw_data/images/${subjID}/mp2rage
 	T2=${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/Series_033_Highresolution_TSE_PAT2_100_c32.nii
@@ -51,7 +46,7 @@ do
 	do
 
 		# initial rigid body coregsitration to initialise BBR later (use skullstripped)
-		flirt -in ${T2} -ref ${T1path}/n4mag0000_PSIR_skulled_std_struc_brain.nii -dof 6 -out ${coregdir}/t22t1_CorRatio_${this_run}.nii -omat ${coregdir}/t22t1_CorRatio_${this_run}.mat
+		flirt -in ${T2} -ref ${T1path}/n4mag0000_PSIR_skulled_std_struc_brain.nii -dof 6 -searchrx -180 180 -searchry -180 180 -searchz -180 180 -out ${coregdir}/t22t1_CorRatio_${this_run}.nii -omat ${coregdir}/t22t1_CorRatio_${this_run}.mat
 		if [ $? -eq 0 ]; then
     			echo ">> CORR_RATIO COREG OK: subject ${subj}/run ${this_run}"	
 		else
@@ -63,7 +58,7 @@ do
 
 		# WITH SPM WM SEG
 		# higher level BBR coregistration (uses wm boundaries - skullstripped ot not may not be important)
-		flirt -in ${T2} -ref ${T1path}/n4mag0000_PSIR_skulled_std_struc_brain.nii -dof 6 -cost bbr -wmseg ${T1path}/c2n4mag0000_PSIR_skulled_std.nii -schedule /applications/fsl/fsl-5.0.11/etc/flirtsch/bbr.sch -init ${coregdir}/t22t1_CorRatio_${this_run}.mat -omat ${coregdir}/t22t1_bbr_spm_${this_run}.mat -out ${coregdir}/t22t1_bbr_spm_${this_run}.nii
+		flirt -in ${T2} -ref ${T1path}/n4mag0000_PSIR_skulled_std_struc_brain.nii -dof 6 -cost bbr -wmseg ${T1path}/c2n4mag0000_PSIR_skulled_std.nii -schedule /applications/fsl/fsl-5.0.10/etc/flirtsch/bbr.sch -init ${coregdir}/t22t1_CorRatio_${this_run}.mat -omat ${coregdir}/t22t1_bbr_spm_${this_run}.mat -out ${coregdir}/t22t1_bbr_spm_${this_run}.nii
 		if [ $? -eq 0 ]; then
     			echo ">> BBR COREG OK: subject ${subj}/run ${this_run}"
 		else
@@ -94,7 +89,7 @@ do
     			echo ">> MATRIX INVERSION FAIL: subject ${subj}/run ${this_run}"
 		fi	
 
-		convert_xfm -omat ${coregdir}/t22epi_${this_run}.mat -concat ${coregdir}/t12epi_${this_run}.mat ${coregdir}/t22t1_CorRatio_${this_run}.mat
+		convert_xfm -omat ${coregdir}/t22epi_${this_run}.mat -concat ${coregdir}/t12epi_${this_run}.mat ${coregdir}/t22t1_bbr_spm_${this_run}.mat
 
 		if [ $? -eq 0 ]; then
 	    		echo ">> MATRIX CONCATENATION OK: subject ${subj}/run ${this_run}"	
@@ -126,6 +121,7 @@ do
 		# create EC only masks
 		fslmaths ${maskregdir}/leftMTLmask_${this_run}.nii -thr 8.5 -uthr 9.5 -bin ${maskregdir}/leftECmask_${this_run}.nii -odt char
 		fslmaths ${maskregdir}/rightMTLmask_${this_run}.nii -thr 8.5 -uthr 9.5 -bin ${maskregdir}/rightECmask_${this_run}.nii -odt char
+		
 		cd ${maskregdir}
 		
 		if [ -f "leftECmask_${this_run}.nii" ] && [ -f "rightECmask_${this_run}.nii" ]; then
@@ -137,6 +133,6 @@ do
 		cd ${pathstem}
 
 	done
-done
+
 
 

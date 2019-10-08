@@ -1,6 +1,6 @@
 #!/bin/bash
 # script to coregister masks in T2 space to EPI space - creates right/left/both EC only masks and right/left MTL masks
-#! Addition to check github
+
 #!declare -a mysubjs=("27734/20190902_U-ID46027
 #!28061/20190911_U-ID46160
 #!28428/20190903_U-ID46074
@@ -17,7 +17,8 @@
 #!module load matlab/matlab2017b
 #!module load freesurfer/6.0.0
 #!module load spm/spm12_6906
-module load fsl/5.0.10
+module unload fsl
+module load fsl/5.0.11
 #!export FREESURFER_HOME=/home/tec31/freesurfer
 #!source $FREESURFER_HOME/SetUpFreeSurfer.sh
 #!export FSF_OUTPUT_FORMAT=nii
@@ -74,12 +75,12 @@ flirt -in ${T2} -ref ${T1path}/n4mag0000_PSIR_skulled_std_struc_brain.nii -dof 6
 
 # WITH SPM WM SEG
 # higher level BBR coregistration (uses wm boundaries - skullstripped ot not may not be important)
-#flirt -in ${T2} -ref ${T1path}/n4mag0000_PSIR_skulled_std_struc_brain.nii -dof 6 -cost bbr -wmseg ${T1path}/c2n4mag0000_PSIR_skulled_std.nii -schedule /applications/fsl/fsl-5.0.10/etc/flirtsch/bbr.sch -init ${coregdir}/t22t1_CorRatio_${this_run}.mat -omat ${coregdir}/t22t1_bbr_spm_${this_run}.mat -out ${coregdir}/t22t1_bbr_spm_${this_run}.nii
-#	if [ $? -eq 0 ]; then
-#    		echo ">> BBR COREG OK: subject ${subj}/run ${this_run}"
-#	else
-#    		echo ">> BBR COREG FAIL: subject ${subj}/run ${this_run}"
-#	fi
+flirt -in ${T2} -ref ${T1path}/n4mag0000_PSIR_skulled_std_struc_brain.nii -dof 6 -cost bbr -wmseg ${T1path}/c2n4mag0000_PSIR_skulled_std.nii -schedule /applications/fsl/fsl-5.0.10/etc/flirtsch/bbr.sch -init ${coregdir}/t22t1_CorRatio_${this_run}.mat -omat ${coregdir}/t22t1_bbr_spm_${this_run}.mat -out ${coregdir}/t22t1_bbr_spm_${this_run}.nii
+	if [ $? -eq 0 ]; then
+    		echo ">> BBR COREG OK: subject ${subj}/run ${this_run}"
+	else
+    		echo ">> BBR COREG FAIL: subject ${subj}/run ${this_run}"
+	fi
 
 #done
 

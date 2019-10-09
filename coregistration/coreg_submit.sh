@@ -89,8 +89,8 @@ subjID=${3}
 workdir="$scriptdir/slurmoutputs"
 
 cd ${scriptdir}
-application="${scriptdir}/coreg_all.sh ${pathstem} ${subjID}"
-
+#!application="${scriptdir}/coreg_all.sh ${pathstem} ${subjID}"
+application="${scriptdir}/t2coreg.sh ${pathstem} ${subjID}"
 CMD="${application}"
 
 ###############################################################

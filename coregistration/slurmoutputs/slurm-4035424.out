@@ -1,0 +1,21 @@
+Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs.
+
+JobID: 4035424
+======
+Time: Wed Oct  9 13:57:40 BST 2019
+Running on master node: wbic-csm-6
+Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs
+
+Nodes allocated:
+================
+wbic-csm-6
+
+numtasks=1, numnodes=1, mpi_tasks_per_node=1 (OMP_NUM_THREADS=1)
+
+Executing command:
+==================
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/t2coreg.sh /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot 27734/20190902_U-ID46027
+
+27734
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/27734
+EXECUTING t2 to t1 coreg in /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/27734/coregistration

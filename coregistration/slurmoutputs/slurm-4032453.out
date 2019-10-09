@@ -1,0 +1,33 @@
+Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs.
+
+JobID: 4032453
+======
+Time: Tue Oct  8 18:12:32 BST 2019
+Running on master node: wbic-cs-23
+Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs
+
+Nodes allocated:
+================
+wbic-cs-23
+
+numtasks=1, numnodes=1, mpi_tasks_per_node=1 (OMP_NUM_THREADS=1)
+
+Executing command:
+==================
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/coreg_all.sh /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot 29358/20190905_U-ID46106
+
+29358
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/29358
+EXECUTING t2 to t1 coreg in /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/29358/coregistration
+>> CORR_RATIO COREG OK: subject 29358/run 1
+0.988796 0.997662 -0.068335 -0.000350 0.000000 0.068336 0.997662 0.001224 0.000000 0.000266 -0.001245 0.999999 0.000000 -25.000368 14.008736 -0.028479 1.000000 
+>> BBR COREG OK: subject 29358/run 1
+EXECUTING matrix calcs for subject 29358 run 1}
+FLIRT pre-alignment
+Running BBR
+0.970811 0.996371 -0.065387 -0.054487 0.000000 0.061036 0.995082 -0.078017 0.000000 0.059320 0.074409 0.995462 0.000000 -16.879117 11.641276 118.512314 1.000000 
+>> EPI_REG OK: subject 29358/run 1
+>> MATRIX INVERSION OK: subject 29358/run 1
+>> MATRIX CONCATENATION OK: subject 29358/run 1
+EXECUTING mask to epi coreg for subject 29358 run 1
+>> EC MASKS SUCCESSFULLY TRANSFORMED TO EPI SPACE: subject 29358/run 1

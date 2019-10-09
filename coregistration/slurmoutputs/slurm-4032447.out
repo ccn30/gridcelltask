@@ -1,0 +1,40 @@
+Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs.
+
+JobID: 4032447
+======
+Time: Tue Oct  8 18:08:59 BST 2019
+Running on master node: wbic-cs-18
+Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs
+
+Nodes allocated:
+================
+wbic-cs-18
+
+numtasks=1, numnodes=1, mpi_tasks_per_node=1 (OMP_NUM_THREADS=1)
+
+Executing command:
+==================
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/coreg_all.sh /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot 28061/20190911_U-ID46160
+
+28061
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28061
+mkdir: cannot create directory ‘/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28061/coregistration’: File exists
+EXECUTING t2 to t1 coreg in /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28061/coregistration
+>> CORR_RATIO COREG OK: subject 28061/run 1
+0.998573 0.997633 -0.000885 -0.068757 0.000000 0.000798 0.999999 -0.001303 0.000000 0.068759 0.001245 0.997633 0.000000 -0.783688 -3.911080 18.773619 1.000000 
+>> BBR COREG OK: subject 28061/run 1
+EXECUTING matrix calcs for subject 28061 run 1}
+FLIRT pre-alignment
+Running BBR
+Applying POWELL correction
+finit, fend, fextrap = 0.780632 , 0.774348 , 0.768978
+fval = 0.756682
+Applying POWELL correction
+finit, fend, fextrap = 0.751038 , 0.749366 , 0.749555
+fval = 0.749366
+0.749077 0.999390 0.008221 -0.033928 0.000000 -0.005911 0.997692 0.067649 0.000000 0.034405 -0.067407 0.997132 0.000000 -5.316658 14.649570 7.503216 1.000000 
+>> EPI_REG OK: subject 28061/run 1
+>> MATRIX INVERSION OK: subject 28061/run 1
+>> MATRIX CONCATENATION OK: subject 28061/run 1
+EXECUTING mask to epi coreg for subject 28061 run 1
+>> EC MASKS SUCCESSFULLY TRANSFORMED TO EPI SPACE: subject 28061/run 1

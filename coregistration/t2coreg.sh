@@ -57,7 +57,7 @@
 		#fi
 		
 		# use fslreorient2std images and N4BiasFieldCorrection T2
-		flirt -in ${N4rT2} -ref ${T1path}/reorientn4mag0000_PSIR_skulled_std_struc_brain.nii -dof 6 -out ${coregdir}/t22t1_CorRatio_reorientN4_${this_run}.nii -omat ${coregdir}/t22t1_CorRatio_reorientN4_${this_run}.mat
+		flirt -in ${N4rT2} -ref ${T1path}/reorientn4mag0000_PSIR_skulled_std_struc_brain.nii -dof 3 -out ${coregdir}/t22t1_CorRatio_reorientN43DOF_${this_run}.nii -omat ${coregdir}/t22t1_CorRatio_reorientN43DOF_${this_run}.mat
 		if [ $? -eq 0 ]; then
     			echo ">> CORR_RATIO COREG T2REF OK: subject ${subj}/run ${this_run}"	
 		else

@@ -1,0 +1,52 @@
+Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs.
+
+JobID: 4036298
+======
+Time: Thu Oct 10 14:12:32 BST 2019
+Running on master node: wbic-cs-4
+Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs
+
+Nodes allocated:
+================
+wbic-cs-4
+
+numtasks=1, numnodes=1, mpi_tasks_per_node=1 (OMP_NUM_THREADS=1)
+
+Executing command:
+==================
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/t2coreg.sh /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot 28428/20190903_U-ID46074
+
+28428
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28428
+
+Running N4 for 3-dimensional images.
+
+Mask not read.  Creating Otsu mask.
+Current level = 1
+  Iteration 1 (of 50).   Current convergence value = 0.000329082 (threshold = 1e-06)
+  Iteration 2 (of 50).   Current convergence value = 0.000325941 (threshold = 1e-06)
+  Iteration 3 (of 50).   Current convergence value = 0.000322805 (threshold = 1e-06)
+  Iteration 4 (of 50).   Current convergence value = 0.000319777 (threshold = 1e-06)
+  Iteration 5 (of 50).   Current convergence value = 0.00031678 (threshold = 1e-06)
+  Iteration 6 (of 50).   Current convergence value = 0.000313854 (threshold = 1e-06)
+  Iteration 7 (of 50).   Current convergence value = 0.000310877 (threshold = 1e-06)
+  Iteration 8 (of 50).   Current convergence value = 0.00030826 (threshold = 1e-06)
+  Iteration 9 (of 50).   Current convergence value = 0.000305672 (threshold = 1e-06)
+  Iteration 10 (of 50).   Current convergence value = 0.000303244 (threshold = 1e-06)
+  Iteration 11 (of 50).   Current convergence value = 0.000300837 (threshold = 1e-06)
+  Iteration 12 (of 50).   Current convergence value = 0.000298269 (threshold = 1e-06)
+  Iteration 13 (of 50).   Current convergence value = 0.000295686 (threshold = 1e-06)
+  Iteration 14 (of 50).   Current convergence value = 0.000293055 (threshold = 1e-06)
+  Iteration 15 (of 50).   Current convergence value = 0.000290366 (threshold = 1e-06)
+  Iteration 16 (of 50).   Current convergence value = 0.000287904 (threshold = 1e-06)
+  Iteration 17 (of 50).   Current convergence value = 0.00028537 (threshold = 1e-06)
+  Iteration 18 (of 50).   Current convergence value = 0.000282717 (threshold = 1e-06)
+  Iteration 19 (of 50).   Current convergence value = 0.000280424 (threshold = 1e-06)
+  Iteration 20 (of 50).   Current convergence value = 0.000277862 (threshold = 1e-06)
+  Iteration 21 (of 50).   Current convergence value = 0.000275695 (threshold = 1e-06)
+  Iteration 22 (of 50).   Current convergence value = 0.000273649 (threshold = 1e-06)
+  Iteration 23 (of 50).   Current convergence value = 0.000271434 (threshold = 1e-06)
+  Iteration 24 (of 50).   Current convergence value = 0.000269352 (threshold = 1e-06)
+  Iteration 25 (of 50).   Current convergence value = 0.000267322 (threshold = 1e-06)
+  Iteration 26 (of 50).   Current convergence value = 0.000265279 (threshold = 1e-06)
+  Iteration 27 (of 50).   Current convergence value = 0.000263237 (threshold = 1e-06)

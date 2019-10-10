@@ -56,8 +56,15 @@
     	#		echo ">> CORR_RATIO BET FAIL: subject ${subj}/run ${this_run}"
 		#fi
 		
-		# use fslreorient2std images and N4BiasFieldCorrection T2
-		flirt -in ${N4rT2} -ref ${T1path}/reorientn4mag0000_PSIR_skulled_std_struc_brain.nii -dof 3 -out ${coregdir}/t22t1_CorRatio_reorientN43DOF_${this_run}.nii -omat ${coregdir}/t22t1_CorRatio_reorientN43DOF_${this_run}.mat
+		# use fslreorient2std images and N4BiasFieldCorrection T2 and 3DOF
+		#flirt -in ${N4rT2} -ref ${T1path}/reorientn4mag0000_PSIR_skulled_std_struc_brain.nii -dof 3 -out ${coregdir}/t22t1_CorRatio_reorientN43DOF_${this_run}.nii -omat ${coregdir}/t22t1_CorRatio_reorientN43DOF_${this_run}.mat
+		#if [ $? -eq 0 ]; then
+    	#		echo ">> CORR_RATIO COREG T2REF OK: subject ${subj}/run ${this_run}"	
+		#else
+    	#		echo ">> CORR_RATIO T2REF FAIL: subject ${subj}/run ${this_run}"
+		#fi
+		
+		flirt -in ${N4rT2} -ref ${T1path}/reorientn4mag0000_PSIR_skulled_std_struc_brain.nii -schedule /applications/fsl/fsl-5.0.10/etc/flirtsch/simple3D.sch -dof 6 -out ${coregdir}/t22t1_CorRatio_reorientN4sch_${this_run}.nii -omat ${coregdir}/t22t1_CorRatio_reorientN4sch_${this_run}.mat
 		if [ $? -eq 0 ]; then
     			echo ">> CORR_RATIO COREG T2REF OK: subject ${subj}/run ${this_run}"	
 		else

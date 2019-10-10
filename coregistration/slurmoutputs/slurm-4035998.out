@@ -19,3 +19,4 @@ Executing command:
 27734
 /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/27734
 EXECUTING t2 to t1 coreg in /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/27734/coregistration
+>> CORR_RATIO COREG T2REF OK: subject 27734/run 1

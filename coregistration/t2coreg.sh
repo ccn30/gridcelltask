@@ -19,7 +19,11 @@
 
 	cd ${segdirpath}
 	pwd
-
+	
+	# run N4BiasFieldCorrection
+	N4BiasFieldCorrection -i ${T2} -o ${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/N4rSeries_033_Highresolution_TSE_PAT2_100_c32.nii
+	N4rT2=${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/N4rSeries_033_Highresolution_TSE_PAT2_100_c32.nii
+	echo "Ran N4BiasFieldCorrection -- ${N4rT2}"
 
 	#### ---------- COREGISTER T2 TO T1 ---------- ####
 	# t2 to t1 matrix from ASHS doesn't work
@@ -52,8 +56,8 @@
     	#		echo ">> CORR_RATIO BET FAIL: subject ${subj}/run ${this_run}"
 		#fi
 		
-		# use fslreorient2std images
-		flirt -in ${T2} -ref ${T1path}/reorientn4mag0000_PSIR_skulled_std_struc_brain.nii -dof 6 -out ${coregdir}/t22t1_CorRatio_reorient_${this_run}.nii -omat ${coregdir}/t22t1_CorRatio_reorient_${this_run}.mat
+		# use fslreorient2std images and N4BiasFieldCorrection T2
+		flirt -in ${N4rT2} -ref ${T1path}/reorientn4mag0000_PSIR_skulled_std_struc_brain.nii -dof 6 -out ${coregdir}/t22t1_CorRatio_reorientN4_${this_run}.nii -omat ${coregdir}/t22t1_CorRatio_reorientN4_${this_run}.mat
 		if [ $? -eq 0 ]; then
     			echo ">> CORR_RATIO COREG T2REF OK: subject ${subj}/run ${this_run}"	
 		else

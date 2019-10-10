@@ -1,8 +1,8 @@
 Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs.
 
-JobID: 4036400
+JobID: 4036404
 ======
-Time: Thu Oct 10 14:48:54 BST 2019
+Time: Thu Oct 10 15:12:09 BST 2019
 Running on master node: wbic-cs-4
 Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs
 
@@ -226,7 +226,7 @@ Current level = 4
   Iteration 48 (of 50).   Current convergence value = 0.000276856 (threshold = 1e-06)
   Iteration 49 (of 50).   Current convergence value = 0.000272314 (threshold = 1e-06)
   Iteration 50 (of 50).   Current convergence value = 0.000267103 (threshold = 1e-06)
-   N4MRIBiasFieldCorrectionImageFilter (0x228f780)
+   N4MRIBiasFieldCorrectionImageFilter (0x257a780)
      RTTI typeinfo:   itk::N4MRIBiasFieldCorrectionImageFilter<itk::Image<float, 3u>, itk::Image<unsigned char, 3u>, itk::Image<float, 3u> >
      Reference Count: 1
      Modified Time: 503
@@ -238,9 +238,9 @@ Current level = 4
      Number Of Threads: 24
      ReleaseDataFlag: Off
      ReleaseDataBeforeUpdateFlag: Off
-     Input 0: (0x22a1cf0)
-     Input 1: (0x22a1fe0)
-     Output 0: (0x2281f20)
+     Input 0: (0x258ccf0)
+     Input 1: (0x258cfe0)
+     Output 0: (0x256cf20)
      AbortGenerateData: Off
      Progress: 0
      Multithreader: 
@@ -265,7 +265,7 @@ Current level = 4
      CurrentConvergenceMeasurement: 0.000267103
      CurrentLevel: 4
      ElapsedIterations: 51
-     LogBiasFieldControlPointLattice: Image (0x3727e20)
+     LogBiasFieldControlPointLattice: Image (0x3a12e20)
   RTTI typeinfo:   itk::Image<itk::Vector<float, 1u>, 3u>
   Reference Count: 2
   Modified Time: 24365022
@@ -310,19 +310,19 @@ Current level = 4
 0 0 1
 
   PixelContainer: 
-    ImportImageContainer (0x3728090)
+    ImportImageContainer (0x3a13090)
       RTTI typeinfo:   itk::ImportImageContainer<unsigned long, itk::Vector<float, 1u> >
       Reference Count: 1
       Modified Time: 24365023
       Debug: Off
       Observers: 
         none
-      Pointer: 0x22a2d50
+      Pointer: 0x258dd50
       Container manages memory: true
       Size: 1331
       Capacity: 1331
 
-Elapsed time: 26.7104
+Elapsed time: 26.67
 Ran N4BiasFieldCorrection -- /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/27734/20190902_U-ID46027/Series_033_Highresolution_TSE_PAT2_100/N4rSeries_033_Highresolution_TSE_PAT2_100_c32.nii
 EXECUTING t2 to t1 coreg in /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/27734/coregistration
 >> CORR_RATIO COREG T2REF OK: subject 27734/run 1

@@ -10,7 +10,7 @@
 
 #! sbatch directives begin here ###############################
 #! Name of the job:
-#SBATCH -J ASHS
+#SBATCH -J coreg_all
 #! Which project should jobs run under:
 #SBATCH -A hphi
 #! How many whole nodes should be allocated?

@@ -8,7 +8,7 @@
 	
 	imagedirpath=${pathstem}/preprocessed_data/images/${subj}
 	T1path=${pathstem}/raw_data/images/${subjID}/mp2rage
-	T2=${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/Series_033_Highresolution_TSE_PAT2_100_c32.nii
+	T2=${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/reorientSeries_033_Highresolution_TSE_PAT2_100_c32.nii
 
 	segdirpath=${pathstem}/preprocessed_data/segmentation/${subj}
 	coregdir=${segdirpath}/coregistration
@@ -35,20 +35,29 @@
 	do
 
 		# use T2 as ref image instead of T1
-		flirt -in ${T1path}/n4mag0000_PSIR_skulled_std_struc_brain.nii -ref ${T2} -dof 6 -out ${coregdir}/t12t2_CorRatio_T2REF_${this_run}.nii -omat ${coregdir}/t12t2_CorRatio_${this_run}.mat
+		#flirt -in ${T1path}/n4mag0000_PSIR_skulled_std_struc_brain.nii -ref ${T2} -dof 6 -out ${coregdir}/t12t2_CorRatio_T2REF_${this_run}.nii -omat ${coregdir}/t12t2_CorRatio_${this_run}.mat
+		#if [ $? -eq 0 ]; then
+    	#		echo ">> CORR_RATIO COREG T2REF OK: subject ${subj}/run ${this_run}"	
+		#else
+    	#		echo ">> CORR_RATIO T2REF FAIL: subject ${subj}/run ${this_run}"
+		#fi
+
+		# use BET T2 as well as BET T1, with T1 as ref	
+		#bet ${T2} ${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/BET_T2.nii
+		#T2BET=${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/BET_T2.nii
+		#flirt -in ${T2BET} -ref ${T1path}/n4mag0000_PSIR_skulled_std_struc_brain.nii -dof 6 -out ${coregdir}/t22t1_CorRatio_BETT2_${this_run}.nii -omat ${coregdir}/t22t1_CorRatio_${this_run}.mat
+		#if [ $? -eq 0 ]; then
+    	#		echo ">> CORR_RATIO BET COREG OK: subject ${subj}/run ${this_run}"	
+		#else
+    	#		echo ">> CORR_RATIO BET FAIL: subject ${subj}/run ${this_run}"
+		#fi
+		
+		# use fslreorient2std images
+		flirt -in ${T2} -ref ${T1path}/reorientn4mag0000_PSIR_skulled_std_struc_brain.nii -dof 6 -out ${coregdir}/t22t1_CorRatio_reorient_${this_run}.nii -omat ${coregdir}/t22t1_CorRatio_reorient_${this_run}.mat
 		if [ $? -eq 0 ]; then
     			echo ">> CORR_RATIO COREG T2REF OK: subject ${subj}/run ${this_run}"	
 		else
     			echo ">> CORR_RATIO T2REF FAIL: subject ${subj}/run ${this_run}"
 		fi
-
-		# use BET T2 as well as BET T1, with T1 as ref	
-		bet ${T2} ${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/BET_T2.nii
-		T2BET=${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/BET_T2.nii
-		flirt -in ${T2BET} -ref ${T1path}/n4mag0000_PSIR_skulled_std_struc_brain.nii -dof 6 -out ${coregdir}/t22t1_CorRatio_BETT2_${this_run}.nii -omat ${coregdir}/t22t1_CorRatio_${this_run}.mat
-		if [ $? -eq 0 ]; then
-    			echo ">> CORR_RATIO BET COREG OK: subject ${subj}/run ${this_run}"	
-		else
-    			echo ">> CORR_RATIO BET FAIL: subject ${subj}/run ${this_run}"
-		fi
+		
 	done

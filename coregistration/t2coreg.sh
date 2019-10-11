@@ -17,7 +17,7 @@
 	#runs_to_process=(1 2 3)
 	runs_to_process=1
 
-	cd ${segdirpath}
+	cd ${coregdirpath}
 	pwd
 	
 	# run N4BiasFieldCorrection
@@ -38,14 +38,14 @@
 	for this_run in ${runs_to_process[@]}
 	do
 		
-		# try ANTS simple default (have added module load to SLURM submit script)
-		antsRegistrationSyNQuick.sh -d 3 -f ${T1path}/n4mag0000_PSIR_skulled_std_struc_brain.nii -m ${N4rT2} -o t22t1_ANTS
+		# try ANTS simple default (have added module load to SLURM submit script) - WORKS (need to skullstrip)
+		antsRegistrationSyNQuick.sh -d 3 -f ${T1path}/reorientn4mag0000_PSIR_skulled_std_struc_brain.nii -m ${N4rT2} -o t22t1_ANTS
 
 	done
 	
 		#--------------------------FSL------------------------------#
 	
-		# use T2 as ref image instead of T1
+		## use T2 as ref image instead of T1 - NO
 		
 		#!flirt -in ${T1path}/n4mag0000_PSIR_skulled_std_struc_brain.nii -ref ${T2} -dof 6 -out ${coregdir}/t12t2_CorRatio_T2REF_${this_run}.nii -omat ${coregdir}/t12t2_CorRatio_${this_run}.mat
 		#if [ $? -eq 0 ]; then
@@ -54,7 +54,7 @@
     	#		echo ">> CORR_RATIO T2REF FAIL: subject ${subj}/run ${this_run}"
 		#fi
 
-		# use BET T2 as well as BET T1, with T1 as ref	
+		## use BET T2 as well as BET T1, with T1 as ref	- NO
 		
 		#!bet ${T2} ${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/BET_T2.nii
 		#T2BET=${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/BET_T2.nii
@@ -65,7 +65,7 @@
     	#		echo ">> CORR_RATIO BET FAIL: subject ${subj}/run ${this_run}"
 		#fi
 		
-		# use fslreorient2std images and N4BiasFieldCorrection T2 and 3DOF
+		## use fslreorient2std images and N4BiasFieldCorrection T2 and 3DOF - NO,NO,NO
 		
 		#!flirt -in ${N4rT2} -ref ${T1path}/reorientn4mag0000_PSIR_skulled_std_struc_brain.nii -dof 3 -out ${coregdir}/t22t1_CorRatio_reorientN43DOF_${this_run}.nii -omat ${coregdir}/t22t1_CorRatio_reorientN43DOF_${this_run}.mat
 		#if [ $? -eq 0 ]; then
@@ -74,7 +74,7 @@
     	#		echo ">> CORR_RATIO T2REF FAIL: subject ${subj}/run ${this_run}"
 		#fi
 		
-		# try simple schedule
+		## try simple schedule -NO
 		
 		#!flirt -in ${N4rT2} -ref ${T1path}/reorientn4mag0000_PSIR_skulled_std_struc_brain.nii -schedule /applications/fsl/fsl-5.0.10/etc/flirtsch/simple3D.sch -dof 6 -out ${coregdir}/t22t1_CorRatio_reorientN4sch_${this_run}.nii -omat ${coregdir}/t22t1_CorRatio_reorientN4sch_${this_run}.mat
 		#if [ $? -eq 0 ]; then
@@ -83,7 +83,7 @@
     	#		echo ">> CORR_RATIO T2REF FAIL: subject ${subj}/run ${this_run}"
 		#fi
 		
-		# try whole brain T1
+		## try whole brain T1 - NO
 		
 		#!flirt -in ${N4rT2} -ref ${T1path}/reorientn4mag0000_PSIR_skulled_std.nii -dof 6 -out ${coregdir}/t22t1_CorRatio_reorientN4whole_${this_run}.nii -omat ${coregdir}/t22t1_CorRatio_reorientN4whole_${this_run}.mat
 		#if [ $? -eq 0 ]; then

@@ -33,7 +33,7 @@ for j = 1:length(subjectvec)
             cd([imagepathstem '/' d.name]);
             fprintf(['\n Moving to... ' d.name '\n']);
             
-            % quick section to reorientate images
+            % quick section to reorientate images 
             cmd = 'fslreorient2std Series_033_Highresolution_TSE_PAT2_100_c32.nii reorientSeries_033_Highresolution_TSE_PAT2_100_c32.nii';
             system(cmd);
             cd ../mp2rage

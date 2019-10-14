@@ -1,14 +1,14 @@
 Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs.
 
-JobID: 4035424
+JobID: 4080354
 ======
-Time: Wed Oct  9 13:57:40 BST 2019
-Running on master node: wbic-csm-6
+Time: Mon Oct 14 12:58:57 BST 2019
+Running on master node: wbic-cs-2
 Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs
 
 Nodes allocated:
 ================
-wbic-csm-6
+wbic-cs-2
 
 numtasks=1, numnodes=1, mpi_tasks_per_node=1 (OMP_NUM_THREADS=1)
 
@@ -17,7 +17,8 @@ Executing command:
 /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/t2coreg.sh /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot 27734/20190902_U-ID46027
 
 27734
-/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/27734
+/home/ccn30
+Ran N4BiasFieldCorrection -- /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/27734/20190902_U-ID46027/Series_033_Highresolution_TSE_PAT2_100/N4rSeries_033_Highresolution_TSE_PAT2_100_c32.nii
 EXECUTING t2 to t1 coreg in /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/27734/coregistration
->> CORR_RATIO COREG T2REF OK: subject 27734/run 1
->> CORR_RATIO BET COREG OK: subject 27734/run 1
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/t2coreg.sh: line 49: syntax error near unexpected token `done'
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/t2coreg.sh: line 49: `	done'

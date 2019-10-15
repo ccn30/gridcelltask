@@ -33,6 +33,7 @@ module load fsl/5.0.10
 
 
 	#### ---------- COREGISTER T2 TO T1 ---------- ####
+	
 	# t2 to t1 matrix from ASHS doesn't work
 	if [ -f "${coregdir}" ]; then
 		echo "${coregdir} exists"
@@ -42,8 +43,7 @@ module load fsl/5.0.10
 
 	echo "EXECUTING t2 to t1 coreg in ${coregdir}" 
 
-	for this_run in ${runs_to_process[@]}
-	do
+	cd ${coregdir}
 
 		# initial rigid body coregsitration to initialise BBR later (use skullstripped)
 		flirt -in ${T2} -ref ${T1path}/n4mag0000_PSIR_skulled_std_struc_brain.nii -dof 6 -searchrx -180 180 -searchry -180 180 -searchrz -180 180 -out ${coregdir}/t22t1_CorRatio_${this_run}.nii -omat ${coregdir}/t22t1_CorRatio_${this_run}.mat
@@ -53,11 +53,7 @@ module load fsl/5.0.10
     			echo ">> CORR_RATIO FAIL: subject ${subj}/run ${this_run}"
 		fi
 
-		# white matter segmentation for BBR if spm mp2rage C2 does not suffice - use brain extracted and set to two tissue types (wm=pve2)
-		#fast -t 1 -n 2 -o FAST_ ${T1path}/n4mag0000_PSIR_skulled_std_struc_brain.nii
-
-		# WITH SPM WM SEG
-		# higher level BBR coregistration (uses wm boundaries - skullstripped ot not may not be important)
+		# higher level BBR coregistration (uses SPM wm boundaries - skullstripped ot not may not be important)
 		flirt -in ${T2} -ref ${T1path}/n4mag0000_PSIR_skulled_std_struc_brain.nii -dof 6 -cost bbr -wmseg ${T1path}/c2n4mag0000_PSIR_skulled_std.nii -schedule /applications/fsl/fsl-5.0.10/etc/flirtsch/bbr.sch -init ${coregdir}/t22t1_CorRatio_${this_run}.mat -omat ${coregdir}/t22t1_bbr_spm_${this_run}.mat -out ${coregdir}/t22t1_bbr_spm_${this_run}.nii
 		if [ $? -eq 0 ]; then
     			echo ">> BBR COREG OK: subject ${subj}/run ${this_run}"
@@ -65,8 +61,10 @@ module load fsl/5.0.10
     			echo ">> BBR COREG FAIL: subject ${subj}/run ${this_run}"
 		fi
 
-		#done
+	# loop through 3 runs
 
+	for this_run in ${runs_to_process[@]}
+	do
 
 		#### ---------- COREGISTER EPIS TO T1 AND INVERT ---------- ####
 

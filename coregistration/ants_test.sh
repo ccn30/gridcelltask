@@ -42,7 +42,7 @@ module load fsl/5.0.10
 	antsRegistration \
 		--dimensionality 3 \
 		--float 0 \
-		--output [T12EPI_fullANTS_,T12EPI_fullANTS__Warped.nii.gz] \
+		--output [T12EPI_fullANTS_,T12EPI_fullANTS_Warped.nii.gz,T12EPI_fullANTS_InverseWarped.nii.gz] \
 		--interpolation Linear --winsorize-image-intensities [0.005,0.995] \
 		--use-histogram-matching 0 \
 		--initial-moving-transform [${imagedirpath}/meantopup_Run_1.nii,${T1path}/reorientn4mag0000_PSIR_skulled_std.nii,1] \

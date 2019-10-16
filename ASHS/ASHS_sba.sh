@@ -63,8 +63,11 @@ mpi_tasks_per_node=$(echo "$SLURM_TASKS_PER_NODE" | sed -e  's/^\([0-9][0-9]*\).
 . /etc/profile.d/modules.sh                # Leave this line (enables the module command)
 module purge                               # Removes all modules still loaded
 module load default-wbic                   # REQUIRED - loads the basic environment
+module unload fsl
+module load fsl/5.0.10
 module load itksnap-nowrap/3.6.0
 module load ASHS_FASTB
+module load ANTS/2.2.0
 
 
 #! Are you using OpenMP (NB this is unrelated to OpenMPI)? If so increase this
@@ -91,28 +94,19 @@ start=(`date +%T`)
 echo "ASHS started at $start"
 
 # ASHS DIRECTIVES START HERE
-# import $subj, $preprocesspathstem and $rawpathstem from ASHS_complete.sh
+# import $subjID, $pathstem and $rawpathstem from ASHS_complete.sh
 
-subject="$(cut -d'/' -f1 <<<"$subj")"
+scriptdir=${1}
+pathstem=${2}
+subjID=${3}
 
-export ASHS_ROOT=${ashsdir}/ashs-fastashs_beta
-export ATLAS=${ashsdir}/atlases/magdeburgatlas
-mkdir ${preprocesspathstem}/$subject
-export OUTPUT=${preprocesspathstem}/$subject
+workdir="$scriptdir/slurmoutputs"
 
-#! Work directory (i.e. where the job will run):
-workdir="$OUTPUT"
+cd ${scriptdir}
 
-#wholeT1=${rawpathstem}/"$subj"/mp2rage/n4mag0000_PSIR_skulled_std.nii
-export brainT1=${rawpathstem}/"$subj"/mp2rage/n4mag0000_PSIR_skulled_std_struc_brain.nii
-export T2=${rawpathstem}/"$subj"/Series_033_Highresolution_TSE_PAT2_100/Series_033_Highresolution_TSE_PAT2_100_c32.nii
+application="${scriptdir}/ASHS_mainfun.sh ${pathstem} ${subjID}"
 
-cd $OUTPUT
-
-$ASHS_ROOT/bin/ashs_main.sh -I ${subject} -a $ATLAS -g ${brainT1} -f ${T2} -w $OUTPUT
-
-end=(`date +%T`)
-printf "\n\n ASHS completed $subj at $end, it took $(($SECONDS/86400)) days $(($SECONDS/3600)) hours $(($SECONDS%3600/60)) minutes and $(($SECONDS%60)) seconds to complete \n\n"
+CMD="${application}"
 
 
 ###############################################################

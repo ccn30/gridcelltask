@@ -21,16 +21,16 @@ outputdir=${preprocesspathstem}/ASHS_2
 
 T2path=${rawpathstem}/Series_033_Highresolution_TSE_PAT2_100
 T2=${T2path}/reorientSeries_033_Highresolution_TSE_PAT2_100_c32.nii
-echo "Running N4BiasFieldCorrection on: " ${T2}
+#!echo "Running N4BiasFieldCorrection on: " ${T2}
 
-cd ${T2path}
-$antsroot/N4BiasFieldCorrection -d 3 -i ${T2} -o N4reorientSeries_033_Highresolution_TSE_PAT2_100_c32.nii
+#!cd ${T2path}
+#!$antsroot/N4BiasFieldCorrection -d 3 -i ${T2} -o N4reorientSeries_033_Highresolution_TSE_PAT2_100_c32.nii
 N4T2=${T2path}/N4reorientSeries_033_Highresolution_TSE_PAT2_100_c32.nii
-if [ -f "${N4T2}" ]; then
-		echo ">> N4BiasFieldCorrection SUCCESS"
-	else
-		echo ">> N4BiasFieldCorrection FAIL"
-fi 
+#!if [ -f "${N4T2}" ]; then
+#!		echo ">> N4BiasFieldCorrection SUCCESS"
+#!	else
+#!		echo ">> N4BiasFieldCorrection FAIL"
+#!fi 
 
 #------------------------------------------------------------------------#
 # Denoise the MP2RAGES = ${denoiseT1}					 #
@@ -42,8 +42,8 @@ brainT1=${T1path}/reorientn4mag0000_PSIR_skulled_std_struc_brain.nii
 echo "Running DenoiseImage in: " ${T1path}
 
 cd ${T1path}
-$antsroot/DenoiseImage -d 3 -i $brainT1 -o ${rawpathstem}/${subjID}/mp2rage/denoiseRn4mag0000_PSIR_skulled_std_struc_brain.nii
-$antsroot/DenoiseImage -d 3 -i $wholeT1 -o ${rawpathstem}/${subjID}/mp2rage/denoiseRn4mag0000_PSIR_skulled_std.nii
+$antsroot/DenoiseImage -d 3 -i $brainT1 -o ${T1path}/denoiseRn4mag0000_PSIR_skulled_std_struc_brain.nii
+$antsroot/DenoiseImage -d 3 -i $wholeT1 -o ${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii
 denoiseT1brain=${T1path}/denoiseRn4mag0000_PSIR_skulled_std_struc_brain.nii
 denoiseT1whole=${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii
 if [ -f "${denoiseT1brain}" && "${denoiseT1whole}" ]; then

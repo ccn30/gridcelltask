@@ -1,0 +1,25 @@
+ModuleCmd_Load.c(208):ERROR:105: Unable to locate a modulefile for 'ASHS_FASTB'
+ASHS started at 12:32:43
+
+
+ ASHS completed 27734/20190902_U-ID46027 at 12:32:43, it took 0 days 0 hours 0 minutes and 0 seconds to complete 
+
+Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/ASHS/slurmoutputs.
+
+JobID: 4083881
+======
+Time: Thu Oct 17 12:32:43 BST 2019
+Running on master node: wbic-csm-6
+Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/ASHS/slurmoutputs
+
+Nodes allocated:
+================
+wbic-csm-6
+
+numtasks=1, numnodes=1, mpi_tasks_per_node=1 (OMP_NUM_THREADS=1)
+
+Executing command:
+==================
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/ASHS/ASHS_mainfun.sh /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot 27734/20190902_U-ID46027
+
+Running DenoiseImage in:  /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/27734/20190902_U-ID46027/mp2rage

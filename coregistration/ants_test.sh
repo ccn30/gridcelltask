@@ -35,7 +35,7 @@ module load fsl/5.0.10
 	## 1 ANTS coreg for T1 to T2 structural (t12t1 should be t12t2) - works well **INCLUDE**
 	#!antsRegistrationSyNQuick.sh -d 3 -f ${N4rT2} -m ${T1path}/reorientn4mag0000_PSIR_skulled_std.nii -o ${coreg}/t12t1_ANTS_
 	## 2 try with DenoiseImage T1
-	antsRegistrationSyNQuick.sh -d 3 -f ${N4rT2} -m ${T1path}/manualtestfiles/denoisern4_PSIR_skulled_std.nii -o ${coreg}/t12t2_ANTSdenoise_
+	antsRegistrationSyNQuick.sh -d 3 -f ${N4rT2} -m ${T1path}/manualtestfiles/denoisern4_PSIR_skulled_std.nii -o ${coregdir}/t12t2_ANTSdenoise_
 
 	## Run ANTS quick reg EPI to T1 - nearly worked, try skulstripped t1 - not working
 	#!antsRegistrationSyNQuick.sh -d 3 -f ${T1path}/reorientn4mag0000_PSIR_skulled_std_struc_brain.nii -m ${imagedirpath}/meantopup_Run_1.nii -o ${coreg}/epi2T1_ANTS_ss_

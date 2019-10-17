@@ -1,19 +1,14 @@
 #!/bin/bash
 # submit ASHS to slurm
 
-#module unload matlab/matlab2016a    
-#module load matlab/matlab2017b
-#module load freesurfer/6.0.0
-#module load spm/spm12_6906
-#module load ASHS_1.0.0
-#module load ANTS/2.2.0
-
 pathstem=/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot
 scriptdir=${pathstem}/scripts/ASHS
 submit=${scriptdir}/ASHS_sba.sh
 
+# separate txt file with subject and date IDs are listed
 mysubjs=${pathstem}/mysubjs_deflist.txt
 
+# this script must be called from ASHS script dir where a slurmoutputs folder must be
 cd slurmoutputs
 
 for subjID in `cat $mysubjs`
@@ -21,6 +16,15 @@ do
 	echo "Submitting ASHS segmentation of:	$subjID"
 	sbatch ${submit} ${scriptdir} ${pathstem} ${subjID}
 done
+
+#--------old directives below---------#
+
+#!module unload matlab/matlab2016a    
+#!module load matlab/matlab2017b
+#!module load freesurfer/6.0.0
+#!module load spm/spm12_6906
+#!module load ASHS_1.0.0
+#!module load ANTS/2.2.0
 
 #!	declare -a mysubjs=("27734/20190902_U-ID46027
 #!	28061/20190911_U-ID46160

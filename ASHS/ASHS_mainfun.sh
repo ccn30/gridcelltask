@@ -1,39 +1,78 @@
 #!/bin/bash
 
+# arguments from ASHS_sba.sh
 pathstem=${1}
 subjID=${2}
 
+# initialise software roots
+antsroot=/applications/ANTS/2.2.0/bin
+ashsroot=/home/ccn30/privatemodules/ASHS/ashs-fastashs_beta
+atlasdir=/home/ccn30/ENCRYPT/atlases/magdeburgatlas
+
+# initialise subject-wise paths
 subject="$(cut -d'/' -f1 <<<"$subjID")"
 rawpathstem=${pathstem}/raw_data/images/${subjID}
 preprocesspathstem=${pathstem}/preprocessed_data/segmentation/${subject}
-ashspath=/home/ccn30/privatemodules/ASHS/ashs-fastashs_beta
-atlasdir=/home/ccn30/ENCRYPT/atlases/magdeburgatlas
-output=${preprocesspathstem}/ASHS_2
+outputdir=${preprocesspathstem}/ASHS_2
 
-mkdir ${output}
+#------------------------------------------------------------------------#
+# Make N4 bias corrected T2s = ${N4T2}					 #
+#------------------------------------------------------------------------#
 
-#! Work directory (i.e. where the job will run):
-workdir="$output"
+T2path=${rawpathstem}/Series_033_Highresolution_TSE_PAT2_100
+T2=${T2path}/reorientSeries_033_Highresolution_TSE_PAT2_100_c32.nii
+echo "Running N4BiasFieldCorrection on: " ${T2}
 
-wholeT1=${rawpathstem}/mp2rage/reorientn4mag0000_PSIR_skulled_std.nii
-brainT1=${rawpathstem}/mp2rage/reorientn4mag0000_PSIR_skulled_std_struc_brain.nii
-T2=${rawpathstem}/reorientSeries_033_Highresolution_TSE_PAT2_100/Series_033_Highresolution_TSE_PAT2_100_c32.nii
+cd ${T2path}
+$antsroot/N4BiasFieldCorrection -d 3 -i ${T2} -o N4reorientSeries_033_Highresolution_TSE_PAT2_100_c32.nii
+N4T2=${T2path}/N4reorientSeries_033_Highresolution_TSE_PAT2_100_c32.nii
+if [ -f "${N4T2}" ]; then
+		echo ">> N4BiasFieldCorrection SUCCESS"
+	else
+		echo ">> N4BiasFieldCorrection FAIL"
+fi 
 
-echo "OUTPUT:" $output
-echo "INPUT:" $wholeT1 $T2
+#------------------------------------------------------------------------#
+# Denoise the MP2RAGES = ${denoiseT1}					 #
+#------------------------------------------------------------------------#
 
-# Denoise the MP2RAGE
-cd ${rawpathstem}/${subjID}/mp2rage
-pwd
-echo
+T1path=${rawpathstem}/mp2rage
+wholeT1=${T1path}/reorientn4mag0000_PSIR_skulled_std.nii
+brainT1=${T1path}/reorientn4mag0000_PSIR_skulled_std_struc_brain.nii
+echo "Running DenoiseImage in: " ${T1path}
 
-DenoiseImage -d 3 -i $brainT1 -o ${rawpathstem}/${subjID}/mp2rage/denoisen4mag0000_PSIR_skulled_std_struc_brain.nii
-DenoiseImage -d 3 -i $brainT1 -o ${rawpathstem}/${subjID}/mp2rage/denoisen4mag0000_PSIR_skulled_std_struc_brain.nii
+cd ${T1path}
+$antsroot/DenoiseImage -d 3 -i $brainT1 -o ${rawpathstem}/${subjID}/mp2rage/denoiseRn4mag0000_PSIR_skulled_std_struc_brain.nii
+$antsroot/DenoiseImage -d 3 -i $wholeT1 -o ${rawpathstem}/${subjID}/mp2rage/denoiseRn4mag0000_PSIR_skulled_std.nii
+denoiseT1brain=${T1path}/denoiseRn4mag0000_PSIR_skulled_std_struc_brain.nii
+denoiseT1whole=${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii
+if [ -f "${denoiseT1brain}" && "${denoiseT1whole}" ]; then
+		echo ">> DenoiseImage SUCCESS"
+	else
+		echo ">> DenoiseImage FAIL"
+fi
 
-cd $OUTPUT
+#------------------------------------------------------------------------#
+# Run ASHS					 			 #
+#------------------------------------------------------------------------#
 
-$ashspath/bin/ashs_main.sh -I ${subject} -a $atlasdir -g ${brainT1} -f ${T2} -w $OUTPUT
+if [ -f "${outputdir}" ]; then
+		echo "${outputdir} exists"
+	else
+		mkdir ${outputdir}
+fi
 
-end=(`date +%T`)
-printf "\n\n ASHS completed $subj at $end, it took $(($SECONDS/86400)) days $(($SECONDS/3600)) hours $(($SECONDS%3600/60)) minutes and $(($SECONDS%60)) seconds to complete \n\n"
+echo "Beginning ASHS for: " $subject
+echo "OUTPUT:" $outputdir
+echo "INPUT:" $denoiseT1brain $N4T2
+
+cd $outputdir
+
+# second ASHS run (corrected inputs, skullstripped T1}
+$ashsroot/bin/ashs_main.sh -I $subject'_2' -a $atlasdir -g ${denoiseT1brain} -f ${N4T2} -w ${outputdir}
+
+echo ">> DONE: " ${subject}
+ 
+# first ASHS run (non corrected inputs, skullstripped T1}
+#!$ashspath/bin/ashs_main.sh -I ${subject} -a $atlasdir -g ${brainT1} -f ${T2} -w $OUTPUT
 

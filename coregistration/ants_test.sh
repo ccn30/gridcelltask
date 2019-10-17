@@ -35,7 +35,7 @@ module load fsl/5.0.10
 	## 1 ANTS coreg for T1 to T2 structural (t12t1 should be t12t2) - works well **INCLUDE**
 	#!antsRegistrationSyNQuick.sh -d 3 -f ${N4rT2} -m ${T1path}/reorientn4mag0000_PSIR_skulled_std.nii -o ${coreg}/t12t1_ANTS_
 	## 2 try with DenoiseImage T1
-	antsRegistrationSyNQuick.sh -d 3 -f ${N4rT2} -m ${T1path}/manualtestfiles/denoisern4_PSIR_skulled_std.nii -o ${coregdir}/t12t2_ANTSdenoise_
+#!	antsRegistrationSyNQuick.sh -d 3 -f ${N4rT2} -m ${T1path}/manualtestfiles/denoisern4_PSIR_skulled_std.nii -o ${coregdir}/t12t2_ANTSdenoise_
 
 	## Run ANTS quick reg EPI to T1 - nearly worked, try skulstripped t1 - not working
 	#!antsRegistrationSyNQuick.sh -d 3 -f ${T1path}/reorientn4mag0000_PSIR_skulled_std_struc_brain.nii -m ${imagedirpath}/meantopup_Run_1.nii -o ${coreg}/epi2T1_ANTS_ss_
@@ -100,14 +100,15 @@ module load fsl/5.0.10
 #!				-t [t12t1_ANTS_0GenericAffine.mat,1] \
 #!				-v
 
-	## 4 now try #1 with new epi to T1 coreg output (does it change difference between affine only reg above?)
+	## 4 now try #1 again with new epi to T1 coreg output (does it change difference between affine only reg above?)
+	## 5 try #1 again with new t2 2 t1 coreg output
 	antsApplyTransforms -d 3 \
 				-i ${segdirpath}/final/${subj}_left_lfseg_corr_nogray.nii.gz \
 				-r ${imagedirpath}/meantopup_Run_1.nii \
-				-o t12epimasks_syn_multilabel.nii.gz \
+				-o t12epimasks_syn_multilab_newt1newepi.nii.gz \
 				-n MultiLabel \
 				-t T12EPI_fullANTS_1Warp.nii.gz \
 				-t T12EPI_fullANTS_0GenericAffine.mat \
-				-t t12t1_ANTS_1InverseWarp.nii.gz \
-				-t [t12t1_ANTS_0GenericAffine.mat,1] \
+				-t t12t2_ANTSdenoise_1InverseWarp.nii.gz \
+				-t [t12t2_ANTSdenoise_0GenericAffine.mat,1] \
 				-v

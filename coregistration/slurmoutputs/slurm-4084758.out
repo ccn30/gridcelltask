@@ -1,0 +1,34 @@
+Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs.
+
+JobID: 4084758
+======
+Time: Thu Oct 17 15:27:15 BST 2019
+Running on master node: wbic-cs-19
+Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs
+
+Nodes allocated:
+================
+wbic-cs-19
+
+numtasks=1, numnodes=1, mpi_tasks_per_node=1 (OMP_NUM_THREADS=1)
+
+Executing command:
+==================
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/ants_test.sh /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot 27734/20190902_U-ID46027
+
+27734
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/27734/coregistration
+Using double precision for computations.
+Input scalar image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/27734/final/27734_left_lfseg_corr_nogray.nii.gz
+Reference image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/27734/meantopup_Run_1.nii
+=============================================================================
+The composite transform comprises the following transforms (in order): 
+  1. inverse of t12t2_ANTSdenoise_0GenericAffine.mat (type = AffineTransform)
+  2. t12t2_ANTSdenoise_1InverseWarp.nii.gz (type = DisplacementFieldTransform)
+  3. T12EPI_fullANTS_0GenericAffine.mat (type = AffineTransform)
+  4. T12EPI_fullANTS_1Warp.nii.gz (type = DisplacementFieldTransform)
+=============================================================================
+Default pixel value: 0
+Interpolation type: LabelImageGaussianInterpolateImageFunction
+Output warped image: t12epimasks_syn_multilab_newt1newepi.nii.gz

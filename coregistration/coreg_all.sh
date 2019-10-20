@@ -36,7 +36,7 @@
 	pwd
 	
 	echo "EXECUTING t2 to t1 coreg: " $subject	
-	$antsroot/antsRegistrationSyNQuick.sh -d 3 -f ${N4T2} -m ${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii -o ${coregdir}/T1toT2_ANTS_
+	$antsroot/antsRegistrationSyNQuick.sh -d 3 -f ${N4T2} -m ${T1path}/reorientn4mag0000_PSIR_skulled_std.nii -o ${coregdir}/T1toT2_ANTS_
 
 	#### ---------- COREGISTER EPIS TO T1 --------- ####
 	
@@ -46,7 +46,7 @@
 
 		echo "EXECUTING epi to T1 coregistration for subject ${subject} run $this_run}"
 		epi=${imagedirpath}/meantopup_Run_1.nii
-		T1=${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii
+		T1=${T1path}/reorientn4mag0000_PSIR_skulled_std.nii
 		echo "EPI: " $epi
 		echo "T1: " $T1
 		antsRegistration \

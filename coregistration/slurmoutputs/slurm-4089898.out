@@ -1,0 +1,58 @@
+Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs.
+
+JobID: 4089898
+======
+Time: Sun Oct 20 16:29:14 BST 2019
+Running on master node: wbic-csm-1
+Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs
+
+Nodes allocated:
+================
+wbic-csm-1
+
+numtasks=, numnodes=1, mpi_tasks_per_node=2 (OMP_NUM_THREADS=1)
+
+Executing command:
+==================
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/coreg_all.sh /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot 28428/20190903_U-ID46074
+
+28428
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28428
+mkdir: cannot create directory ‘/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28428/coregistration’: File exists
+Making coregistration directory...
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28428/coregistration
+EXECUTING t2 to t1 coreg:  28428
+
+--------------------------------------------------------------------------------------
+ Mapping parameters
+--------------------------------------------------------------------------------------
+ ANTSPATH is /applications/ANTS/2.2.0/bin/
+
+ Dimensionality:           3
+ Output name prefix:       /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28428/coregistration/T1toT2_ANTS_
+ Fixed images:             /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/28428/20190903_U-ID46074/Series_033_Highresolution_TSE_PAT2_100/N4Series_033_Highresolution_TSE_PAT2_100_c32.nii
+ Moving images:            /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/28428/20190903_U-ID46074/mp2rage/reorientn4mag0000_PSIR_skulled_std.nii
+ Number of threads:        1
+ Spline distance:          26
+ Transform type:           s
+ MI histogram bins:        32
+ Precision:                d
+ Use histogram matching    0
+======================================================================================
+ antsRegistration call:
+--------------------------------------------------------------------------------------
+/applications/ANTS/2.2.0/bin//antsRegistration --verbose 1 --dimensionality 3 --float 0 --output [/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28428/coregistration/T1toT2_ANTS_,/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28428/coregistration/T1toT2_ANTS_Warped.nii.gz,/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28428/coregistration/T1toT2_ANTS_InverseWarped.nii.gz] --interpolation Linear --use-histogram-matching 0 --winsorize-image-intensities [0.005,0.995] --initial-moving-transform [/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/28428/20190903_U-ID46074/Series_033_Highresolution_TSE_PAT2_100/N4Series_033_Highresolution_TSE_PAT2_100_c32.nii,/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/28428/20190903_U-ID46074/mp2rage/reorientn4mag0000_PSIR_skulled_std.nii,1] --transform Rigid[0.1] --metric MI[/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/28428/20190903_U-ID46074/Series_033_Highresolution_TSE_PAT2_100/N4Series_033_Highresolution_TSE_PAT2_100_c32.nii,/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/28428/20190903_U-ID46074/mp2rage/reorientn4mag0000_PSIR_skulled_std.nii,1,32,Regular,0.25] --convergence [1000x500x250x0,1e-6,10] --shrink-factors 12x8x4x2 --smoothing-sigmas 4x3x2x1vox --transform Affine[0.1] --metric MI[/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/28428/20190903_U-ID46074/Series_033_Highresolution_TSE_PAT2_100/N4Series_033_Highresolution_TSE_PAT2_100_c32.nii,/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/28428/20190903_U-ID46074/mp2rage/reorientn4mag0000_PSIR_skulled_std.nii,1,32,Regular,0.25] --convergence [1000x500x250x0,1e-6,10] --shrink-factors 12x8x4x2 --smoothing-sigmas 4x3x2x1vox --transform SyN[0.1,3,0] --metric MI[/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/28428/20190903_U-ID46074/Series_033_Highresolution_TSE_PAT2_100/N4Series_033_Highresolution_TSE_PAT2_100_c32.nii,/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/28428/20190903_U-ID46074/mp2rage/reorientn4mag0000_PSIR_skulled_std.nii,1,32] --convergence [100x100x70x50x0,1e-6,10] --shrink-factors 10x6x4x2x1 --smoothing-sigmas 5x3x2x1x0vox
+--------------------------------------------------------------------------------------
+All_Command_lines_OK
+Using double precision for computations.
+=============================================================================
+The composite transform comprises the following transforms (in order): 
+  1. Center of mass alignment using fixed image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/28428/20190903_U-ID46074/Series_033_Highresolution_TSE_PAT2_100/N4Series_033_Highresolution_TSE_PAT2_100_c32.nii and moving image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/28428/20190903_U-ID46074/mp2rage/reorientn4mag0000_PSIR_skulled_std.nii (type = Euler3DTransform)
+=============================================================================
+  number of levels = 4
+  number of levels = 4
+  number of levels = 5
+  fixed image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/28428/20190903_U-ID46074/Series_033_Highresolution_TSE_PAT2_100/N4Series_033_Highresolution_TSE_PAT2_100_c32.nii
+  moving image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/28428/20190903_U-ID46074/mp2rage/reorientn4mag0000_PSIR_skulled_std.nii
+  fixed image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/28428/20190903_U-ID46074/Series_033_Highresolution_TSE_PAT2_100/N4Series_033_Highresolution_TSE_PAT2_100_c32.nii
+  moving image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/28428/20190903_U-ID46074/mp2rage/reorientn4mag0000_PSIR_skulled_std.nii

@@ -6,7 +6,7 @@ scriptdir=${pathstem}/scripts/ASHS
 submit=${scriptdir}/ASHS_sba.sh
 
 # separate txt file with subject and date IDs are listed
-mysubjs=${pathstem}/mysubjs_deflist.txt
+mysubjs=${pathstem}/master_subjsdeflist.txt
 
 # this script must be called from ASHS script dir where a slurmoutputs folder must be
 cd slurmoutputs
@@ -17,7 +17,7 @@ do
 	sbatch ${submit} ${scriptdir} ${pathstem} ${subjID}
 done
 
-#--------old directives below---------#
+#-----old directives below for future ref-----#
 
 #!module unload matlab/matlab2016a    
 #!module load matlab/matlab2017b

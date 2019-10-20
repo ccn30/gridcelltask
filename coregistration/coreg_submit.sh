@@ -10,7 +10,7 @@
 
 #! sbatch directives begin here ###############################
 #! Name of the job:
-#SBATCH -J coreg_all
+#SBATCH -J ANTS coreg
 #! Which project should jobs run under:
 #SBATCH -A hphi
 #! How many whole nodes should be allocated?
@@ -64,6 +64,8 @@ mpi_tasks_per_node=$(echo "$SLURM_TASKS_PER_NODE" | sed -e  's/^\([0-9][0-9]*\).
 module purge                               # Removes all modules still loaded
 module load default-wbic                   # REQUIRED - loads the basic environment
 module load ANTS/2.2.0
+module unload fsl
+module load fsl/5.0.10
 
 #! Are you using OpenMP (NB this is unrelated to OpenMPI)? If so increase this
 #! safe value to no more than 16:
@@ -90,8 +92,8 @@ subjID=${3}
 workdir="$scriptdir/slurmoutputs"
 
 cd ${scriptdir}
-#!application="${scriptdir}/coreg_all.sh ${pathstem} ${subjID}"
-application="${scriptdir}/ants_test.sh ${pathstem} ${subjID}"
+application="${scriptdir}/coreg_all.sh ${pathstem} ${subjID}"
+#!application="${scriptdir}/ants_test.sh ${pathstem} ${subjID}"
 CMD="${application}"
 
 ###############################################################

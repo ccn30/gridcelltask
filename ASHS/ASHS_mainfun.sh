@@ -5,56 +5,45 @@ pathstem=${1}
 subjID=${2}
 
 # initialise software roots
-antsroot=/applications/ANTS/2.2.0/bin
-ashsroot=/home/ccn30/privatemodules/ASHS/ashs-fastashs_beta
-atlasdir=/home/ccn30/ENCRYPT/atlases/magdeburgatlas
+export antsroot=/applications/ANTS/2.2.0/bin
+export ASHS_ROOT=/home/ccn30/privatemodules/ASHS/ashs-fastashs_beta
+export atlasdir=/home/ccn30/ENCRYPT/atlases/magdeburgatlas
 
 # initialise subject-wise paths
 subject="$(cut -d'/' -f1 <<<"$subjID")"
 rawpathstem=${pathstem}/raw_data/images/${subjID}
 preprocesspathstem=${pathstem}/preprocessed_data/segmentation/${subject}
-outputdir=${preprocesspathstem}/ASHS_2
+outputdir=${preprocesspathstem}/ASHS_corinputs
 
 #------------------------------------------------------------------------#
 # Make N4 bias corrected T2s = ${N4T2}					 #
 #------------------------------------------------------------------------#
 
+# eventually include this in separate script earlier in pipeline
 T2path=${rawpathstem}/Series_033_Highresolution_TSE_PAT2_100
-T2=${T2path}/reorientSeries_033_Highresolution_TSE_PAT2_100_c32.nii
-#!echo "Running N4BiasFieldCorrection on: " ${T2}
+#!T2=${T2path}/reorientSeries_033_Highresolution_TSE_PAT2_100_c32.nii <- swaped z and y axes, not good
+T2=${T2path}/Series_033_Highresolution_TSE_PAT2_100_c32.nii
+echo "Running N4BiasFieldCorrection on: " ${T2}
 
-#!cd ${T2path}
-#!$antsroot/N4BiasFieldCorrection -d 3 -i ${T2} -o N4reorientSeries_033_Highresolution_TSE_PAT2_100_c32.nii
-N4T2=${T2path}/N4reorientSeries_033_Highresolution_TSE_PAT2_100_c32.nii
-#!if [ -f "${N4T2}" ]; then
-#!		echo ">> N4BiasFieldCorrection SUCCESS"
-#!	else
-#!		echo ">> N4BiasFieldCorrection FAIL"
-#!fi 
-
-#------------------------------------------------------------------------#
-# Denoise the MP2RAGES = ${denoiseT1}					 #
-#------------------------------------------------------------------------#
-
-T1path=${rawpathstem}/mp2rage
-wholeT1=${T1path}/reorientn4mag0000_PSIR_skulled_std.nii
-brainT1=${T1path}/reorientn4mag0000_PSIR_skulled_std_struc_brain.nii
-echo "Running DenoiseImage in: " ${T1path}
-
-cd ${T1path}
-$antsroot/DenoiseImage -d 3 -i $brainT1 -o ${T1path}/denoiseRn4mag0000_PSIR_skulled_std_struc_brain.nii
-$antsroot/DenoiseImage -d 3 -i $wholeT1 -o ${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii
-denoiseT1brain=${T1path}/denoiseRn4mag0000_PSIR_skulled_std_struc_brain.nii
-denoiseT1whole=${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii
-if [ -f "${denoiseT1brain}" && "${denoiseT1whole}" ]; then
-		echo ">> DenoiseImage SUCCESS"
+cd ${T2path}
+N4T2=${T2path}/N4Series_033_Highresolution_TSE_PAT2_100_c32.nii
+$antsroot/N4BiasFieldCorrection -d 3 -i ${T2} -o ${N4T2}
+if [ -f "${N4T2}" ]; then
+		echo ">> N4BiasFieldCorrection SUCCESS"
 	else
-		echo ">> DenoiseImage FAIL"
-fi
+		echo ">> N4BiasFieldCorrection FAIL"
+fi 
 
 #------------------------------------------------------------------------#
 # Run ASHS					 			 #
 #------------------------------------------------------------------------#
+T1path=${rawpathstem}/mp2rage
+wholeT1=${T1path}/reorientn4mag0000_PSIR_skulled_std.nii
+brainT1=${T1path}/reorientn4mag0000_PSIR_skulled_std_struc_brain.nii
+
+# separate denoise script created, output =
+denoiseT1brain=${T1path}/denoiseRn4mag0000_PSIR_skulled_std_struc_brain.nii
+denoiseT1whole=${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii
 
 if [ -f "${outputdir}" ]; then
 		echo "${outputdir} exists"
@@ -68,11 +57,20 @@ echo "INPUT:" $denoiseT1brain $N4T2
 
 cd $outputdir
 
-# second ASHS run (corrected inputs, skullstripped T1}
-$ashsroot/bin/ashs_main.sh -I $subject'_2' -a $atlasdir -g ${denoiseT1brain} -f ${N4T2} -w ${outputdir}
+# Set a timer
+SECONDS=0
+start=(`date +%T`)
+echo "ASHS started at $start"
 
-echo ">> DONE: " ${subject}
+# third ASHS run (corrected inputs but not reorientated T2s, skullstripped T1s)
+$ASHS_ROOT/bin/ashs_main.sh -I $subject'_3' -a $atlasdir -g ${denoiseT1brain} -f ${N4T2} -w ${outputdir}
+
+end=(`date +%T`)
+printf "\n\n ASHS completed for $subject at $end, it took $(($SECONDS/86400)) days $(($SECONDS/3600)) hours $(($SECONDS%3600/60)) minutes and $(($SECONDS%60)) seconds to complete \n\n"
+
+# second ASHS run (corrected inputs, skullstripped T1}
+#!$ASHS_ROOT/bin/ashs_main.sh -I $subject'_2' -a $atlasdir -g ${denoiseT1brain} -f ${N4T2} -w ${outputdir}
  
 # first ASHS run (non corrected inputs, skullstripped T1}
-#!$ashspath/bin/ashs_main.sh -I ${subject} -a $atlasdir -g ${brainT1} -f ${T2} -w $OUTPUT
+#!$ASHS_ROOT/bin/ashs_main.sh -I ${subject} -a $atlasdir -g ${brainT1} -f ${T2} -w $OUTPUT
 

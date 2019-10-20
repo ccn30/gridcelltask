@@ -20,7 +20,7 @@
 #SBATCH --cpus-per-task=1
 #!SBATCH --mem-per-cpu=16384M
 #! How much wallclock time will be required?
-#SBATCH --time=03:00:00
+#SBATCH --time=7:00:00
 #! What types of email messages do you wish to receive?
 #SBATCH --mail-type=FAIL
 #!SBATCH -p skylake-himem
@@ -88,11 +88,6 @@ export I_MPI_PIN_ORDER=scatter # Adjacent domains have minimal sharing of caches
 #! 4. If MPI tasks perform better when sharing caches/sockets, try I_MPI_PIN_ORDER=compact.
 
 
-# Set a timer
-SECONDS=0
-start=(`date +%T`)
-echo "ASHS started at $start"
-
 # ASHS DIRECTIVES START HERE
 # import $subjID, $pathstem and $rawpathstem from ASHS_complete.sh
 
@@ -105,9 +100,6 @@ workdir="$scriptdir/slurmoutputs"
 application="${scriptdir}/ASHS_mainfun.sh ${pathstem} ${subjID}"
 
 CMD="${application}"
-
-end=(`date +%T`)
-printf "\n\n ASHS completed $subjID at $end, it took $(($SECONDS/86400)) days $(($SECONDS/3600)) hours $(($SECONDS%3600/60)) minutes and $(($SECONDS%60)) seconds to complete \n\n"
 
 ###############################################################
 ### You should not have to change anything below this line ####

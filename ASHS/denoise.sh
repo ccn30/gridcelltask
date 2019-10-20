@@ -22,15 +22,15 @@ wholeT1=${T1path}/reorientn4mag0000_PSIR_skulled_std.nii
 brainT1=${T1path}/reorientn4mag0000_PSIR_skulled_std_struc_brain.nii
 echo "Running DenoiseImage in: " ${T1path}
 
-denoiseT1brain=${T1path}/denoiseRn4mag0000_PSIR_skulled_std_struc_brain.nii
+#!denoiseT1brain=${T1path}/denoiseRn4mag0000_PSIR_skulled_std_struc_brain.nii
 denoiseT1whole=${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii
 cd ${T1path}
 
-if [ -f "${denoiseT1brain}" ]; then
-		echo $subject "already denoised brain"
-	else
-		$antsroot/DenoiseImage -d 3 -i $brainT1 -o ${T1path}/denoiseRn4mag0000_PSIR_skulled_std_struc_brain.nii -v 1
-fi
+#!if [ -f "${denoiseT1brain}" ]; then
+#!		echo $subject "already denoised brain"
+#!	else
+#!		$antsroot/DenoiseImage -d 3 -i $brainT1 -o ${T1path}/denoiseRn4mag0000_PSIR_skulled_std_struc_brain.nii -v 1
+#!fi
 
 $antsroot/DenoiseImage -d 3 -i $wholeT1 -o ${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii -v 1
 

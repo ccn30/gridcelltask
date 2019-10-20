@@ -25,7 +25,7 @@
 #SBATCH --mail-type=FAIL
 #!SBATCH -p skylake-himem
 #SBATCH --qos short.q
-#SBATCH --mem=9000
+#SBATCH --mem=5000
 
 # CHANGE ME IF YOU WANT TO BE EMAILED
 #SBATCH --mail-user=ccn30

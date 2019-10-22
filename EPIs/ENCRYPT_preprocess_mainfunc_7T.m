@@ -181,8 +181,9 @@ switch step
             end
             flags = struct;
             %flags.which = 0;
-            flags.which = [2 1];
-            flags.prefix = 'r';
+            %flags.which = [2 1];
+             flags.which = 1;
+	     flags.prefix = 'r';
             try
                 spm_reslice(filestorealign,flags)
                 resliceworkedcorrectly(crun) = 1;

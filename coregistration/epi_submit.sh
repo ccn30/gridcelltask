@@ -84,16 +84,15 @@ export I_MPI_PIN_ORDER=scatter # Adjacent domains have minimal sharing of caches
 #! 3. I_MPI_PIN_PROCESSOR_LIST is ignored if I_MPI_PIN_DOMAIN is set.
 #! 4. If MPI tasks perform better when sharing caches/sockets, try I_MPI_PIN_ORDER=compact.
 
-scriptdir=${1}
-pathstem=${2}
-subjID=${3}
+scriptdir=/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration
 
 #! Work directory (i.e. where the job will run):
-workdir="$scriptdir/slurmoutputs"
+workdir="$scriptdir/epislurmoutputs"
 
 cd ${scriptdir}
-application="${scriptdir}/coreg_all.sh ${pathstem} ${subjID}"
+#!application="${scriptdir}/coreg_all.sh ${pathstem} ${subjID}"
 #!application="${scriptdir}/ants_test.sh ${pathstem} ${subjID}"
+application="${scriptdir}/epi_coreg_all.sh"
 CMD="${application}"
 
 ###############################################################

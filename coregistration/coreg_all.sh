@@ -45,7 +45,7 @@
 	#!do
 
 		echo "EXECUTING epi to T1 coregistration for subject ${subject} run $this_run}"
-		epi=${imagedirpath}/meantopup_Run_1.nii
+		epi=${imagedirpath}/topup_Run_2_split0000.nii
 		T1=${T1path}/reorientn4mag0000_PSIR_skulled_std.nii
 		echo "EPI: " $epi
 		echo "T1: " $T1
@@ -88,7 +88,6 @@
 		echo "EXECUTING T2 mask to EPI space transformation for subject ${subject} run ${this_run}"
 		
 		# use same EPI as for T1 to EPI coregistration
-		epi=${imagedirpath}/meantopup_Run_1.nii
 		
 		# for left MTL
 		antsApplyTransforms -d 3 \

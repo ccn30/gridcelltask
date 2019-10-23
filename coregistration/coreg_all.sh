@@ -145,7 +145,7 @@
 		
 		cd ${maskregdir}
 		
-		if [ -f "LeftECmaskWarped_affine.nii.gz" ] && [ -f "RightECmaskWarped_SyN.nii.gz" ]; then
+		if [ -f "LeftECmaskWarped_affine.nii" ] && [ -f "RightECmaskWarped_SyN.nii" ]; then
 			echo ">> EC MASKS SUCCESSFULLY TRANSFORMED TO EPI SPACE: subject ${subject}"
 		else
 			echo ">> EC MASKS FAILED TRANSFORMATION: subject ${subject}"

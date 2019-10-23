@@ -1,4 +1,4 @@
-Wed Oct 23 15:24:13 BST 2019
+Wed Oct 23 16:02:29 BST 2019
 working on file 1
 The workspace going into this is /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/ENCRYPT_preprocess_mainfunc_7T.m /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/ENCRYPT_subjects_parameters.m 1 HPHI raw realign
 
@@ -35,7 +35,7 @@ rawpathstem =
 >> 
 preprocessedpathstem =
 
-    '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/spmtest'
+    '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images'
 
 >> >> >> Submitting the following command: ENCRYPT_preprocess_mainfunc_7T('realign','raw','HPHI',preprocessedpathstem,rawpathstem,subjects,1,fullid,basedir,blocksin,blocksin_folders,blocksout,minvols,dates,group)
 >> 
@@ -44,27 +44,27 @@ Current subject = 27734...
 
 
 
-Moving n4mag0000_PSIR_skulled_std.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/spmtest/27734/structural.nii...
+Moving n4mag0000_PSIR_skulled_std.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/27734/structural.nii...
 
 
 
-Moving run1.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/spmtest/27734/Run_1.nii...
+Moving run1.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/27734/Run_1.nii...
 
 
 
-Moving run2.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/spmtest/27734/Run_2.nii...
+Moving run2.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/27734/Run_2.nii...
 
 
 
-Moving run3.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/spmtest/27734/Run_3.nii...
+Moving run3.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/27734/Run_3.nii...
 
 
 
-Moving pos_topup.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/spmtest/27734/Pos_topup.nii...
+Moving pos_topup.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/27734/Pos_topup.nii...
 
 
 
-Moving neg_topup.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/spmtest/27734/Neg_topup.nii...
+Moving neg_topup.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/27734/Neg_topup.nii...
 
 
 
@@ -76,7 +76,7 @@ Raw data copied to preprocessing directory! Now working on it.
 (___/(__)  (_/\/\_)  SPM12 - http://www.fil.ion.ucl.ac.uk/spm/
 
 
-SPM12: v6906                                       15:25:00 - 23/10/2019
+SPM12: v6906                                       16:02:48 - 23/10/2019
 ========================================================================
 Initialising SPM                        :                   ........done
 
@@ -84,11 +84,11 @@ SPM present working directory:
 	/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/slurmoutputs
 running realign
 
-SPM12: spm_realign (v6070)                         15:25:31 - 23/10/2019
+SPM12: spm_realign (v6070)                         16:03:16 - 23/10/2019
 ========================================================================
 Printing 'Graphics' figure to:
   /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/slurmoutputs/spm_2019Oct23.ps
-Completed                               :          15:29:51 - 23/10/2019
+Completed                               :          16:07:46 - 23/10/2019
 
 ans =
 

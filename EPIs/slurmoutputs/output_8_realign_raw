@@ -1,0 +1,100 @@
+Wed Oct 23 16:02:30 BST 2019
+working on file 8
+The workspace going into this is /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/ENCRYPT_preprocess_mainfunc_7T.m /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/ENCRYPT_subjects_parameters.m 8 HPHI raw realign
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2017 The MathWorks, Inc.
+                   R2017b (9.3.0.713579) 64-bit (glnxa64)
+                             September 14, 2017
+
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+    ----------------------------------------------------
+	Your MATLAB license will expire in 7 days.
+	Please contact your system administrator or
+	MathWorks to renew this license.
+    ----------------------------------------------------
+>> >> >> Path is /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs
+>> Function is ENCRYPT_preprocess_mainfunc_7T
+>> Subject definition function is /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/ENCRYPT_subjects_parameters.m
+>> Environment is HPHI
+>> Previous step is raw
+>> This step is realign
+>> 
+do_definition_func =
+
+    '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/ENCRYPT_subjects_parameters.m'
+
+>> >> >> >> >> 
+rawpathstem =
+
+    '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images'
+
+>> 
+preprocessedpathstem =
+
+    '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images'
+
+>> >> >> Submitting the following command: ENCRYPT_preprocess_mainfunc_7T('realign','raw','HPHI',preprocessedpathstem,rawpathstem,subjects,8,fullid,basedir,blocksin,blocksin_folders,blocksout,minvols,dates,group)
+>> 
+
+Current subject = 29336...
+
+
+
+Moving n4mag0000_PSIR_skulled_std.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29336/structural.nii...
+
+
+
+Moving run1.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29336/Run_1.nii...
+
+
+
+Moving run2.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29336/Run_2.nii...
+
+
+
+Moving run3.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29336/Run_3.nii...
+
+
+
+Moving pos_topup.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29336/Pos_topup.nii...
+
+
+
+Moving neg_topup.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29336/Neg_topup.nii...
+
+
+
+Raw data copied to preprocessing directory! Now working on it.
+
+ ___  ____  __  __                                            
+/ __)(  _ \(  \/  )                                           
+\__ \ )___/ )    (   Statistical Parametric Mapping           
+(___/(__)  (_/\/\_)  SPM12 - http://www.fil.ion.ucl.ac.uk/spm/
+
+
+SPM12: v6906                                       16:02:56 - 23/10/2019
+========================================================================
+Initialising SPM                        :                   ........done
+
+SPM present working directory:
+	/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/slurmoutputs
+running realign
+
+SPM12: spm_realign (v6070)                         16:13:27 - 23/10/2019
+========================================================================
+Printing 'Graphics' figure to:
+  /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/slurmoutputs/spm_2019Oct23.ps
+Completed                               :          16:17:45 - 23/10/2019
+
+ans =
+
+  1x3 cell array
+
+    {238x1 struct}    {238x1 struct}    {238x1 struct}
+
+>> Bye for now...
+

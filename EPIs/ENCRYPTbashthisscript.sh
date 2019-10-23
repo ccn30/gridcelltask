@@ -11,7 +11,7 @@ subjs_def=${myscriptdir}/ENCRYPT_subjects_parameters.m
 #subjects_to_process=($(seq 1 1 10))
 subjects_to_process=1
 
-prevstep=reslice
+prevstep=raw
 step=realign
 
 jobIDs=""
@@ -38,8 +38,8 @@ fi
 done
 
 jobIDs=""
-prevstep=
-step=
+prevstep=realign
+step=topup
 for this_subj in ${subjects_to_process[@]}
 do 
 this_job_id=$(sbatch --parsable ${submit} ${prepare} ${func} ${subjs_def} ${this_subj} ${clusterid} ${prevstep} ${step})

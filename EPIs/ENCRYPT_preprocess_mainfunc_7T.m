@@ -180,10 +180,9 @@ switch step
                 filestorealign{i} = spm_select('ExtFPList',outpath,['^' prevStep blocksout{crun}{theseepis(i)} '.nii'],1:minvols(crun));
             end
             flags = struct;
-            %flags.which = 0;
+            flags.which = 0;
             %flags.which = [2 1];
-             flags.which = 1;
-	     flags.prefix = 'r';
+            %flags.which = 1;
             try
                 spm_reslice(filestorealign,flags)
                 resliceworkedcorrectly(crun) = 1;

@@ -40,7 +40,7 @@ addpath(pa2)
 eval(af2)
 addpath(pwd)
 rawpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images'
-preprocessedpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images'
+preprocessedpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/spmtest'
 end
 dofunc=sprintf('%s(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',af,'''${Step}''','''${prevStep}''','''${clusterid}''','preprocessedpathstem','rawpathstem','subjects','${this_subj}','fullid','basedir','blocksin','blocksin_folders','blocksout','minvols','dates','group');
 disp(['Submitting the following command: ' dofunc])

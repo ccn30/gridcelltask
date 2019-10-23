@@ -44,8 +44,8 @@
 	#!for this_run in ${runs_to_process[@]}
 	#!do
 
-		echo "EXECUTING epi to T1 coregistration for subject ${subject} run $this_run}"
-		epi=${imagedirpath}/topup_Run_2_split0000.nii
+		echo "EXECUTING epi to T1 coregistration for subject ${subject} using:"
+		epi=${imagedirpath}/topup_Run_1_split0000.nii
 		T1=${T1path}/reorientn4mag0000_PSIR_skulled_std.nii
 		echo "EPI: " $epi
 		echo "T1: " $T1
@@ -77,7 +77,7 @@
 		
 
 	#### ---------- COREGISTER ASHS OUTPUT TO EPIS AND MAKE EC MASKS --------- ####
-	# do affine mask transformation as well as diffeomorphic?
+	# do affine mask transformation as well as diffeomorphic
 		
 		if [ -f "${maskregdir}" ]; then
 			echo "Epi Mask directory exists"
@@ -85,15 +85,16 @@
 			mkdir ${maskregdir}
 			echo "Making EPI Mask directory"
 		fi
-		echo "EXECUTING T2 mask to EPI space transformation for subject ${subject} run ${this_run}"
+		echo "EXECUTING T2 mask to EPI space transformation for subject ${subject}"
 		
 		# use same EPI as for T1 to EPI coregistration
 		
-		# for left MTL
+		#----- DIFFEOMORPHIC SYN -----#
+		#left MTL
 		antsApplyTransforms -d 3 \
 				-i ${segdirpath}/ASHS_corinputs/final/${subject}_3_left_lfseg_corr_nogray.nii.gz \
 				-r ${epi} \
-				-o ${maskregdir}/LeftMTLmaskWarped_MultiLabel.nii.gz \
+				-o ${maskregdir}/LeftMTLmaskWarped_SyN.nii.gz \
 				-n MultiLabel \
 				-t T1toEPI_ANTS_1Warp.nii.gz \
 				-t T1toEPI_ANTS_0GenericAffine.mat \
@@ -101,28 +102,53 @@
 				-t [T1toT2_ANTS_0GenericAffine.mat,1] \
 				-v
 
-		# for right MTL
+		#right MTL
 		antsApplyTransforms -d 3 \
 				-i ${segdirpath}/ASHS_corinputs/final/${subject}_3_right_lfseg_corr_nogray.nii.gz \
 				-r ${epi} \
-				-o ${maskregdir}/RightMTLmaskWarped_MultiLabel.nii.gz \
+				-o ${maskregdir}/RightMTLmaskWarped_SyN.nii.gz \
 				-n MultiLabel \
 				-t T1toEPI_ANTS_1Warp.nii.gz \
 				-t T1toEPI_ANTS_0GenericAffine.mat \
 				-t T1toT2_ANTS_1InverseWarp.nii.gz \
 				-t [T1toT2_ANTS_0GenericAffine.mat,1] \
 				-v
+	
+		#----- AFFINE -----#
+		#left MTL
+		antsApplyTransforms -d 3 \
+				-i ${segdirpath}/ASHS_corinputs/final/${subject}_3_left_lfseg_corr_nogray.nii.gz \
+				-r ${epi} \
+				-o ${maskregdir}/LeftMTLmaskWarped_affine.nii.gz \
+				-n MultiLabel \
+				-t T1toEPI_ANTS_0GenericAffine.mat \
+				-t [T1toT2_ANTS_0GenericAffine.mat,1] \
+				-v
 
+		#right MTL
+		antsApplyTransforms -d 3 \
+				-i ${segdirpath}/ASHS_corinputs/final/${subject}_3_right_lfseg_corr_nogray.nii.gz \
+				-r ${epi} \
+				-o ${maskregdir}/RightMTLmaskWarped_affine.nii.gz \
+				-n MultiLabel \
+				-t T1toEPI_ANTS_0GenericAffine.mat \
+				-t [T1toT2_ANTS_0GenericAffine.mat,1] \
+				-v
+		
 		# create EC only masks
-		fslmaths ${maskregdir}/LeftMTLmaskWarped_MultiLabel.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/LeftECmaskWarped_MultiLabel.nii.gz -odt char
-		fslmaths ${maskregdir}/RightMTLmaskWarped_MultiLabel.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/RightECmaskWarped_MultiLabel.nii.gz -odt char
+		# diffeomorphic
+		fslmaths ${maskregdir}/LeftMTLmaskWarped_SyN.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/LeftECmaskWarped_SyN.nii.gz -odt char
+		fslmaths ${maskregdir}/RightMTLmaskWarped_SyN.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/RightECmaskWarped_SyN.nii.gz -odt char
+		# affine
+		fslmaths ${maskregdir}/LeftMTLmaskWarped_affine.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/LeftECmaskWarped_affine.nii.gz -odt char
+		fslmaths ${maskregdir}/RightMTLmaskWarped_affine.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/RightECmaskWarped_affine.nii.gz -odt char
 		
 		cd ${maskregdir}
 		
-		if [ -f "LeftECmaskWarped_MultiLabel.nii.gz" ] && [ -f "RightECmaskWarped_MultiLabel.nii.gz" ]; then
-			echo ">> EC MASKS SUCCESSFULLY TRANSFORMED TO EPI SPACE: subject ${subject}/run ${this_run}"
+		if [ -f "LeftECmaskWarped_affine.nii.gz" ] && [ -f "RightECmaskWarped_SyN.nii.gz" ]; then
+			echo ">> EC MASKS SUCCESSFULLY TRANSFORMED TO EPI SPACE: subject ${subject}"
 		else
-			echo ">> EC MASKS FAILED TRANSFORMATION: subject ${subject}/run ${this_run}"
+			echo ">> EC MASKS FAILED TRANSFORMATION: subject ${subject}"
 		fi
 		
 		cd ${pathstem}

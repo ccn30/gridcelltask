@@ -10,7 +10,7 @@
 
 #! sbatch directives begin here ###############################
 #! Name of the job:
-#SBATCH -J ANTS_coreg
+#SBATCH -J ANTS
 #! Which project should jobs run under:
 #SBATCH -A hphi
 #! How many whole nodes should be allocated?
@@ -25,7 +25,10 @@
 #SBATCH --mail-type=FAIL
 #!SBATCH -p skylake-himem
 #SBATCH --qos short.q
-#SBATCH --mem=5000
+#SBATCH --mem=9000
+
+sleep 1h
+exit 0
 
 # CHANGE ME IF YOU WANT TO BE EMAILED
 #SBATCH --mail-user=ccn30

@@ -21,4 +21,4 @@ Running DenoiseImage in:  /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/
 
 Running for 3-dimensional images.
 
-*
+*********10*********20*********30*********40*********50*********60*******slurmstepd: error: *** JOB 4089906 ON wbic-cs-40 CANCELLED AT 2019-10-20T23:35:37 DUE TO TIME LIMIT ***

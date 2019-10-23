@@ -1,0 +1,93 @@
+Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs.
+
+JobID: 4100534
+======
+Time: Wed Oct 23 11:52:34 BST 2019
+Running on master node: wbic-csm-6
+Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs
+
+Nodes allocated:
+================
+wbic-csm-6
+
+numtasks=1, numnodes=1, mpi_tasks_per_node=1 (OMP_NUM_THREADS=1)
+
+Executing command:
+==================
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/coreg_all.sh /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot 28061/20190911_U-ID46160
+
+28061
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28061
+mkdir: cannot create directory ‘/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28061/coregistration’: File exists
+Making coregistration directory...
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28061/coregistration
+EXECUTING t2 to t1 coreg:  28061
+Moving image '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/28061/20190911_U-ID46160/mp2rage/denoiseRn4mag0000_PSIR_skulled_std.nii' does not exist.  See usage: '/applications/ANTS/2.2.0/bin/antsRegistrationSyNQuick.sh -h 1'
+EXECUTING epi to T1 coregistration for subject 28061 using:
+EPI:  /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/28061/topup_Run_1_split0000.nii
+T1:  /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/28061/20190911_U-ID46160/mp2rage/denoiseRn4mag0000_PSIR_skulled_std.nii
+All_Command_lines_OK
+Using double precision for computations.
+ file /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/28061/20190911_U-ID46160/mp2rage/denoiseRn4mag0000_PSIR_skulled_std.nii does not exist . 
+Exception Object caught: 
+
+itk::ExceptionObject (0x404f5a0)
+Location: "unknown" 
+File: /home/smf34/scratch/ANTs/ANTs-2.2.0/build/ITKv4-install/include/ITK-4.11/itkCenteredTransformInitializer.hxx
+Line: 47
+Description: itk::ERROR: CenteredTransformInitializer(0x4051bb0): Moving Image has not been set
+
+
+>> EPI_REG FAIL: subject 28061/run 
+mkdir: cannot create directory ‘/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28061/epimasks’: File exists
+Making EPI Mask directory
+EXECUTING T2 mask to EPI space transformation for subject 28061
+Using double precision for computations.
+Input scalar image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28061/ASHS_corinputs/final/28061_3_left_lfseg_corr_nogray.nii.gz
+Reference image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/28061/topup_Run_1_split0000.nii
+=============================================================================
+The composite transform comprises the following transforms (in order): 
+  1. inverse of T1toT2_ANTS_0GenericAffine.mat (type = AffineTransform)
+  2. T1toT2_ANTS_1InverseWarp.nii.gz (type = DisplacementFieldTransform)
+  3. T1toEPI_ANTS_0GenericAffine.mat (type = AffineTransform)
+  4. T1toEPI_ANTS_1Warp.nii.gz (type = DisplacementFieldTransform)
+=============================================================================
+Default pixel value: 0
+Interpolation type: LabelImageGaussianInterpolateImageFunction
+Output warped image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28061/epimasks/LeftMTLmaskWarped_SyN.nii.gz
+Using double precision for computations.
+Input scalar image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28061/ASHS_corinputs/final/28061_3_right_lfseg_corr_nogray.nii.gz
+Reference image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/28061/topup_Run_1_split0000.nii
+=============================================================================
+The composite transform comprises the following transforms (in order): 
+  1. inverse of T1toT2_ANTS_0GenericAffine.mat (type = AffineTransform)
+  2. T1toT2_ANTS_1InverseWarp.nii.gz (type = DisplacementFieldTransform)
+  3. T1toEPI_ANTS_0GenericAffine.mat (type = AffineTransform)
+  4. T1toEPI_ANTS_1Warp.nii.gz (type = DisplacementFieldTransform)
+=============================================================================
+Default pixel value: 0
+Interpolation type: LabelImageGaussianInterpolateImageFunction
+Output warped image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28061/epimasks/RightMTLmaskWarped_SyN.nii.gz
+Using double precision for computations.
+Input scalar image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28061/ASHS_corinputs/final/28061_3_left_lfseg_corr_nogray.nii.gz
+Reference image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/28061/topup_Run_1_split0000.nii
+=============================================================================
+The composite transform comprises the following transforms (in order): 
+  1. inverse of T1toT2_ANTS_0GenericAffine.mat (type = AffineTransform)
+  2. T1toEPI_ANTS_0GenericAffine.mat (type = AffineTransform)
+=============================================================================
+Default pixel value: 0
+Interpolation type: LabelImageGaussianInterpolateImageFunction
+Output warped image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28061/epimasks/LeftMTLmaskWarped_affine.nii.gz
+Using double precision for computations.
+Input scalar image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28061/ASHS_corinputs/final/28061_3_right_lfseg_corr_nogray.nii.gz
+Reference image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/28061/topup_Run_1_split0000.nii
+=============================================================================
+The composite transform comprises the following transforms (in order): 
+  1. inverse of T1toT2_ANTS_0GenericAffine.mat (type = AffineTransform)
+  2. T1toEPI_ANTS_0GenericAffine.mat (type = AffineTransform)
+=============================================================================
+Default pixel value: 0
+Interpolation type: LabelImageGaussianInterpolateImageFunction
+Output warped image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28061/epimasks/RightMTLmaskWarped_affine.nii.gz
+>> EC MASKS SUCCESSFULLY TRANSFORMED TO EPI SPACE: subject 28061

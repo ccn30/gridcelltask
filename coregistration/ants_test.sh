@@ -1,10 +1,13 @@
 #!/bin/bash
 module unload fsl
 module load fsl/5.0.10
-
-	pathstem=${1}
-	subjID=${2}
+module load ANTS/2.2.0
+	#!pathstem=${1}
+	#!subjID=${2}
 	
+	subjID=27734/20190902_U-ID46027
+	pathstem=/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot	
+
 	subj="$(cut -d'/' -f1 <<<"$subjID")"
 	echo $subj
 	echo $pathstem
@@ -26,8 +29,9 @@ module load fsl/5.0.10
 	## run N4BiasFieldCorrection (now present in ASHS scripts) - old N4 in 27734 mp2rage/manualtestfiles
 
 	#!N4BiasFieldCorrection -i ${T2} -o ${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/N4rSeries_033_Highresolution_TSE_PAT2_100_c32.nii
-	N4rT2=${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/N4reorientSeries_033_Highresolution_TSE_PAT2_100_c32.nii
-	#!echo "Ran N4BiasFieldCorrection"
+	
+N4T2=${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/N4Series_033_Highresolution_TSE_PAT2_100_c32.nii
+
 	
 
 	## COREGISTRATION BELOW:
@@ -102,13 +106,22 @@ module load fsl/5.0.10
 
 	## 4 now try #1 again with new epi to T1 coreg output (does it change difference between affine only reg above?)
 	## 5 try #1 again with new t2 2 t1 coreg output
+#!	antsApplyTransforms -d 3 \
+#!				-i ${segdirpath}/final/${subj}_left_lfseg_corr_nogray.nii.gz \
+#!				-r ${imagedirpath}/meantopup_Run_1.nii \
+#!				-o t12epimasks_syn_multilab_newt1newepi.nii.gz \
+#!				-n MultiLabel \
+#!				-t T12EPI_fullANTS_1Warp.nii.gz \
+#!				-t T12EPI_fullANTS_0GenericAffine.mat \
+#!				-t t12t2_ANTSdenoise_1InverseWarp.nii.gz \
+#!				-t [t12t2_ANTSdenoise_0GenericAffine.mat,1] \
+#!				-v
+
+ # try applytransform of affine only transform for T2 to T1 (inverse)
 	antsApplyTransforms -d 3 \
-				-i ${segdirpath}/final/${subj}_left_lfseg_corr_nogray.nii.gz \
-				-r ${imagedirpath}/meantopup_Run_1.nii \
-				-o t12epimasks_syn_multilab_newt1newepi.nii.gz \
-				-n MultiLabel \
-				-t T12EPI_fullANTS_1Warp.nii.gz \
-				-t T12EPI_fullANTS_0GenericAffine.mat \
-				-t t12t2_ANTSdenoise_1InverseWarp.nii.gz \
-				-t [t12t2_ANTSdenoise_0GenericAffine.mat,1] \
+				-i ${N4T2} \
+				-r ${T1path}/reorientn4mag0000_PSIR_skulled_std.nii \
+				-o T2toT1Warped_affine.nii.gz \
+				-n Linear \
+				-t [T1toT2_ANTS_0GenericAffine.mat,1] \
 				-v

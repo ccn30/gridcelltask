@@ -38,7 +38,7 @@ pwd
 
 # whole brain didn't work, now trying skullstripped (overwriting output)
 antsApplyTransforms -d 3 \
-			-i ${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii \
+			-i ${T1path}/denoiseRn4mag0000_PSIR_skulled_std_struc_brain.nii \
 			-r ${epi} \
 			-o T1toEPIWarped_affine.nii.gz \
 			-n Linear \

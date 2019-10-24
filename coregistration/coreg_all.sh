@@ -90,6 +90,8 @@
 		#!echo "EXECUTING T2 mask to EPI space transformation for subject ${subject}"
 		
 		# use same EPI as for T1 to EPI coregistration
+
+#####****************** REWRITE to include ATNS affine t2-t1 only and either epi_reg converted, or ITK snap**********************###
 		
 		#----- DIFFEOMORPHIC SYN -----#
 		#left MTL

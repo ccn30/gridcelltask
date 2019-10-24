@@ -1,0 +1,26 @@
+Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs.
+
+JobID: 4102953
+======
+Time: Thu Oct 24 15:51:44 BST 2019
+Running on master node: wbic-csm-5
+Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs
+
+Nodes allocated:
+================
+wbic-csm-5
+
+numtasks=1, numnodes=1, mpi_tasks_per_node=1 (OMP_NUM_THREADS=1)
+
+Executing command:
+==================
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/coreg_all_FSL.sh /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot 29383/20190912_U-ID46168
+
+
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/29383/coregistration/FSLtests
+EXECUTING epi_reg for subject 29383
+Running FAST segmentation
+FLIRT pre-alignment
+Running BBR
+1.003104 0.823680 -0.343518 -0.451162 0.000000 0.386016 0.922489 0.002355 0.000000 0.415383 -0.176095 0.892439 0.000000 -123.287784 70.327552 130.630807 1.000000 
+>> EPI_REG OK: subject /run 

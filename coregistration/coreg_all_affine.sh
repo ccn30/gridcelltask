@@ -26,22 +26,22 @@ pwd
 ##----TRANSFORM T2 to T1 SPACE----##
 ## to check affine only transformation
 
-antsApplyTransforms -d 3 \
-			-i ${N4T2} \
-			-r ${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii \
-			-o T2toT1Warped_affine.nii.gz \
-			-n Linear \
-			-t [T1toT2_ANTS_0GenericAffine.mat,1] \
-			-v
+#!antsApplyTransforms -d 3 \
+#!			-i ${N4T2} \
+#!			-r ${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii \
+#!			-o T2toT1Warped_affine.nii.gz \
+#!			-n Linear \
+#!			-t [T1toT2_ANTS_0GenericAffine.mat,1] \
+#!			-v
 
 ##----TRANSFORM T1 to EPI SPACE----##
 
-# whole brain
+# whole brain didn't work, now trying skullstripped (overwriting output)
 antsApplyTransforms -d 3 \
 			-i ${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii \
 			-r ${epi} \
 			-o T1toEPIWarped_affine.nii.gz \
 			-n Linear \
-			-t T1toEPI_ANTS_0GenericAffine.mat \
+			-t T1toEPI_ssANTS_0GenericAffine.mat \
 			-v
 

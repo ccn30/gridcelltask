@@ -1,0 +1,30 @@
+Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs.
+
+JobID: 4102503
+======
+Time: Thu Oct 24 12:37:59 BST 2019
+Running on master node: wbic-csm-6
+Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs
+
+Nodes allocated:
+================
+wbic-csm-6
+
+numtasks=1, numnodes=1, mpi_tasks_per_node=1 (OMP_NUM_THREADS=1)
+
+Executing command:
+==================
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/coreg_all_affine.sh /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot 28428/20190903_U-ID46074
+
+28428
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/28428/coregistration
+Using double precision for computations.
+Input scalar image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/28428/20190903_U-ID46074/mp2rage/denoiseRn4mag0000_PSIR_skulled_std.nii
+Reference image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/28428/topup_Run_1_split0000.nii
+=============================================================================
+The composite transform comprises the following transforms (in order): 
+  1. T1toEPI_ssANTS_0GenericAffine.mat (type = AffineTransform)
+=============================================================================
+Default pixel value: 0
+Interpolation type: LinearInterpolateImageFunction
+Output warped image: T1toEPIWarped_affine.nii.gz

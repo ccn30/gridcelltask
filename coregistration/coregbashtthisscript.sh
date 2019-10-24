@@ -15,6 +15,6 @@ cd slurmoutputs
 for subjID in `cat $mysubjs`
 do
 	echo "ANTS coregistration of:	$subjID"
-	#!sbatch ${submit} ${scriptdir} ${pathstem} ${subjID}
-	sbatch ${submit2} ${scriptdir} ${pathstem} ${subjID}
+	sbatch ${submit} ${scriptdir} ${pathstem} ${subjID}
+	#!sbatch ${submit2} ${scriptdir} ${pathstem} ${subjID}
 done	

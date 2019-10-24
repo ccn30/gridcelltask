@@ -12,8 +12,8 @@
 	# set subject-wise paths
 	imagedirpath=${pathstem}/preprocessed_data/images/${subject}
 	T1path=${pathstem}/raw_data/images/${subjID}/mp2rage
-	#!N4T2=${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/N4Series_033_Highresolution_TSE_PAT2_100_c32.nii
-	N4T2=${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/N4reorientSeries_033_Highresolution_TSE_PAT2_100_c32.nii	
+	N4T2=${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/N4Series_033_Highresolution_TSE_PAT2_100_c32.nii
+	#!N4T2=${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/N4reorientSeries_033_Highresolution_TSE_PAT2_100_c32.nii	
 	segdirpath=${pathstem}/preprocessed_data/segmentation/${subject}
 	coregdir=${segdirpath}/coregistration
 	maskregdir=${segdirpath}/epimasks
@@ -36,8 +36,8 @@
 	cd ${coregdir}
 	pwd
 	
-	#!echo "EXECUTING t2 to t1 coreg: " $subject	
-	#!$antsroot/antsRegistrationSyNQuick.sh -d 3 -f ${N4T2} -m ${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii -o ${coregdir}/T1toT2_ANTS_
+	echo "EXECUTING t2 to t1 coreg: " $subject	
+	$antsroot/antsRegistrationSyNQuick.sh -d 3 -f ${N4T2} -m ${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii -o ${coregdir}/T1toT2_ANTS_
 
 	#### ---------- COREGISTER EPIS TO T1 --------- ####
 	

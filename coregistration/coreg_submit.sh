@@ -92,7 +92,7 @@ subjID=${3}
 workdir="$scriptdir/slurmoutputs"
 
 cd ${scriptdir}
-application="${scriptdir}/coreg_all_affine.sh ${pathstem} ${subjID}"
+application="${scriptdir}/coreg_all.sh ${pathstem} ${subjID}"
 #!application="${scriptdir}/ants_test.sh ${pathstem} ${subjID}"
 CMD="${application}"
 

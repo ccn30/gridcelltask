@@ -18,8 +18,8 @@
 	coregdir=${segdirpath}/coregistration
 	maskregdir=${segdirpath}/epimasks
 
-	#runs_to_process=(1 2 3) - combine means after coregistering EPIs together?
-	runs_to_process=1
+	#!runs_to_process=(1 2 3) - combine means after coregistering EPIs together?
+	#!runs_to_process=1
 
 	cd ${segdirpath}
 	pwd
@@ -36,24 +36,25 @@
 	cd ${coregdir}
 	pwd
 	
-	echo "EXECUTING t2 to t1 coreg: " $subject	
-	$antsroot/antsRegistrationSyNQuick.sh -d 3 -f ${N4T2} -m ${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii -o ${coregdir}/T1toT2_ANTS_
+	#!echo "EXECUTING t2 to t1 coreg: " $subject	
+	#!$antsroot/antsRegistrationSyNQuick.sh -d 3 -f ${N4T2} -m ${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii -o ${coregdir}/T1toT2_ANTS_
 
 	#### ---------- COREGISTER EPIS TO T1 --------- ####
 	
 	# will need to remove for loop if making average EPI across all runs and coregistering 4D time series to it
 	#!for this_run in ${runs_to_process[@]}
 	#!do
-
+		
+		# run second time with skullstripped T1 instead of whole brain
 		echo "EXECUTING epi to T1 coregistration for subject ${subject} using:"
 		epi=${imagedirpath}/topup_Run_1_split0000.nii
-		T1=${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii
+		T1=${T1path}/denoiseRn4mag0000_PSIR_skulled_std_struc_brain.nii
 		echo "EPI: " $epi
 		echo "T1: " $T1
 		antsRegistration \
 			--dimensionality 3 \
 			--float 0 \
-			--output [T1toEPI_ANTS_,T1toEPI_ANTS_Warped.nii.gz,T1toEPI_ANTS_InverseWarped.nii.gz] \
+			--output [T1toEPI_ssANTS_,T1toEPI_ssANTS_Warped.nii.gz,T1toEPI_ssANTS_InverseWarped.nii.gz] \
 			--interpolation Linear --winsorize-image-intensities [0.005,0.995] \
 			--use-histogram-matching 0 \
 			--initial-moving-transform [${epi},${T1},1] \
@@ -92,7 +93,7 @@
 		
 		#----- DIFFEOMORPHIC SYN -----#
 		#left MTL
-		antsApplyTransforms -d 3 \
+		#!antsApplyTransforms -d 3 \
 				-i ${segdirpath}/ASHS_corinputs/final/${subject}_3_left_lfseg_corr_nogray.nii.gz \
 				-r ${epi} \
 				-o ${maskregdir}/LeftMTLmaskWarped_SyN.nii.gz \
@@ -104,7 +105,7 @@
 				-v
 
 		#right MTL
-		antsApplyTransforms -d 3 \
+		#!antsApplyTransforms -d 3 \
 				-i ${segdirpath}/ASHS_corinputs/final/${subject}_3_right_lfseg_corr_nogray.nii.gz \
 				-r ${epi} \
 				-o ${maskregdir}/RightMTLmaskWarped_SyN.nii.gz \
@@ -117,7 +118,7 @@
 	
 		#----- AFFINE -----#
 		#left MTL
-		antsApplyTransforms -d 3 \
+		#!antsApplyTransforms -d 3 \
 				-i ${segdirpath}/ASHS_corinputs/final/${subject}_3_left_lfseg_corr_nogray.nii.gz \
 				-r ${epi} \
 				-o ${maskregdir}/LeftMTLmaskWarped_affine.nii.gz \
@@ -127,7 +128,7 @@
 				-v
 
 		#right MTL
-		antsApplyTransforms -d 3 \
+		#!antsApplyTransforms -d 3 \
 				-i ${segdirpath}/ASHS_corinputs/final/${subject}_3_right_lfseg_corr_nogray.nii.gz \
 				-r ${epi} \
 				-o ${maskregdir}/RightMTLmaskWarped_affine.nii.gz \
@@ -138,11 +139,11 @@
 		
 		# create EC only masks
 		# diffeomorphic
-		fslmaths ${maskregdir}/LeftMTLmaskWarped_SyN.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/LeftECmaskWarped_SyN.nii.gz -odt char
-		fslmaths ${maskregdir}/RightMTLmaskWarped_SyN.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/RightECmaskWarped_SyN.nii.gz -odt char
+		#!fslmaths ${maskregdir}/LeftMTLmaskWarped_SyN.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/LeftECmaskWarped_SyN.nii.gz -odt char
+		#!fslmaths ${maskregdir}/RightMTLmaskWarped_SyN.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/RightECmaskWarped_SyN.nii.gz -odt char
 		# affine
-		fslmaths ${maskregdir}/LeftMTLmaskWarped_affine.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/LeftECmaskWarped_affine.nii.gz -odt char
-		fslmaths ${maskregdir}/RightMTLmaskWarped_affine.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/RightECmaskWarped_affine.nii.gz -odt char
+		#!fslmaths ${maskregdir}/LeftMTLmaskWarped_affine.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/LeftECmaskWarped_affine.nii.gz -odt char
+		#!fslmaths ${maskregdir}/RightMTLmaskWarped_affine.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/RightECmaskWarped_affine.nii.gz -odt char
 		
 		cd ${maskregdir}
 		

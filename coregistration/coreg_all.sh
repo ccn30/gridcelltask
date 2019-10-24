@@ -87,7 +87,7 @@
 			mkdir ${maskregdir}
 			echo "Making EPI Mask directory"
 		fi
-		echo "EXECUTING T2 mask to EPI space transformation for subject ${subject}"
+		#!echo "EXECUTING T2 mask to EPI space transformation for subject ${subject}"
 		
 		# use same EPI as for T1 to EPI coregistration
 		
@@ -147,11 +147,11 @@
 		
 		cd ${maskregdir}
 		
-		if [ -f "LeftECmaskWarped_affine.nii" ] && [ -f "RightECmaskWarped_SyN.nii" ]; then
-			echo ">> EC MASKS SUCCESSFULLY TRANSFORMED TO EPI SPACE: subject ${subject}"
-		else
-			echo ">> EC MASKS FAILED TRANSFORMATION: subject ${subject}"
-		fi
+		#!if [ -f "LeftECmaskWarped_affine.nii" ] && [ -f "RightECmaskWarped_SyN.nii" ]; then
+			#!echo ">> EC MASKS SUCCESSFULLY TRANSFORMED TO EPI SPACE: subject ${subject}"
+		#!else
+			#!echo ">> EC MASKS FAILED TRANSFORMATION: subject ${subject}"
+		#!fi
 		
 		cd ${pathstem}
 

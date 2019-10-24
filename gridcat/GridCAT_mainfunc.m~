@@ -43,17 +43,18 @@ for subj = 1 %1:length(subjectvec)
     for run = 1:3 %1:length(runs)
         
         % specify functional scans
+        cfg.rawData.run(run).functionalScans = {
         for scan = 1:nScans
-            cfg.rawData.run(run).functionalScans(scan,1) = {[preprocesspathstem '/images/' subjectvec{subj} '/rtopup_Run_' num2str(run) '.nii,' num2str(scan)]};
+            [preprocesspathstem '/images/' subjectvec{subj} '/rtopup_Run_' num2str(run) '.nii,' num2str(scan)]};
         end
         
         % specify event-table
         cfg.rawData.run(run).eventTable_file = [taskpathstem '/' subjectvec{subj} '/' runs{run} '/eventTable_movemenEventData.txt'] ;
         
         % specify additional regressors file - need to combine rp.txt with phys regressors
-        if strcmp(regressor_flag,'phys') == 1
+        if strcmp(regressor_flag,'phys')
             cfg.rawData.run(run).additionalRegressors_file = {[preprocesspathstem '/regressors/' subjectvec{subj} '/Run' num2str(run) '/Physio_regressors/multiple_regressors.txt']};
-        elseif strcmp(regressor_flag,'move') == 1
+        elseif strcmp(regressor_flag,'move')
             cfg.rawData.run(run).additionalRegressors_file = {[preprocesspathstem '/images/' subjectvec{subj} '/rp_topup_Run_' num2str(run) '.txt']};
         end
         

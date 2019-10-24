@@ -39,9 +39,9 @@ antsApplyTransforms -d 3 \
 # whole brain
 antsApplyTransforms -d 3 \
 			-i ${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii \
-			-r  \
+			-r ${epi} \
 			-o T1toEPIWarped_affine.nii.gz \
 			-n Linear \
-			-t [T1toT2_ANTS_0GenericAffine.mat,1] \
+			-t T1toEPI_ANTS_0GenericAffine.mat \
 			-v
 

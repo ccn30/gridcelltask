@@ -5,7 +5,7 @@ pathstem=/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot
 scriptdir=${pathstem}/scripts/coregistration
 
 submit=${scriptdir}/coreg_submit.sh
-submit2=${scriptdir}/coreg_2_submit.sh
+#!submit2=${scriptdir}/coreg_2_submit.sh
 #!mysubjs=${pathstem}/master_subjsdeflist.txt
 #!subjID=27734/20190902_U-ID46027
 mysubjs=${pathstem}/mysubjs_deflist.txt

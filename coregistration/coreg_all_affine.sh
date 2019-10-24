@@ -6,7 +6,8 @@
 	## import variables from SLURM submission script
 	pathstem=${1}
 	subjID=${2}
-	
+	#!pathstem=/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot
+	#!subjID=28428/20190903_U-ID46074
 	subject="$(cut -d'/' -f1 <<<"$subjID")"
 	echo $subject
 	
@@ -26,22 +27,30 @@ pwd
 ##----TRANSFORM T2 to T1 SPACE----##
 ## to check affine only transformation
 
-#!antsApplyTransforms -d 3 \
-#!			-i ${N4T2} \
-#!			-r ${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii \
-#!			-o T2toT1Warped_affine.nii.gz \
-#!			-n Linear \
-#!			-t [T1toT2_ANTS_0GenericAffine.mat,1] \
-#!			-v
+antsApplyTransforms -d 3 \
+			-i ${N4T2} \
+			-r ${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii \
+			-o T2toT1Warped_affine.nii.gz \
+			-n Linear \
+			-t [T1toT2_ANTS_0GenericAffine.mat,1] \
+			-v
 
 ##----TRANSFORM T1 to EPI SPACE----##
 
 # whole brain didn't work, now trying skullstripped (overwriting output)
-antsApplyTransforms -d 3 \
-			-i ${T1path}/denoiseRn4mag0000_PSIR_skulled_std_struc_brain.nii \
-			-r ${epi} \
-			-o T1toEPIWarped_affine.nii.gz \
-			-n Linear \
-			-t T1toEPI_ssANTS_0GenericAffine.mat \
-			-v
+#!antsApplyTransforms -d 3 \
+#!			-i ${T1path}/denoiseRn4mag0000_PSIR_skulled_std_struc_brain.nii \
+#!			-r ${epi} \
+#!			-o T1toEPIWarped_affine.nii.gz \
+#!			-n Linear \
+#!			-t T1toEPI_ssANTS_0GenericAffine.mat \
+#!			-v
 
+##---TRY MANUAL ITKSNAP RIGID---#
+#!antsApplyTransforms -d 3 \
+#!			-i ${T1path}/denoiseRn4mag0000_PSIR_skulled_std_struc_brain.nii \
+#!			-r ${epi} \
+#!			-o T1toEPI_Warped_ITKmanual.nii.gz \
+#!			-n Linear \
+#!			-t [EPItoT1_ITK_manual.txt,1] \
+#!			-v

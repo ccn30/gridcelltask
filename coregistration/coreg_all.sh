@@ -117,40 +117,40 @@
 	
 		#----- AFFINE ITK and ANTS -----#
 		#left MTL
-		antsApplyTransforms -d 3 \
-				-i ${segdirpath}/ASHS_corinputs/final/${subject}_3_left_lfseg_corr_nogray.nii.gz \
-				-r ${epi} \
-				-o ${maskregdir}/LeftMTLmaskWarped_ITKaffine.nii.gz \
-				-n MultiLabel \
-				-t [EPItoT1_ITK_affine_crosscorr.txt,1] \
-				-t [T1toT2_ANTS_0GenericAffine.mat,1] \
-				-v
+#!		antsApplyTransforms -d 3 \
+#!				-i ${segdirpath}/ASHS_corinputs/final/${subject}_3_left_lfseg_corr_nogray.nii.gz \
+#!				-r ${epi} \
+#!				-o ${maskregdir}/LeftMTLmaskWarped_ITKaffine.nii.gz \
+#!				-n MultiLabel \
+#!				-t [EPItoT1_ITK_affine_crosscorr.txt,1] \
+#!				-t [T1toT2_ANTS_0GenericAffine.mat,1] \
+#!				-v
 
 		#right MTL
-		antsApplyTransforms -d 3 \
-				-i ${segdirpath}/ASHS_corinputs/final/${subject}_3_right_lfseg_corr_nogray.nii.gz \
-				-r ${epi} \
-				-o ${maskregdir}/RightMTLmaskWarped_ITKaffine.nii.gz \
-				-n MultiLabel \
-				-t [EPItoT1_ITK_affine_crosscorr.txt,1] \
-				-t [T1toT2_ANTS_0GenericAffine.mat,1] \
-				-v
+#!		antsApplyTransforms -d 3 \
+#!				-i ${segdirpath}/ASHS_corinputs/final/${subject}_3_right_lfseg_corr_nogray.nii.gz \
+#!				-r ${epi} \
+#!				-o ${maskregdir}/RightMTLmaskWarped_ITKaffine.nii.gz \
+#!				-n MultiLabel \
+#!				-t [EPItoT1_ITK_affine_crosscorr.txt,1] \
+#!				-t [T1toT2_ANTS_0GenericAffine.mat,1] \
+#!				-v
 		
 		# create EC only masks
 		# diffeomorphic
 		#!fslmaths ${maskregdir}/LeftMTLmaskWarped_SyN.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/LeftECmaskWarped_SyN.nii.gz -odt char
 		#!fslmaths ${maskregdir}/RightMTLmaskWarped_SyN.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/RightECmaskWarped_SyN.nii.gz -odt char
 		# affine
-		#!fslmaths ${maskregdir}/LeftMTLmaskWarped_affine.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/LeftECmaskWarped_affine.nii.gz -odt char
-		#!fslmaths ${maskregdir}/RightMTLmaskWarped_affine.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/RightECmaskWarped_affine.nii.gz -odt char
+		fslmaths ${maskregdir}/LeftMTLmaskWarped_ITKaffine.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/LeftECmaskWarped_ITKaffine.nii -odt char
+		fslmaths ${maskregdir}/RightMTLmaskWarped_ITKaffine.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/RightECmaskWarped_ITKaffine.nii -odt char
 		
 		cd ${maskregdir}
 		
-		#!if [ -f "LeftECmaskWarped_affine.nii" ] && [ -f "RightECmaskWarped_SyN.nii" ]; then
-			#!echo ">> EC MASKS SUCCESSFULLY TRANSFORMED TO EPI SPACE: subject ${subject}"
-		#!else
-			#!echo ">> EC MASKS FAILED TRANSFORMATION: subject ${subject}"
-		#!fi
+		if [ -f "LeftECmaskWarped_ITKaffine.nii" ] && [ -f "RightECmaskWarped_ITKaffine.nii" ]; then
+			echo ">> EC MASKS SUCCESSFULLY TRANSFORMED TO EPI SPACE: subject ${subject}"
+		else
+			echo ">> EC MASKS FAILED TRANSFORMATION: subject ${subject}"
+		fi
 		
 		cd ${pathstem}
 

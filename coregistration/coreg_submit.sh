@@ -10,7 +10,7 @@
 
 #! sbatch directives begin here ###############################
 #! Name of the job:
-#SBATCH -J ANTS_coreg
+#SBATCH -J coreg
 #! Which project should jobs run under:
 #SBATCH -A hphi
 #! How many whole nodes should be allocated?
@@ -20,12 +20,12 @@
 #SBATCH --cpus-per-task=1
 #!SBATCH --mem-per-cpu=15000M
 #! How much wallclock time will be required?
-#SBATCH --time=06:00:00
+#SBATCH --time=00:10:00
 #! What types of email messages do you wish to receive?
 #SBATCH --mail-type=FAIL
 #!SBATCH -p skylake-himem
 #SBATCH --qos short.q
-#SBATCH --mem=5000
+#SBATCH --mem=2000
 
 # CHANGE ME IF YOU WANT TO BE EMAILED
 #SBATCH --mail-user=ccn30

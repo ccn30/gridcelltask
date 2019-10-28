@@ -47,3 +47,4 @@ The composite transform comprises the following transforms (in order):
 =============================================================================
 Default pixel value: 0
 Interpolation type: LabelImageGaussianInterpolateImageFunction
+Output warped image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/29321/epimasks/RightMTLmaskWarped_ITKaffine.nii.gz

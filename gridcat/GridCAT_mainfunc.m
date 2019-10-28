@@ -22,7 +22,7 @@ subjectvec = {'27734','28061','28428','29317','29321','29332','29336','29358','2
 
 preprocesspathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data';
 taskpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/task_data';
-outpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/gridCAT_output';
+outpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/gridCAT_out01';
 
 runs = {'BlockA','BlockB','BlockC'};
 TR = 2.53;
@@ -30,7 +30,7 @@ xfold = 6;
 nScans = 238;
 maskthresh=0.4;
 
-%% FLAGS
+% FLAGS
 % what type of mask to use - affine or SyN
 warp_flag = 'affine';
 % calculate mean grid orientation within each run separately (0) or across all runs (1)
@@ -44,7 +44,7 @@ for subj = 1 %1:length(subjectvec)
         
         % specify functional scans
         for scan = 1:nScans
-            cfg.rawData.run(run).functionalScans(scan,1) = {[preprocesspathstem '/images/' subjectvec{subj} '/rtopup_Run_' num2str(run) '.nii,' num2str(scan)]};
+            cfg.rawData.run(run).functionalScans(scan,1) = {[preprocesspathstem '/images/old_data/' subjectvec{subj} '/rtopup_Run_' num2str(run) '.nii,' num2str(scan)]};
         end
         
         % specify event-table
@@ -54,7 +54,7 @@ for subj = 1 %1:length(subjectvec)
         if strcmp(regressor_flag,'phys') == 1
             cfg.rawData.run(run).additionalRegressors_file = {[preprocesspathstem '/regressors/' subjectvec{subj} '/Run' num2str(run) '/Physio_regressors/multiple_regressors.txt']};
         elseif strcmp(regressor_flag,'move') == 1
-            cfg.rawData.run(run).additionalRegressors_file = {[preprocesspathstem '/images/' subjectvec{subj} '/rp_topup_Run_' num2str(run) '.txt']};
+            cfg.rawData.run(run).additionalRegressors_file = {[preprocesspathstem '/images/old_data/' subjectvec{subj} '/rp_topup_Run_' num2str(run) '.txt']};
         end
         
     end
@@ -158,8 +158,8 @@ for subj = 1 %1:length(subjectvec)
     % Use either affine or SyN mask
     if strcmp(warp_flag,'affine') == 1
         cfg.GLM.GLM2_roiMask_calcMeanGridOri = {
-                                            [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/LeftECmaskWarped_affine.nii']
-                                            [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/RightECmaskWarped_affine.nii']
+                                            [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/LeftECmaskWarped_ITKaffine.nii']
+                                            [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/RightECmaskWarped_ITKaffine.nii']
                                             };
     elseif strcmp(warp_flag,'SyN') == 1
         cfg.GLM.GLM2_roiMask_calcMeanGridOri = {
@@ -198,8 +198,8 @@ for subj = 1 %1:length(subjectvec)
     % Specify ROI masks, for which the grid metrics are calculated and exported
     if strcmp(warp_flag,'affine') == 1
         ROI_masks = {
-                     [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/LeftECmaskWarped_affine.nii']
-                     [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/RightECmaskWarped_affine.nii']
+                     [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/LeftECmaskWarped_ITKaffine.nii']
+                     [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/RightECmaskWarped_ITKaffine.nii']
                      };
     elseif strcmp(warp_flag,'SyN') == 1
         ROI_masks = {

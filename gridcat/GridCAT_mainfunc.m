@@ -27,7 +27,7 @@ regressor_flag = 'move';
 % use 'left', 'right', or 'both' EC ROI in mask
 ROI_flag = 'both';
 
-for subj = 2:length(subjectvec)
+for subj = 1:length(subjectvec)
     %% FUNCTIONAL SCANS, EVENT-TABLES, ADDITIONAL REGRESSORS
     subject = subjectvec{subj};
     outpathstem = ['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/' subject '/gridCAT_out02'];

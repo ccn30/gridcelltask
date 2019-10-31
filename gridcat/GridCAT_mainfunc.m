@@ -1,32 +1,19 @@
 %% GridCAT function for batch script
 % input images, event table and regressors to generate grid cell metrics
 % CCNewton adapted from GridCAT demo script 22/08/19
-
-% Add GridCAT to the Matlab path:
-%GridCAT_path = '/home/ccn30/GridCAT'; % specify the path to the GridCAT directory
-%addpath(genpath(GridCAT_path));
-
-% % Add SPM12 to the Matlab path:
-%SPM12_path = '/applications/spm/spm12_6906'; % specify the path to the SPM12 directory
-%addpath(genpath(SPM12_path));
-
-% Add CircStat2012a to the Matlab path:
-%CircStat_path = '/home/ccn30/Documents/MATLAB/Add-Ons/Collections/Circular Statistics Toolbox (Directional Statistics)/code'; % specify the path to the CircStat2012a directory
-%addpath(genpath(CircStat_path));
+% out01 = both EC, 6 fold
+% out02 = both EC, 7 fold
 
 function GridCAT_mainfunc
+%(subject,preprocesspathstem,taskpathstem)
 %(preprocesspathstem,outpathstem,subjectvec,dateIDvec,nrun,TR,xfold)
 
 subjectvec = {'27734','28061','28428','29317','29321','29332','29336','29358','29382','29383'};
-%dateIDvec = {'20190902_U-ID46027','20190911_U-ID46160','20190903_U-ID46074','20190902_U-ID46030','20190902_U-ID46038','20190903_U-ID46058','20190903_U-ID46066','20190905_U-ID46106','20190911_U-ID46164','20190912_U-ID46168'};
-
 preprocesspathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data';
 taskpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/task_data';
-outpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/gridCAT_out01';
-
 runs = {'BlockA','BlockB','BlockC'};
 TR = 2.53;
-xfold = 6;
+xfold = 7;
 nScans = 238;
 maskthresh=0.4;
 
@@ -36,25 +23,30 @@ warp_flag = 'affine';
 % calculate mean grid orientation within each run separately (0) or across all runs (1)
 orientationcalc_flag = 0;
 % use physiology regressors (phys) or use movement parameters (move)
-regressor_flag='phys';
+regressor_flag = 'move';
+% use 'left', 'right', or 'both' EC ROI in mask
+ROI_flag = 'both';
 
-for subj = 1 %1:length(subjectvec)
+for subj = 2:length(subjectvec)
     %% FUNCTIONAL SCANS, EVENT-TABLES, ADDITIONAL REGRESSORS
-    for run = 1:3 %1:length(runs)
+    subject = subjectvec{subj};
+    outpathstem = ['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/' subject '/gridCAT_out02'];
+    
+    for run = 1:length(runs)
         
         % specify functional scans
         for scan = 1:nScans
-            cfg.rawData.run(run).functionalScans(scan,1) = {[preprocesspathstem '/images/old_data/' subjectvec{subj} '/rtopup_Run_' num2str(run) '.nii,' num2str(scan)]};
+            cfg.rawData.run(run).functionalScans(scan,1) = {[preprocesspathstem '/images/old_data/' subject '/rtopup_Run_' num2str(run) '_split' sprintf('%04d',scan-1) '.nii']};
         end
         
         % specify event-table
-        cfg.rawData.run(run).eventTable_file = [taskpathstem '/' subjectvec{subj} '/' runs{run} '/eventTable_movemenEventData.txt'] ;
+        cfg.rawData.run(run).eventTable_file = [taskpathstem '/' subject '/' runs{run} '/eventTable_movemenEventData.txt'] ;
         
         % specify additional regressors file - need to combine rp.txt with phys regressors
         if strcmp(regressor_flag,'phys') == 1
-            cfg.rawData.run(run).additionalRegressors_file = {[preprocesspathstem '/regressors/' subjectvec{subj} '/Run' num2str(run) '/Physio_regressors/multiple_regressors.txt']};
+            cfg.rawData.run(run).additionalRegressors_file = [preprocesspathstem '/regressors/' subject '/Run' num2str(run) '/Physio_regressors/multiple_regressors.txt'];
         elseif strcmp(regressor_flag,'move') == 1
-            cfg.rawData.run(run).additionalRegressors_file = {[preprocesspathstem '/images/old_data/' subjectvec{subj} '/rp_topup_Run_' num2str(run) '.txt']};
+            cfg.rawData.run(run).additionalRegressors_file = [preprocesspathstem '/images/old_data/' subject '/rp_topup_Run_' num2str(run) '.txt'];
         end
         
     end
@@ -74,7 +66,7 @@ for subj = 1 %1:length(subjectvec)
     cfg.GLM.microtimeResolution = 16;
     
     % HPF per run
-    cfg.GLM.HPF_perRun = [128, 128];
+    cfg.GLM.HPF_perRun = [128, 128, 128];
     
     % Model derivatives
     %   [0 0] ... do not model derivatives
@@ -85,7 +77,7 @@ for subj = 1 %1:length(subjectvec)
     % Optional: Do you want to display the design matrix after it has been created?
     % The design matrix will not be displayed, if this settings is not defined
     % use 0 or 1
-    cfg.GLM.dispDesignMatrix = 1;
+    cfg.GLM.dispDesignMatrix = 0;
     
     
     %% GLM1
@@ -155,17 +147,18 @@ for subj = 1 %1:length(subjectvec)
     
     % Specify binary ROI mask
     % Nonzero voxels within this mask are used to calculate the mean grid orientation.
-    % Use either affine or SyN mask
-    if strcmp(warp_flag,'affine') == 1
-        cfg.GLM.GLM2_roiMask_calcMeanGridOri = {
-                                            [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/LeftECmaskWarped_ITKaffine.nii']
-                                            [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/RightECmaskWarped_ITKaffine.nii']
-                                            };
-    elseif strcmp(warp_flag,'SyN') == 1
-        cfg.GLM.GLM2_roiMask_calcMeanGridOri = {
-                                            [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/LeftECmaskWarped_SyN.nii']
-                                            [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/RightECmaskWarped_SyN.nii']
-                                            };
+    % Use either affine or SyN mask, either left or right
+    
+    if strcmp(warp_flag, 'affine')
+        if strcmp(ROI_flag, 'both')    
+            cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/bothECmaskWarped_ITKaffine.nii']};
+        elseif strcmp(ROI_flag, 'left')
+            cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/LeftECmaskWarped_ITKaffine.nii']};
+        elseif strcmp(ROI_flag, 'right')
+            cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/RightECmaskWarped_ITKaffine.nii']};
+        end
+    elseif strcmp(warp_flag,'SyN')
+        cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/bothECmaskWarped_SyN.nii']};
     end
     
     % Use different weighting for individual voxels within the ROI, when estimating the mean grid orientation?
@@ -196,16 +189,16 @@ for subj = 1 %1:length(subjectvec)
     %% EXPORT GRID METRICS
     
     % Specify ROI masks, for which the grid metrics are calculated and exported
-    if strcmp(warp_flag,'affine') == 1
-        ROI_masks = {
-                     [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/LeftECmaskWarped_ITKaffine.nii']
-                     [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/RightECmaskWarped_ITKaffine.nii']
-                     };
+    if strcmp(warp_flag,'affine')
+        if strcmp(ROI_flag, 'both')    
+            ROI_masks = {[preprocesspathstem '/segmentation/' subject '/epimasks/bothECmaskWarped_ITKaffine.nii']};
+        elseif strcmp(ROI_flag, 'left')
+            ROI_masks = {[preprocesspathstem '/segmentation/' subject '/epimasks/LeftECmaskWarped_ITKaffine.nii']};
+        elseif strcmp(ROI_flag, 'right')
+            ROI_masks = {[preprocesspathstem '/segmentation/' subject '/epimasks/RightECmaskWarped_ITKaffine.nii']};
+        end
     elseif strcmp(warp_flag,'SyN') == 1
-        ROI_masks = {
-                     [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/LeftECmaskWarped_SyN.nii']
-                     [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/RightECmaskWarped_SyN.nii']
-                     };
+            ROI_masks = {[preprocesspathstem '/segmentation/' subject '/epimasks/bothECmaskWarped_SyN.nii']};
     end
     
     % Specify where the GLM1 and GLM2 output is stored
@@ -213,13 +206,14 @@ for subj = 1 %1:length(subjectvec)
     GLM2dir = [outpathstem '/GLM2'];
     
     % Specify where the grid metric output should be saved
-    output_file = {[outpathstem '/GridCAT_grid_metrics.txt']};
+    output_file = {[outpathstem '/GridCAT_metrics_' subject '_xfold' num2str(xfold) '.txt']};
     
     % Calculate and export grid metrics
     gridMetric_export(ROI_masks, GLM1dir, GLM2dir, output_file);
     
-end
-end
+end % of subject loop
+disp('NEXT SUBJECT');
+end % of function
 
 
 

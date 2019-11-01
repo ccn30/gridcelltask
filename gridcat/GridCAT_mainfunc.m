@@ -14,7 +14,7 @@ function GridCAT_mainfunc(subject,preprocesspathstem,taskpathstem,outdirname,ROI
 
 runs = {'BlockA','BlockB','BlockC'};
 TR = 2.53;
-xfold = 7;
+xfold = 6;
 nScans = 238;
 maskthresh=0.4;
 

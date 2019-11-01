@@ -6,7 +6,7 @@ subjectvec = {'27734','28061','28428','29317','29321','29332','29336','29358','2
 runvec = {'BlockA','BlockB','BlockC'};
 
 % prepare output file
-outfile = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/group_pilot_results_bothEC6fold.txt';
+outfile = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/group_pilot_results_bothEC7fold.txt';
 resultsall = fopen(outfile, 'w+');
 % headers
 fprintf(resultsall, '%-20s','Subject','Voxels_NAN','Voxels_ROI','Magnitude_all','MeanOrientation','RayleighZ_all','RayleighP_all', ...
@@ -18,7 +18,7 @@ for i = 1:length(subjectvec)
     Subject = subjectvec{i}
     
     %% GRID CODE RESULTS
-    GCresult = fopen(['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/' Subject '/gridCAT_out01/GridCAT_grid_metrics.txt']);
+    GCresult = fopen(['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/' Subject '/gridCAT_out02/GridCAT_metrics_' Subject '_xfold7.txt']);
     tline = fgetl(GCresult);
     
     % init

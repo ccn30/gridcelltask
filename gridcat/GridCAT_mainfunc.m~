@@ -4,14 +4,13 @@
 % out01 = both EC, 6 fold
 % out02 = both EC, 7 fold
 
-function GridCAT_mainfunc(subject,preprocesspathstem,taskpathstem,outdirname,ROI_flag)
+function GridCAT_mainfunc(subject,preprocesspathstem,taskpathstem)
 %(subject,preprocesspathstem,taskpathstem)
 %(preprocesspathstem,outpathstem,subjectvec,dateIDvec,nrun,TR,xfold)
 
 %subjectvec = {'27734','28061','28428','29317','29321','29332','29336','29358','29382','29383'};
 %preprocesspathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data';
 %taskpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/task_data';
-
 runs = {'BlockA','BlockB','BlockC'};
 TR = 2.53;
 xfold = 7;
@@ -22,16 +21,16 @@ maskthresh=0.4;
 % what type of mask to use - affine or SyN
 warp_flag = 'affine';
 % calculate mean grid orientation within each run separately (0) or across all runs (1)
-orientationcalc_flag = 1;
+orientationcalc_flag = 0;
 % use physiology regressors (phys) or use movement parameters (move)
 regressor_flag = 'move';
 % use 'left', 'right', or 'both' EC ROI in mask
-%ROI_flag = 'left';
+ROI_flag = 'both';
 
 %for subj = 1:length(subjectvec)
     %% FUNCTIONAL SCANS, EVENT-TABLES, ADDITIONAL REGRESSORS
     %subject = subjectvec{subj};
-    outpathstem = ['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/' subject '/' outdirname];
+    outpathstem = ['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/' subject '/gridCAT_out02'];
     
     disp(['You are inside GridCAT_mainfunc, subject ' subject]);
     
@@ -209,7 +208,7 @@ regressor_flag = 'move';
     GLM2dir = [outpathstem '/GLM2'];
     
     % Specify where the grid metric output should be saved
-    output_file = {[outpathstem '/GridCATmetrics_' subject '_xfold_' num2str(xfold) '_' ROI_flag '.txt']};
+    output_file = {[outpathstem '/GridCAT_metrics_' subject '_xfold' num2str(xfold) '.txt']};
     
     % Calculate and export grid metrics
     gridMetric_export(ROI_masks, GLM1dir, GLM2dir, output_file);

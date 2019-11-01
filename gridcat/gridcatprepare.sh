@@ -7,7 +7,7 @@
 subject=${1}
 func=${2}
 
-matlab -nodesktop -nosplash -nodisplay <<EOF
+matlab -nodesktop -nosplash <<EOF
 [pa,af,~]=fileparts('${func}');
 addpath(pa);
 disp(['Subject is ${subject}'])
@@ -17,7 +17,9 @@ addpath('/applications/spm/spm12_6906')
 addpath('/home/ccn30/Documents/MATLAB/Add-Ons/Collections/Circular Statistics Toolbox (Directional Statistics)/code')
 preprocesspathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data';
 taskpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/task_data';
-dofunc=sprintf('%s(%s,%s,%s)',af,'''${subject}''','preprocesspathstem','taskpathstem');
+outdirname = 'gridCAT_out03'
+ROI_flag = 'left'
+dofunc=sprintf('%s(%s,%s,%s,%s,%s)',af,'''${subject}''','preprocesspathstem','taskpathstem','outdirname','ROI_flag');
 disp(['Submitting the following command: ' dofunc])
 eval(dofunc)
 ;exit

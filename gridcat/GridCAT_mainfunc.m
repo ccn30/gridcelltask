@@ -2,7 +2,8 @@
 % input images, event table and regressors to generate grid cell metrics
 % CCNewton adapted from GridCAT demo script 22/08/19
 % out01 = both EC, 6 fold
-% out02 = both EC, 7 fold
+% out02 = both EC, 7 fold, 03 = left EC 6 fold, 04 = right EC 6 fold, 05 =
+% both EC 4 fold
 
 function GridCAT_mainfunc(subject,preprocesspathstem,taskpathstem,outdirname,ROI_flag)
 %(subject,preprocesspathstem,taskpathstem)
@@ -14,7 +15,7 @@ function GridCAT_mainfunc(subject,preprocesspathstem,taskpathstem,outdirname,ROI
 
 runs = {'BlockA','BlockB','BlockC'};
 TR = 2.53;
-xfold = 6;
+xfold = 4;
 nScans = 238;
 maskthresh=0.4;
 
@@ -141,7 +142,7 @@ regressor_flag = 'move';
     
     % Include unused grid events in the model?
     %	0 ... grid events that are not used for this GLM will not be included in the model
-    %	1 ... grid events that are not used for this GLM will not be included in the model
+    %	1 ... grid events that are not used for this GLM will be included in the model
     cfg.GLM.keepUnusedGridEvents = 1;
     
     % GLM2 tests the estimated grid orientations that were estimated in GLM1.

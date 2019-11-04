@@ -1,3 +1,6 @@
+% extract information from gridcat output
+% Matthias Stangl adapted by Coco Newton 11/19
+
 function standalone_collateGridCAToutput()
 
 clear all
@@ -29,7 +32,7 @@ letters = cellfun(@(x) x(1:1),{subjDirList(:).name},'un',0);
 badIds = find(strcmp(letters, '.') | strcmp(letters, '$'));
 subjDirList(badIds) = [];
 
-for subjIdx = 1 %:length(subjDirList)
+for subjIdx = 1:length(subjDirList)
     
     subjDir = [allSubjGridcatData_dir filesep subjDirList(subjIdx).name];
     
@@ -44,24 +47,25 @@ for subjIdx = 1 %:length(subjDirList)
         GLM2dirName = GLM2dirList(GLM2dirIdx).name;
 
         % for which ROI was the mean grid ori computed at GLM2?
-        if  strfind(GLM2dirName, '01')
+        if  contains(GLM2dirName, '01')
             ROI_GLM2meanGridOriCalc = 'both';
             dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics.txt'];
-        elseif strfind(GLM2dirName, '02')
+        elseif contains(GLM2dirName, '02')
             ROI_GLM2meanGridOriCalc = 'both';
             dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold7.txt'];
-        elseif strfind(GLM2dirName, '03')
-            ROI_GLM2meanGridOriCalc = 'left';
+        elseif contains(GLM2dirName, '03')
+            ROI_GLM2meanGridOriCalc = 'Left';
             dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_left.txt'];
-        elseif strfind(GLM2dirName, '04')
-            ROI_GLM2meanGridOriCalc = 'righ';
+        elseif contains(GLM2dirName, '04')
+            ROI_GLM2meanGridOriCalc = 'Righ';
             dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_right.txt'];
-        elseif strfind(GLM2dirName, '05')
+        elseif contains(GLM2dirName, '05')
             ROI_GLM2meanGridOriCalc = 'both';
             dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_4_both.txt'];
-        elseif strfind(GLM2dirName, '07')
+        elseif contains(GLM2dirName, '07')
             ROI_GLM2meanGridOriCalc = 'both';
             dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_both_control.txt'];
+        else
         end
 
         fid = fopen(dataFile);
@@ -85,7 +89,7 @@ for subjIdx = 1 %:length(subjDirList)
                         cellData = strsplit(lineData{5}, {'-','_'});
                         run_str = cellData{1};
 
-                        if ~magnitude_showOnlyAllRunsAvg || (magnitude_showOnlyAllRunsAvg && ~isempty(strfind(run_str, 'allRuns')))
+                        if ~magnitude_showOnlyAllRunsAvg || (magnitude_showOnlyAllRunsAvg && ~contains(run_str, 'allRuns'))
 
                             GCmagnitude = lineData{6};                    
                             metricName = ['GCmagnitude_' run_str '_' ROI_gridMetricMask(1:4) '_' GLM2dirName];                    
@@ -152,7 +156,7 @@ end
 disp(' ');
 output_cArray = [['Subject' subjNameList]' [metricNameList; output_cArray]];
 
-filename = [GLM2findStr '_totalresults';
+filename = [GLM2findStr '_totalresults'];
 filename(filename=='*')='X';
 
 cell2csv([allSubjGridcatData_dir filesep filename '.csv'], output_cArray);

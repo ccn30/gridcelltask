@@ -3,7 +3,7 @@
 % CCNewton adapted from GridCAT demo script 22/08/19
 % out01 = both EC, 6 fold
 % out02 = both EC, 7 fold, 03 = left EC 6 fold, 04 = right EC 6 fold, 05 =
-% both EC 4 fold, 06 = both posterior HC 6 fold
+% both EC 4 fold
 
 function GridCAT_mainfunc(subject,preprocesspathstem,taskpathstem,outdirname,ROI_flag)
 %(subject,preprocesspathstem,taskpathstem)
@@ -15,7 +15,7 @@ function GridCAT_mainfunc(subject,preprocesspathstem,taskpathstem,outdirname,ROI
 
 runs = {'BlockA','BlockB','BlockC'};
 TR = 2.53;
-xfold = 6;
+xfold = 4;
 nScans = 238;
 maskthresh=0.4;
 
@@ -164,7 +164,7 @@ regressor_flag = 'move';
     elseif strcmp(warp_flag,'SyN')
         cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/bothECmaskWarped_SyN.nii']};
     elseif strcmp(warp_flag,'control')
-        cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/bothPostHCmaskWarped_ITKaffine.nii']};
+        cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/bothPostHCmaskWarped_SyN.nii']};
     end
     
     % Use different weighting for individual voxels within the ROI, when estimating the mean grid orientation?
@@ -206,7 +206,7 @@ regressor_flag = 'move';
     elseif strcmp(warp_flag,'SyN')
             ROI_masks = {[preprocesspathstem '/segmentation/' subject '/epimasks/bothECmaskWarped_SyN.nii']};
     elseif strcmp(warp_flag,'control')
-            ROI_masks = {[preprocesspathstem '/segmentation/' subject '/epimasks/bothPostHCmaskWarped_ITKaffine.nii']};
+            ROI_masks = {[preprocesspathstem '/segmentation/' subject '/epimasks/bothPostHCmaskWarped_SyN.nii']};
     end
     
     % Specify where the GLM1 and GLM2 output is stored
@@ -214,7 +214,7 @@ regressor_flag = 'move';
     GLM2dir = [outpathstem '/GLM2'];
     
     % Specify where the grid metric output should be saved
-    output_file = {[outpathstem '/GridCATmetrics_' subject '_xfold_' num2str(xfold) '_' ROI_flag '_' warp_flag '.txt']};
+    output_file = {[outpathstem '/GridCATmetrics_' subject '_xfold_' num2str(xfold) '_' ROI_flag '_' warp_flag.txt']};
     
     % Calculate and export grid metrics
     gridMetric_export(ROI_masks, GLM1dir, GLM2dir, output_file);

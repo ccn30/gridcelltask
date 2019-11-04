@@ -59,7 +59,7 @@ for subjIdx = 1 %:length(subjDirList)
         elseif strfind(GLM2dirName, '05')
             ROI_GLM2meanGridOriCalc = 'both';
             dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_4_both.txt'];
-        elseif strfind(GLM2dirName, '07')
+        elseif strfind(GLM2dirName, '06')
             ROI_GLM2meanGridOriCalc = 'both';
             dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_both_control.txt'];
         end

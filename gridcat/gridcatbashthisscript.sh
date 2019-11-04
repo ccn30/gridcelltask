@@ -9,7 +9,7 @@ prepare=${scriptdir}/gridcatprepare.sh
 func=${scriptdir}/GridCAT_mainfunc.m
 
 mysubjs=${pathstem}/master_subjsdeflist.txt
-#!subjID=29336/20190903_U-ID46066
+#!subjID=29321/20190902_U-ID46038
 
 cd slurmoutputs
 

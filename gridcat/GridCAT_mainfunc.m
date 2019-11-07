@@ -5,9 +5,7 @@
 % out02 = both EC, 7 fold, 03 = left EC 6 fold, 04 = right EC 6 fold, 05 =
 % both EC 4 fold, 06 = both posterior HC 6 fold
 
-function GridCAT_mainfunc(subject,preprocesspathstem,taskpathstem,outdirname,ROI_flag)
-%(subject,preprocesspathstem,taskpathstem)
-%(preprocesspathstem,outpathstem,subjectvec,dateIDvec,nrun,TR,xfold)
+function GridCAT_mainfunc(subject,preprocesspathstem,taskpathstem,outdirname,ROI_flag,warp_flag,xFold)
 
 %subjectvec = {'27734','28061','28428','29317','29321','29332','29336','29358','29382','29383'};
 %preprocesspathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data';
@@ -15,13 +13,11 @@ function GridCAT_mainfunc(subject,preprocesspathstem,taskpathstem,outdirname,ROI
 
 runs = {'BlockA','BlockB','BlockC'};
 TR = 2.53;
-xfold = 6;
+xfold = str2double(xFold); %taken from input - xFold = str, xfold = numeric
 nScans = 238;
 maskthresh=0.4;
 
 % FLAGS
-% what type of mask to use - affine or SyN
-warp_flag = 'control';
 % calculate mean grid orientation within each run separately (0) or across all runs (1)
 orientationcalc_flag = 1;
 % use physiology regressors (phys) or use movement parameters (move)

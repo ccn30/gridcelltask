@@ -15,7 +15,7 @@ runs = {'BlockA','BlockB','BlockC'};
 TR = 2.53;
 xfold = str2double(xFold); %taken from input - xFold = str, xfold = numeric
 nScans = 238;
-maskthresh=0.4;
+maskthresh=str2double(mask_thresh); %taken from input - mask_thresh = str, maskthresh = numeric
 
 % FLAGS
 % calculate mean grid orientation within each run separately (0) or across all runs (1)

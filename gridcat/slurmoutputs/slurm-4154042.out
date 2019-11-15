@@ -1,0 +1,19 @@
+Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/gridcat/slurmoutputs.
+
+JobID: 4154042
+======
+Time: Fri Nov 15 16:46:17 GMT 2019
+Running on master node: wbic-cs-20
+Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/gridcat/slurmoutputs
+
+Nodes allocated:
+================
+wbic-cs-20
+
+numtasks=1, numnodes=1, mpi_tasks_per_node=1 (OMP_NUM_THREADS=1)
+
+Executing command:
+==================
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/gridcat/gridcatprepare.sh 29336 /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/gridcat/GridCAT_mainfunc.m
+
+MATLAB is selecting SOFTWARE OPENGL rendering.

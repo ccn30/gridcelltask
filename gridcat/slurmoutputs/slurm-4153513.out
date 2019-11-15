@@ -1,0 +1,264 @@
+Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/gridcat/slurmoutputs.
+
+JobID: 4153513
+======
+Time: Fri Nov 15 11:10:15 GMT 2019
+Running on master node: wbic-cs-1
+Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/gridcat/slurmoutputs
+
+Nodes allocated:
+================
+wbic-cs-1
+
+numtasks=1, numnodes=1, mpi_tasks_per_node=1 (OMP_NUM_THREADS=1)
+
+Executing command:
+==================
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/gridcat/gridcatprepare.sh 29321 /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/gridcat/GridCAT_mainfunc.m
+
+MATLAB is selecting SOFTWARE OPENGL rendering.
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2017 The MathWorks, Inc.
+                   R2017b (9.3.0.713579) 64-bit (glnxa64)
+                             September 14, 2017
+
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+>> >> >> Subject is 29321
+>> >> >> >> >> >> >> >> >> >> >> >> 
+outdirname =
+
+    'gridCAT_regress01'
+
+>> >> Submitting the following command: GridCAT_mainfunc('29321',preprocesspathstem,taskpathstem,outdirname,ROI_flag,warp_flag,xFold)
+>> You are inside GridCAT_mainfunc, subject 29321
+
+
+------------------------------------------------------------------------
+Running job #1
+------------------------------------------------------------------------
+Running 'fMRI model specification'
+
+SPM12: spm_fMRI_design (v5183)                     11:11:16 - 15/11/2019
+========================================================================
+Saving fMRI design                      :               ...SPM.mat saved
+
+SPM12: spm_fmri_spm_ui (v6088)                     11:11:17 - 15/11/2019
+========================================================================
+Mapping files                           :                        ...done
+Calculating globals                     :                        ...done
+Saving SPM configuration                :               ...SPM.mat saved
+Saving SPM configuration                :               ...SPM.mat saved
+Completed                               :          11:12:23 - 15/11/2019
+Done    'fMRI model specification'
+Done
+
+
+
+------------------------------------------------------------------------
+Running job #1
+------------------------------------------------------------------------
+Running 'Model estimation'
+
+SPM12: spm_spm (v6842)                             11:12:38 - 15/11/2019
+========================================================================
+
+SPM12: spm_est_non_sphericity (v6827)              11:12:40 - 15/11/2019
+========================================================================
+Chunk   1/15                            :                  ...processing                       ...doneChunk   2/15                            :                  ...processing                       ...doneChunk   3/15                            :                  ...processing                       ...doneChunk   4/15                            :                  ...processing                       ...doneChunk   5/15                            :                  ...processing                       ...doneChunk   6/15                            :                  ...processing                       ...doneChunk   7/15                            :                  ...processing                       ...doneChunk   8/15                            :                  ...processing                       ...doneChunk   9/15                            :                  ...processing                       ...doneChunk  10/15                            :                  ...processing                       ...doneChunk  11/15                            :                  ...processing                       ...doneChunk  12/15                            :                  ...processing                       ...doneChunk  13/15                            :                  ...processing                       ...doneChunk  14/15                            :                  ...processing                       ...doneChunk  15/15                            :                  ...processing                       ...done
+Temporal non-sphericity (126693 voxels) :             ...ReML estimation
+  ReML Block 1                
+  ReML Iteration 1                      :        ...2.136592e+01 [+4.25]
+  ReML Iteration 2                      :        ...1.147224e-01 [+4.50]
+  ReML Iteration 3                      :        ...4.674868e-03 [+4.75]
+  ReML Block 2                
+  ReML Iteration 1                      :        ...2.023016e+01 [+4.25]
+  ReML Iteration 2                      :        ...1.434672e-01 [+4.50]
+  ReML Iteration 3                      :        ...1.135682e-02 [+4.75]
+  ReML Block 3                
+  ReML Iteration 1                      :        ...2.329205e+01 [+4.25]
+  ReML Iteration 2                      :        ...7.903594e-02 [+4.50]
+
+SPM12: spm_spm (v6842)                             11:13:37 - 15/11/2019
+========================================================================
+Chunk   1/15                            :                  ...processing                       ...doneChunk   2/15                            :                  ...processing                       ...doneChunk   3/15                            :                  ...processing                       ...doneChunk   4/15                            :                  ...processing                       ...doneChunk   5/15                            :                  ...processing                       ...doneChunk   6/15                            :                  ...processing                       ...doneChunk   7/15                            :                  ...processing                       ...doneChunk   8/15                            :                  ...processing                       ...doneChunk   9/15                            :                  ...processing                       ...doneChunk  10/15                            :                  ...processing                       ...doneChunk  11/15                            :                  ...processing                       ...doneChunk  12/15                            :                  ...processing                       ...doneChunk  13/15                            :                  ...processing                       ...doneChunk  14/15                            :                  ...processing                       ...doneChunk  15/15                            :                  ...processing                       ...done
+Spatial non-sphericity (over scans)     :      ...estimating derivatives ...writing resels/voxel image                       ...done
+Saving SPM.mat                          :                     ...writing                       ...done
+Completed                               :          11:14:53 - 15/11/2019
+Done
+Done    'Model estimation'
+Done
+
+Run2: Regressor 'GridEvent-translation-30degPeak-misalignedWithROI1meanOri' is not included in the model because it does not contain any event.
+
+
+------------------------------------------------------------------------
+Running job #1
+------------------------------------------------------------------------
+Running 'fMRI model specification'
+
+SPM12: spm_fMRI_design (v5183)                     11:15:12 - 15/11/2019
+========================================================================
+Saving fMRI design                      :               ...SPM.mat saved
+
+SPM12: spm_fmri_spm_ui (v6088)                     11:15:12 - 15/11/2019
+========================================================================
+Mapping files                           :                        ...done
+Calculating globals                     :                        ...done
+Saving SPM configuration                :               ...SPM.mat saved
+Saving SPM configuration                :               ...SPM.mat saved
+Completed                               :          11:15:34 - 15/11/2019
+Done    'fMRI model specification'
+Done
+
+
+
+------------------------------------------------------------------------
+Running job #1
+------------------------------------------------------------------------
+Running 'Model estimation'
+
+SPM12: spm_spm (v6842)                             11:15:49 - 15/11/2019
+========================================================================
+
+SPM12: spm_est_non_sphericity (v6827)              11:15:52 - 15/11/2019
+========================================================================
+Chunk   1/15                            :                  ...processing                       ...doneChunk   2/15                            :                  ...processing                       ...doneChunk   3/15                            :                  ...processing                       ...doneChunk   4/15                            :                  ...processing                       ...doneChunk   5/15                            :                  ...processing                       ...doneChunk   6/15                            :                  ...processing                       ...doneChunk   7/15                            :                  ...processing                       ...doneChunk   8/15                            :                  ...processing                       ...doneChunk   9/15                            :                  ...processing                       ...doneChunk  10/15                            :                  ...processing                       ...doneChunk  11/15                            :                  ...processing                       ...doneChunk  12/15                            :                  ...processing                       ...doneChunk  13/15                            :                  ...processing                       ...doneChunk  14/15                            :                  ...processing                       ...doneChunk  15/15                            :                  ...processing                       ...done
+Temporal non-sphericity (108920 voxels) :             ...ReML estimation
+  ReML Block 1                
+  ReML Iteration 1                      :        ...1.982777e+01 [+4.25]
+  ReML Iteration 2                      :        ...8.729760e-02 [+4.50]
+  ReML Block 2                
+  ReML Iteration 1                      :        ...1.873351e+01 [+4.25]
+  ReML Iteration 2                      :        ...8.953459e-02 [+4.50]
+  ReML Block 3                
+  ReML Iteration 1                      :        ...2.175680e+01 [+4.25]
+  ReML Iteration 2                      :        ...6.365684e-02 [+4.50]
+
+SPM12: spm_spm (v6842)                             11:17:23 - 15/11/2019
+========================================================================
+Chunk   1/15                            :                  ...processing                       ...doneChunk   2/15                            :                  ...processing                       ...doneChunk   3/15                            :                  ...processing                       ...doneChunk   4/15                            :                  ...processing                       ...doneChunk   5/15                            :                  ...processing                       ...doneChunk   6/15                            :                  ...processing                       ...doneChunk   7/15                            :                  ...processing                       ...doneChunk   8/15                            :                  ...processing                       ...doneChunk   9/15                            :                  ...processing                       ...doneChunk  10/15                            :                  ...processing                       ...doneChunk  11/15                            :                  ...processing                       ...doneChunk  12/15                            :                  ...processing                       ...doneChunk  13/15                            :                  ...processing                       ...doneChunk  14/15                            :                  ...processing                       ...doneChunk  15/15                            :                  ...processing                       ...done
+Spatial non-sphericity (over scans)     :      ...estimating derivatives ...writing resels/voxel image                       ...done
+Saving SPM.mat                          :                     ...writing                       ...done
+Completed                               :          11:19:19 - 15/11/2019
+Done
+Done    'Model estimation'
+Done
+
+Contrast could not be generated for run2 'translation' 30 degrees peak (aligned/misaligned with ROI1 mean grid ori). Regressor does not exist or is not estimable.
+
+
+------------------------------------------------------------------------
+Running job #1
+------------------------------------------------------------------------
+Running 'Contrast Manager'
+
+SPM12: spm_contrasts.m                             11:19:40 - 15/11/2019
+========================================================================
+Contrasts folder                        : ./29321/gridCAT_regress01/GLM2
+	contrast image  1               :                   ...computing       ...written con_0001.nii
+	spm{T} image  1                 :                   ...computing      ...written spmT_0001.nii
+	contrast image  2               :                   ...computing       ...written con_0002.nii
+	spm{T} image  2                 :                   ...computing      ...written spmT_0002.nii
+	contrast image  3               :                   ...computing       ...written con_0003.nii
+	spm{T} image  3                 :                   ...computing      ...written spmT_0003.nii
+	contrast image  4               :                   ...computing       ...written con_0004.nii
+	spm{T} image  4                 :                   ...computing      ...written spmT_0004.nii
+	contrast image  5               :                   ...computing       ...written con_0005.nii
+	spm{T} image  5                 :                   ...computing      ...written spmT_0005.nii
+	contrast image  6               :                   ...computing       ...written con_0006.nii
+	spm{T} image  6                 :                   ...computing      ...written spmT_0006.nii
+	contrast image  7               :                   ...computing       ...written con_0007.nii
+	spm{T} image  7                 :                   ...computing      ...written spmT_0007.nii
+	contrast image  8               :                   ...computing       ...written con_0008.nii
+	spm{T} image  8                 :                   ...computing      ...written spmT_0008.nii
+	contrast image  9               :                   ...computing       ...written con_0009.nii
+	spm{T} image  9                 :                   ...computing      ...written spmT_0009.nii
+	contrast image 10               :                   ...computing       ...written con_0010.nii
+	spm{T} image 10                 :                   ...computing      ...written spmT_0010.nii
+	contrast image 11               :                   ...computing       ...written con_0011.nii
+	spm{T} image 11                 :                   ...computing      ...written spmT_0011.nii
+	contrast image 12               :                   ...computing       ...written con_0012.nii
+	spm{T} image 12                 :                   ...computing      ...written spmT_0012.nii
+	contrast image 13               :                   ...computing       ...written con_0013.nii
+	spm{T} image 13                 :                   ...computing      ...written spmT_0013.nii
+	contrast image 14               :                   ...computing       ...written con_0014.nii
+	spm{T} image 14                 :                   ...computing      ...written spmT_0014.nii
+	contrast image 15               :                   ...computing       ...written con_0015.nii
+	spm{T} image 15                 :                   ...computing      ...written spmT_0015.nii
+	contrast image 16               :                   ...computing       ...written con_0016.nii
+	spm{T} image 16                 :                   ...computing      ...written spmT_0016.nii
+	contrast image 17               :                   ...computing       ...written con_0017.nii
+	spm{T} image 17                 :                   ...computing      ...written spmT_0017.nii
+	contrast image 18               :                   ...computing       ...written con_0018.nii
+	spm{T} image 18                 :                   ...computing      ...written spmT_0018.nii
+	contrast image 19               :                   ...computing       ...written con_0019.nii
+	spm{T} image 19                 :                   ...computing      ...written spmT_0019.nii
+	contrast image 20               :                   ...computing       ...written con_0020.nii
+	spm{T} image 20                 :                   ...computing      ...written spmT_0020.nii
+	contrast image 21               :                   ...computing       ...written con_0021.nii
+	spm{T} image 21                 :                   ...computing      ...written spmT_0021.nii
+	contrast image 22               :                   ...computing       ...written con_0022.nii
+	spm{T} image 22                 :                   ...computing      ...written spmT_0022.nii
+	contrast image 23               :                   ...computing       ...written con_0023.nii
+	spm{T} image 23                 :                   ...computing      ...written spmT_0023.nii
+	contrast image 24               :                   ...computing       ...written con_0024.nii
+	spm{T} image 24                 :                   ...computing      ...written spmT_0024.nii
+	contrast image 25               :                   ...computing       ...written con_0025.nii
+	spm{T} image 25                 :                   ...computing      ...written spmT_0025.nii
+	contrast image 26               :                   ...computing       ...written con_0026.nii
+	spm{T} image 26                 :                   ...computing      ...written spmT_0026.nii
+	contrast image 27               :                   ...computing       ...written con_0027.nii
+	spm{T} image 27                 :                   ...computing      ...written spmT_0027.nii
+	contrast image 28               :                   ...computing       ...written con_0028.nii
+	spm{T} image 28                 :                   ...computing      ...written spmT_0028.nii
+	contrast image 29               :                   ...computing       ...written con_0029.nii
+	spm{T} image 29                 :                   ...computing      ...written spmT_0029.nii
+	contrast image 30               :                   ...computing       ...written con_0030.nii
+	spm{T} image 30                 :                   ...computing      ...written spmT_0030.nii
+	contrast image 31               :                   ...computing       ...written con_0031.nii
+	spm{T} image 31                 :                   ...computing      ...written spmT_0031.nii
+	contrast image 32               :                   ...computing       ...written con_0032.nii
+	spm{T} image 32                 :                   ...computing      ...written spmT_0032.nii
+	contrast image 33               :                   ...computing       ...written con_0033.nii
+	spm{T} image 33                 :                   ...computing      ...written spmT_0033.nii
+	contrast image 34               :                   ...computing       ...written con_0034.nii
+	spm{T} image 34                 :                   ...computing      ...written spmT_0034.nii
+	contrast image 35               :                   ...computing       ...written con_0035.nii
+	spm{T} image 35                 :                   ...computing      ...written spmT_0035.nii
+	contrast image 36               :                   ...computing       ...written con_0036.nii
+	spm{T} image 36                 :                   ...computing      ...written spmT_0036.nii
+	contrast image 37               :                   ...computing       ...written con_0037.nii
+	spm{T} image 37                 :                   ...computing      ...written spmT_0037.nii
+	contrast image 38               :                   ...computing       ...written con_0038.nii
+	spm{T} image 38                 :                   ...computing      ...written spmT_0038.nii
+	contrast image 39               :                   ...computing       ...written con_0039.nii
+	spm{T} image 39                 :                   ...computing      ...written spmT_0039.nii
+	contrast image 40               :                   ...computing       ...written con_0040.nii
+	spm{T} image 40                 :                   ...computing      ...written spmT_0040.nii
+	contrast image 41               :                   ...computing       ...written con_0041.nii
+	spm{T} image 41                 :                   ...computing      ...written spmT_0041.nii
+	contrast image 42               :                   ...computing       ...written con_0042.nii
+	spm{T} image 42                 :                   ...computing      ...written spmT_0042.nii
+	contrast image 43               :                   ...computing       ...written con_0043.nii
+	spm{T} image 43                 :                   ...computing      ...written spmT_0043.nii
+	contrast image 44               :                   ...computing       ...written con_0044.nii
+	spm{T} image 44                 :                   ...computing      ...written spmT_0044.nii
+	contrast image 45               :                   ...computing       ...written con_0045.nii
+	spm{T} image 45                 :                   ...computing      ...written spmT_0045.nii
+	contrast image 46               :                   ...computing       ...written con_0046.nii
+	spm{T} image 46                 :                   ...computing      ...written spmT_0046.nii
+	contrast image 47               :                   ...computing       ...written con_0047.nii
+	spm{T} image 47                 :                   ...computing      ...written spmT_0047.nii
+Completed                               :          11:20:00 - 15/11/2019
+Done    'Contrast Manager'
+Done
+
+[Warning: MATLAB has disabled some advanced graphics rendering features by
+switching to software OpenGL. For more information, click <a
+href="matlab:opengl('problems')">here</a>.] 
+Output saved to: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/29321/gridCAT_regress01/GridCATmetrics_29321_xfold_6_right_affine.txt
+>> 

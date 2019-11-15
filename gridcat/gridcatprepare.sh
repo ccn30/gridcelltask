@@ -18,12 +18,13 @@ addpath('/home/ccn30/Documents/MATLAB/Add-Ons/Collections/Circular Statistics To
 % what type of mask to use - affine or SyN or control?
 warp_flag = 'affine';
 % use 'left', 'right', or 'both' EC ROI in mask?
-ROI_flag = 'left';
-xFold = '4';
+ROI_flag = 'both';
+xFold = '6';
+mask_thresh = '0.7'
 preprocesspathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data';
 taskpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/task_data';
-outdirname = 'gridCAT_out08'
-dofunc=sprintf('%s(%s,%s,%s,%s,%s,%s)',af,'''${subject}''','preprocesspathstem','taskpathstem','outdirname','ROI_flag','warp_flag','xFold');
+outdirname = 'gridCAT_thresh01'
+dofunc=sprintf('%s(%s,%s,%s,%s,%s,%s,%s,%s)',af,'''${subject}''','preprocesspathstem','taskpathstem','outdirname','ROI_flag','warp_flag','xFold','mask_thresh');
 disp(['Submitting the following command: ' dofunc])
 eval(dofunc)
 ;exit

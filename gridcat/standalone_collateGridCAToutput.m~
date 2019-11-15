@@ -50,31 +50,31 @@ for subjIdx = 1:length(subjDirList)
         if  contains(GLM2dirName, '01')
             ROI_GLM2meanGridOriCalc = 'both';
             dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics.txt'];
-        elseif contains(GLM2dirName, '2')
+        elseif contains(GLM2dirName, '02')
             ROI_GLM2meanGridOriCalc = 'both';
             dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold7.txt'];
-        elseif contains(GLM2dirName, '3')
+        elseif contains(GLM2dirName, '03')
             ROI_GLM2meanGridOriCalc = 'Left';
             dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_left.txt'];
-        elseif contains(GLM2dirName, '4')
+        elseif contains(GLM2dirName, '04')
             ROI_GLM2meanGridOriCalc = 'Righ';
             dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_right.txt'];
-        elseif contains(GLM2dirName, '5')
+        elseif contains(GLM2dirName, '05')
             ROI_GLM2meanGridOriCalc = 'both';
             dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_4_both.txt'];
-        elseif contains(GLM2dirName, '7')
+        elseif contains(GLM2dirName, '07')
             ROI_GLM2meanGridOriCalc = 'both';
             dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_both_control.txt'];
-        elseif contains(GLM2dirName, '8')
+        elseif contains(GLM2dirName, '08')
             ROI_GLM2meanGridOriCalc = 'Left';
             dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_4_left_affine.txt'];
-        elseif contains(GLM2dirName, '9')
+        elseif contains(GLM2dirName, '09')
             ROI_GLM2meanGridOriCalc = 'Left';
             dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_8_left_affine.txt'];
-        elseif contains(GLM2dirName, 'w')
+        elseif ends_with(GLM2dirName, '10')
             ROI_GLM2meanGridOriCalc = 'Righ';
             dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_4_right_affine.txt'];
-        elseif contains(GLM2dirName, 'y')
+        elseif ends_with(GLM2dirName, '11')
             ROI_GLM2meanGridOriCalc = 'Righ';
             dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_8_right_affine.txt'];
         else

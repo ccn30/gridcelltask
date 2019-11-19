@@ -17,3 +17,29 @@ Executing command:
 /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/gridcat/gridcatprepare.sh 28061 /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/gridcat/GridCAT_mainfunc.m
 
 MATLAB is selecting SOFTWARE OPENGL rendering.
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2017 The MathWorks, Inc.
+                   R2017b (9.3.0.713579) 64-bit (glnxa64)
+                             September 14, 2017
+
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+>> >> >> Subject is 28061
+>> >> >> >> >> >> >> >> >> >> 
+mask_thresh =
+
+    '0.7'
+
+>> >> >> 
+outdirname =
+
+    'gridCAT_thresh01'
+
+>> >> Submitting the following command: GridCAT_mainfunc('28061',preprocesspathstem,taskpathstem,outdirname,ROI_flag,warp_flag,xFold,mask_thresh)
+>> {Error using GridCAT_mainfunc
+Too many input arguments.
+} 
+>> 

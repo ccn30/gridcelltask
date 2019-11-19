@@ -1,0 +1,51 @@
+Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs.
+
+JobID: 4171063
+======
+Time: Tue Nov 19 14:51:53 GMT 2019
+Running on master node: wbic-cs-31
+Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs
+
+Nodes allocated:
+================
+wbic-cs-31
+
+numtasks=1, numnodes=1, mpi_tasks_per_node=1 (OMP_NUM_THREADS=1)
+
+Executing command:
+==================
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/coreg_all.sh /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot 29382/20190911_U-ID46164
+
+29382
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/29382
+mkdir: cannot create directory ‘/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/29382/coregistration’: File exists
+Making coregistration directory...
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/29382/coregistration
+EPI:  /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/old_data/29382/rtopup_Run_1_split0000.nii
+T1:  /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/29382/20190911_U-ID46164/mp2rage/denoiseRn4mag0000_PSIR_skulled_std_struc_brain.nii
+mkdir: cannot create directory ‘/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/29382/epimasks’: File exists
+Making EPI Mask directory
+EXECUTING T2 mask to EPI space transformation for subject 29382
+Using double precision for computations.
+Input scalar image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/pm-alEC_masks/leftMTL_29382.nii.gz
+Reference image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/old_data/29382/rtopup_Run_1_split0000.nii
+=============================================================================
+The composite transform comprises the following transforms (in order): 
+  1. inverse of T1toT2_ANTS_0GenericAffine.mat (type = AffineTransform)
+  2. inverse of EPItoT1_ITK_affine_crosscorr.txt (type = MatrixOffsetTransformBase)
+=============================================================================
+Default pixel value: 0
+Interpolation type: LabelImageGaussianInterpolateImageFunction
+Output warped image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/pm-alEC_masks/leftMTLWarped_29382.nii.gz
+Using double precision for computations.
+Input scalar image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/pm-alEC_masks/rightMTL_29382.nii.gz
+Reference image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/old_data/29382/rtopup_Run_1_split0000.nii
+=============================================================================
+The composite transform comprises the following transforms (in order): 
+  1. inverse of T1toT2_ANTS_0GenericAffine.mat (type = AffineTransform)
+  2. inverse of EPItoT1_ITK_affine_crosscorr.txt (type = MatrixOffsetTransformBase)
+=============================================================================
+Default pixel value: 0
+Interpolation type: LabelImageGaussianInterpolateImageFunction
+Output warped image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/pm-alEC_masks/rightMTLWarped_29382.nii.gz
+>> EC MASKS SUCCESSFULLY TRANSFORMED TO EPI SPACE: subject 29382

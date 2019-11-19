@@ -1,0 +1,63 @@
+Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/gridcat/slurmoutputs.
+
+JobID: 4166753
+======
+Time: Mon Nov 18 10:02:49 GMT 2019
+Running on master node: wbic-cs-7
+Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/gridcat/slurmoutputs
+
+Nodes allocated:
+================
+wbic-cs-7
+
+numtasks=1, numnodes=1, mpi_tasks_per_node=1 (OMP_NUM_THREADS=1)
+
+Executing command:
+==================
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/gridcat/gridcatprepare.sh 28428 /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/gridcat/GridCAT_mainfunc.m
+
+MATLAB is selecting SOFTWARE OPENGL rendering.
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2017 The MathWorks, Inc.
+                   R2017b (9.3.0.713579) 64-bit (glnxa64)
+                             September 14, 2017
+
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+>> >> >> Subject is 28428
+>> >> >> >> >> >> >> 
+warp_flag =
+
+    'affine'
+
+>> >> >> 
+ROI_flag =
+
+    'right'
+
+>> >> >> 
+xFold =
+
+    '6'
+
+>> >> >> 
+mask_thresh =
+
+    '0.4'
+
+>> >> >> >> >> >> >> >> 
+regressor_flag =
+
+    'aligned_misaligned'
+
+>> >> >> 
+outdirname =
+
+    'gridCAT_phys01'
+
+>> >> >> >> >> >> Submitting the following command: GridCAT_mainfunc('28428',preprocesspathstem,taskpathstem,outdirname,ROI_flag,warp_flag,xFold,mask_thresh,regressor_flag)
+>> You are inside GridCAT_mainfunc, subject 28428
+slurmstepd: error: *** JOB 4166753 ON wbic-cs-7 CANCELLED AT 2019-11-18T10:03:47 ***

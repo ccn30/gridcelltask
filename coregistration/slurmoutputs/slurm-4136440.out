@@ -1,0 +1,29 @@
+Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs.
+
+JobID: 4136440
+======
+Time: Mon Nov  4 12:16:47 GMT 2019
+Running on master node: wbic-cs-39
+Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/slurmoutputs
+
+Nodes allocated:
+================
+wbic-cs-39
+
+numtasks=1, numnodes=1, mpi_tasks_per_node=1 (OMP_NUM_THREADS=1)
+
+Executing command:
+==================
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/coregistration/coreg_all.sh /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot 29358/20190905_U-ID46106
+
+29358
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/29358
+mkdir: cannot create directory ‘/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/29358/coregistration’: File exists
+Making coregistration directory...
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/29358/coregistration
+EPI:  /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/old_data/29358/topup_Run_1_split0000.nii
+T1:  /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/29358/20190905_U-ID46106/mp2rage/denoiseRn4mag0000_PSIR_skulled_std_struc_brain.nii
+mkdir: cannot create directory ‘/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/29358/epimasks’: File exists
+Making EPI Mask directory
+EXECUTING T2 mask to EPI space transformation for subject 29358
+>> EC MASKS SUCCESSFULLY TRANSFORMED TO EPI SPACE: subject 29358

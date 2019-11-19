@@ -179,26 +179,28 @@ preprocesspathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/prep
 for subj = 1:length(subjectvec)
    subj
     % delete un-needed EPIS
-    for run = 1:3
-        disp(['Working on run ' num2str(run)]);
-        FOURDfile = [preprocesspathstem '/images/old_data/' subjectvec{subj} '/rtopup_Run_' num2str(run) '.nii'];
-        cmd = [fsldir 'fslsplit ' FOURDfile ' ' FOURDfile(1:end-4) '_split -t'];
-        system(cmd);
-        delete([preprocesspathstem '/images/old_data/' subjectvec{subj} '/topup_Run_' num2str(run) '_split*.nii']);
-        delete([preprocesspathstem '/images/old_data/' subjectvec{subj} '/Run_' num2str(run) '_split*.nii']);
-    end
+%     for run = 1:3
+%         disp(['Working on run ' num2str(run)]);
+%         FOURDfile = [preprocesspathstem '/images/old_data/' subjectvec{subj} '/rtopup_Run_' num2str(run) '.nii'];
+%         cmd = [fsldir 'fslsplit ' FOURDfile ' ' FOURDfile(1:end-4) '_split -t'];
+%         system(cmd);
+%         delete([preprocesspathstem '/images/old_data/' subjectvec{subj} '/topup_Run_' num2str(run) '_split*.nii']);
+%         delete([preprocesspathstem '/images/old_data/' subjectvec{subj} '/Run_' num2str(run) '_split*.nii']);
+%     end
     
-    % combine right and left EC masks
-       rightEC = [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/RightECmaskWarped_ITKaffine.nii']; 
-       leftEC = [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/LeftECmaskWarped_ITKaffine.nii'];
-       bothEC = [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/bothECmaskWarped_ITKaffine.nii'];
+    % combine right and left EC masks - FOR POS HC
+       rightEC = [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/RightPostHCmaskWarped_ITKaffine.nii']; 
+       leftEC = [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/LeftPostHCmaskWarped_ITKaffine.nii'];
+       bothEC = [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/bothPostHCmaskWarped_ITKaffine.nii'];
        cmd = [fsldir 'fslmaths ' rightEC ' -add ' leftEC ' ' bothEC]
        [status,cmdout] = system(cmd);
          if status == 0
              disp('Done merging masks.');
          else
-             sprintf
+             warning('Mask wrong');
          end
+
+
 end
 
 

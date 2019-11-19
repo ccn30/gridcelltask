@@ -1,0 +1,232 @@
+Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/gridcat/slurmoutputs.
+
+JobID: 4171160
+======
+Time: Tue Nov 19 15:45:08 GMT 2019
+Running on master node: wbic-cs-12
+Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/gridcat/slurmoutputs
+
+Nodes allocated:
+================
+wbic-cs-12
+
+numtasks=1, numnodes=1, mpi_tasks_per_node=1 (OMP_NUM_THREADS=1)
+
+Executing command:
+==================
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/gridcat/gridcatprepare.sh 29382 /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/gridcat/GridCAT_mainfunc.m
+
+MATLAB is selecting SOFTWARE OPENGL rendering.
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2017 The MathWorks, Inc.
+                   R2017b (9.3.0.713579) 64-bit (glnxa64)
+                             September 14, 2017
+
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+>> >> >> Subject is 29382
+>> >> >> >> >> >> >> 
+warp_flag =
+
+    'affine'
+
+>> >> >> 
+ROI_flag =
+
+    'pmLeft'
+
+>> >> >> 
+xFold =
+
+    '6'
+
+>> >> >> 
+mask_thresh =
+
+    '0.4'
+
+>> >> >> >> >> >> >> >> 
+regressor_flag =
+
+    'aligned_misaligned'
+
+>> >> >> 
+outdirname =
+
+    'gridCAT_pmEC02'
+
+>> >> >> >> >> >> Submitting the following command: GridCAT_mainfunc('29382',preprocesspathstem,taskpathstem,outdirname,ROI_flag,warp_flag,xFold,mask_thresh,regressor_flag)
+>> You are inside GridCAT_mainfunc, subject 29382
+
+
+------------------------------------------------------------------------
+Running job #1
+------------------------------------------------------------------------
+Running 'fMRI model specification'
+
+SPM12: spm_fMRI_design (v5183)                     15:46:03 - 19/11/2019
+========================================================================
+Saving fMRI design                      :               ...SPM.mat saved
+
+SPM12: spm_fmri_spm_ui (v6088)                     15:46:04 - 19/11/2019
+========================================================================
+Mapping files                           :                        ...done
+Calculating globals                     :                        ...done
+Saving SPM configuration                :               ...SPM.mat saved
+Saving SPM configuration                :               ...SPM.mat saved
+Completed                               :          15:47:00 - 19/11/2019
+Done    'fMRI model specification'
+Done
+
+
+
+------------------------------------------------------------------------
+Running job #1
+------------------------------------------------------------------------
+Running 'Model estimation'
+
+SPM12: spm_spm (v6842)                             15:47:22 - 19/11/2019
+========================================================================
+
+SPM12: spm_est_non_sphericity (v6827)              15:47:24 - 19/11/2019
+========================================================================
+Chunk   1/15                            :                  ...processing                       ...doneChunk   2/15                            :                  ...processing                       ...doneChunk   3/15                            :                  ...processing                       ...doneChunk   4/15                            :                  ...processing                       ...doneChunk   5/15                            :                  ...processing                       ...doneChunk   6/15                            :                  ...processing                       ...doneChunk   7/15                            :                  ...processing                       ...doneChunk   8/15                            :                  ...processing                       ...doneChunk   9/15                            :                  ...processing                       ...doneChunk  10/15                            :                  ...processing                       ...doneChunk  11/15                            :                  ...processing                       ...doneChunk  12/15                            :                  ...processing                       ...doneChunk  13/15                            :                  ...processing                       ...doneChunk  14/15                            :                  ...processing                       ...doneChunk  15/15                            :                  ...processing                       ...done
+Temporal non-sphericity (114017 voxels) :             ...ReML estimation
+  ReML Block 1                
+  ReML Iteration 1                      :        ...2.021284e+01 [+4.25]
+  ReML Iteration 2                      :        ...3.408316e-04 [+4.50]
+  ReML Block 2                
+  ReML Iteration 1                      :        ...2.226598e+01 [+4.25]
+  ReML Iteration 2                      :        ...3.248022e-04 [+4.50]
+  ReML Block 3                
+  ReML Iteration 1                      :        ...2.298612e+01 [+4.25]
+  ReML Iteration 2                      :        ...8.835812e-04 [+4.50]
+
+SPM12: spm_spm (v6842)                             15:48:42 - 19/11/2019
+========================================================================
+Chunk   1/15                            :                  ...processing                       ...doneChunk   2/15                            :                  ...processing                       ...doneChunk   3/15                            :                  ...processing                       ...doneChunk   4/15                            :                  ...processing                       ...doneChunk   5/15                            :                  ...processing                       ...doneChunk   6/15                            :                  ...processing                       ...doneChunk   7/15                            :                  ...processing                       ...doneChunk   8/15                            :                  ...processing                       ...doneChunk   9/15                            :                  ...processing                       ...doneChunk  10/15                            :                  ...processing                       ...doneChunk  11/15                            :                  ...processing                       ...doneChunk  12/15                            :                  ...processing                       ...doneChunk  13/15                            :                  ...processing                       ...doneChunk  14/15                            :                  ...processing                       ...doneChunk  15/15                            :                  ...processing                       ...done
+Spatial non-sphericity (over scans)     :      ...estimating derivatives ...writing resels/voxel image                       ...done
+Saving SPM.mat                          :                     ...writing                       ...done
+Completed                               :          15:50:25 - 19/11/2019
+Done
+Done    'Model estimation'
+Done
+
+[Warning: A valid mean grid orientation cannot be caluclated for grid event
+'translation' in run 1. Potential reasons: You have no valid voxels within your
+ROI mask for GLM2 mean grid ori calculation. Or you are attempting to estimate
+the mean grid orientation in GLM2 for runs, for which you do not have estimated
+voxel-wise grid orientations in GLM1. This only works, if you have multiple
+runs with the same grid event and you have selected to average the mean grid
+orientation across runs.] 
+[> In generateMultiCondFile (line 105)
+  In specifyGLM (line 39)
+  In GridCAT_mainfunc (line 191)] 
+[Warning: A valid mean grid orientation cannot be caluclated for grid event
+'translation' in run 2. Potential reasons: You have no valid voxels within your
+ROI mask for GLM2 mean grid ori calculation. Or you are attempting to estimate
+the mean grid orientation in GLM2 for runs, for which you do not have estimated
+voxel-wise grid orientations in GLM1. This only works, if you have multiple
+runs with the same grid event and you have selected to average the mean grid
+orientation across runs.] 
+[> In generateMultiCondFile (line 105)
+  In specifyGLM (line 39)
+  In GridCAT_mainfunc (line 191)] 
+[Warning: A valid mean grid orientation cannot be caluclated for grid event
+'translation' in run 3. Potential reasons: You have no valid voxels within your
+ROI mask for GLM2 mean grid ori calculation. Or you are attempting to estimate
+the mean grid orientation in GLM2 for runs, for which you do not have estimated
+voxel-wise grid orientations in GLM1. This only works, if you have multiple
+runs with the same grid event and you have selected to average the mean grid
+orientation across runs.] 
+[> In generateMultiCondFile (line 105)
+  In specifyGLM (line 39)
+  In GridCAT_mainfunc (line 191)] 
+
+
+------------------------------------------------------------------------
+Running job #1
+------------------------------------------------------------------------
+Running 'fMRI model specification'
+
+SPM12: spm_fMRI_design (v5183)                     15:50:49 - 19/11/2019
+========================================================================
+Saving fMRI design                      :               ...SPM.mat saved
+
+SPM12: spm_fmri_spm_ui (v6088)                     15:50:49 - 19/11/2019
+========================================================================
+Mapping files                           :                        ...done
+Calculating globals                     :                        ...done
+Saving SPM configuration                :               ...SPM.mat saved
+Saving SPM configuration                :               ...SPM.mat saved
+Completed                               :          15:51:12 - 19/11/2019
+Done    'fMRI model specification'
+Done
+
+
+
+------------------------------------------------------------------------
+Running job #1
+------------------------------------------------------------------------
+Running 'Model estimation'
+
+SPM12: spm_spm (v6842)                             15:51:28 - 19/11/2019
+========================================================================
+
+SPM12: spm_est_non_sphericity (v6827)              15:51:31 - 19/11/2019
+========================================================================
+Chunk   1/15                            :                  ...processing                       ...doneChunk   2/15                            :                  ...processing                       ...doneChunk   3/15                            :                  ...processing                       ...doneChunk   4/15                            :                  ...processing                       ...doneChunk   5/15                            :                  ...processing                       ...doneChunk   6/15                            :                  ...processing                       ...doneChunk   7/15                            :                  ...processing                       ...doneChunk   8/15                            :                  ...processing                       ...doneChunk   9/15                            :                  ...processing                       ...doneChunk  10/15                            :                  ...processing                       ...doneChunk  11/15                            :                  ...processing                       ...doneChunk  12/15                            :                  ...processing                       ...doneChunk  13/15                            :                  ...processing                       ...doneChunk  14/15                            :                  ...processing                       ...doneChunk  15/15                            :                  ...processing                       ...done
+Temporal non-sphericity (120182 voxels) :             ...ReML estimation
+  ReML Block 1                
+  ReML Iteration 1                      :        ...2.050507e+01 [+4.25]
+  ReML Iteration 2                      :        ...5.446338e-04 [+4.50]
+  ReML Block 2                
+  ReML Iteration 1                      :        ...2.262181e+01 [+4.25]
+  ReML Iteration 2                      :        ...4.897099e-04 [+4.50]
+  ReML Block 3                
+  ReML Iteration 1                      :        ...2.337432e+01 [+4.25]
+  ReML Iteration 2                      :        ...5.509032e-04 [+4.50]
+
+SPM12: spm_spm (v6842)                             15:52:41 - 19/11/2019
+========================================================================
+Chunk   1/15                            :                  ...processing                       ...doneChunk   2/15                            :                  ...processing                       ...doneChunk   3/15                            :                  ...processing                       ...doneChunk   4/15                            :                  ...processing                       ...doneChunk   5/15                            :                  ...processing                       ...doneChunk   6/15                            :                  ...processing                       ...doneChunk   7/15                            :                  ...processing                       ...doneChunk   8/15                            :                  ...processing                       ...doneChunk   9/15                            :                  ...processing                       ...doneChunk  10/15                            :                  ...processing                       ...doneChunk  11/15                            :                  ...processing                       ...doneChunk  12/15                            :                  ...processing                       ...doneChunk  13/15                            :                  ...processing                       ...doneChunk  14/15                            :                  ...processing                       ...doneChunk  15/15                            :                  ...processing                       ...done
+Spatial non-sphericity (over scans)     :      ...estimating derivatives ...writing resels/voxel image                       ...done
+Saving SPM.mat                          :                     ...writing                       ...done
+Completed                               :          15:54:26 - 19/11/2019
+Done
+Done    'Model estimation'
+Done
+
+Contrast could not be generated for run1 'translation' aligned/misaligned with ROI1 mean grid orientation. One or both regressors do not exist or are not estimable.
+Contrast could not be generated for run2 'translation' aligned/misaligned with ROI1 mean grid orientation. One or both regressors do not exist or are not estimable.
+Contrast could not be generated for run3 'translation' aligned/misaligned with ROI1 mean grid orientation. One or both regressors do not exist or are not estimable.
+
+
+------------------------------------------------------------------------
+Running job #1
+------------------------------------------------------------------------
+Running 'Contrast Manager'
+
+SPM12: spm_contrasts.m                             15:54:44 - 19/11/2019
+========================================================================
+Contrasts folder                        :    ./29382/gridCAT_pmEC02/GLM2
+Completed                               :          15:54:44 - 19/11/2019
+Done    'Contrast Manager'
+Done
+
+[Warning: MATLAB has disabled some advanced graphics rendering features by
+switching to software OpenGL. For more information, click <a
+href="matlab:opengl('problems')">here</a>.] 
+{Output argument "outputData" (and maybe others) not assigned during call to
+"gridMetric_gridCodeResponseMagnitude".
+
+Error in gridMetric_export (line 56)
+    output = gridMetric_gridCodeResponseMagnitude(0, roiMasks, GLM2dir);
+
+Error in GridCAT_mainfunc (line 226)
+    gridMetric_export(ROI_masks, GLM1dir, GLM2dir, output_file);
+} 
+>> 

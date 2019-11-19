@@ -1,11 +1,13 @@
 %% GridCAT function for batch script
+ %called from gridcatprepare.sh on command line
+
 % input images, event table and regressors to generate grid cell metrics
 % CCNewton adapted from GridCAT demo script 22/08/19
 % out01 = both EC, 6 fold
 % out02 = both EC, 7 fold, 03 = left EC 6 fold, 04 = right EC 6 fold, 05 =
 % both EC 4 fold, 06 = both posterior HC 6 fold
 
-function GridCAT_mainfunc(subject,preprocesspathstem,taskpathstem,outdirname,ROI_flag,warp_flag,xFold)
+function GridCAT_mainfunc(subject,preprocesspathstem,taskpathstem,outdirname,ROI_flag,warp_flag,xFold,mask_thresh,regressor_flag)
 
 %subjectvec = {'27734','28061','28428','29317','29321','29332','29336','29358','29382','29383'};
 %preprocesspathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data';
@@ -21,7 +23,7 @@ maskthresh=str2double(mask_thresh); %taken from input - mask_thresh = str, maskt
 % calculate mean grid orientation within each run separately (0) or across all runs (1)
 orientationcalc_flag = 1;
 % use physiology regressors (phys) or use movement parameters (move)
-regressor_flag = 'move';
+nuisance_flag = 'move';
 % use 'left', 'right', or 'both' EC ROI in mask
 %ROI_flag = 'left';
 
@@ -43,9 +45,9 @@ regressor_flag = 'move';
         cfg.rawData.run(run).eventTable_file = [taskpathstem '/' subject '/' runs{run} '/eventTable_movemenEventData.txt'] ;
         
         % specify additional regressors file - need to combine rp.txt with phys regressors
-        if strcmp(regressor_flag,'phys') == 1
+        if strcmp(nuisance_flag,'phys') == 1
             cfg.rawData.run(run).additionalRegressors_file = [preprocesspathstem '/regressors/' subject '/Run' num2str(run) '/Physio_regressors/multiple_regressors.txt'];
-        elseif strcmp(regressor_flag,'move') == 1
+        elseif strcmp(nuisance_flag,'move') == 1
             cfg.rawData.run(run).additionalRegressors_file = [preprocesspathstem '/images/old_data/' subject '/rp_topup_Run_' num2str(run) '.txt'];
         end
         
@@ -156,6 +158,10 @@ regressor_flag = 'move';
             cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/LeftECmaskWarped_ITKaffine.nii']};
         elseif strcmp(ROI_flag, 'right')
             cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/RightECmaskWarped_ITKaffine.nii']};
+        elseif strcmp(ROI_flag, 'pmRight')
+            cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/pmEC_rightWarped_ITKaffine.nii']};
+        elseif strcmp(ROI_flag, 'pmLeft')
+            cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/pmEC_leftWarped_ITKaffine.nii']};
         end
     elseif strcmp(warp_flag,'SyN')
         cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/bothECmaskWarped_SyN.nii']};
@@ -179,7 +185,7 @@ regressor_flag = 'move';
     %                            and one regressor for misaligned events
     %   'aligned_misaligned_multiple' ... one regressor for each orientation, for which either a positive peak (for aligned events)
     %                                     or a negative peak (for misaligned events) in the BOLD signal is expected
-    cfg.GLM.GLM2_gridRegressorMethod = 'aligned_misaligned';
+    cfg.GLM.GLM2_gridRegressorMethod = regressor_flag;
     
     % Specify GLM2 using the current configuration (cfg)
     specifyGLM(cfg);
@@ -198,6 +204,10 @@ regressor_flag = 'move';
             ROI_masks = {[preprocesspathstem '/segmentation/' subject '/epimasks/LeftECmaskWarped_ITKaffine.nii']};
         elseif strcmp(ROI_flag, 'right')
             ROI_masks = {[preprocesspathstem '/segmentation/' subject '/epimasks/RightECmaskWarped_ITKaffine.nii']};
+        elseif strcmp(ROI_flag, 'pmRight')
+            ROI_masks = {[preprocesspathstem '/segmentation/' subject '/epimasks/pmEC_rightWarped_ITKaffine.nii']};
+        elseif strcmp(ROI_flag, 'pmLeft')
+            ROI_masks = {[preprocesspathstem '/segmentation/' subject '/epimasks/pmEC_leftWarped_ITKaffine.nii']};
         end
     elseif strcmp(warp_flag,'SyN')
             ROI_masks = {[preprocesspathstem '/segmentation/' subject '/epimasks/bothECmaskWarped_SyN.nii']};

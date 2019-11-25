@@ -166,7 +166,13 @@ nuisance_flag = 'move';
     elseif strcmp(warp_flag,'SyN')
         cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/bothECmaskWarped_SyN.nii']};
     elseif strcmp(warp_flag,'control')
-        cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/bothPostHCmaskWarped_ITKaffine.nii']};
+        if strcmp(ROI_flag,'PosHipp')
+            cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/bothPostHCmaskWarped_ITKaffine.nii']};
+        elseif strcmp(ROI_flag,'alRight')
+            cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/alEC_rightWarped_ITKaffine.nii']};
+        elseif strcmp(ROI_flag,'alLeft')
+            cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/alEC_leftWarped_ITKaffine.nii']};
+        end
     end
     
     % Use different weighting for individual voxels within the ROI, when estimating the mean grid orientation?
@@ -212,7 +218,13 @@ nuisance_flag = 'move';
     elseif strcmp(warp_flag,'SyN')
             ROI_masks = {[preprocesspathstem '/segmentation/' subject '/epimasks/bothECmaskWarped_SyN.nii']};
     elseif strcmp(warp_flag,'control')
+        if strcmp(ROI_flag,'PosHipp')
             ROI_masks = {[preprocesspathstem '/segmentation/' subject '/epimasks/bothPostHCmaskWarped_ITKaffine.nii']};
+        elseif strcmp(ROI_flag,'alRight')
+            ROI_masks = {[preprocesspathstem '/segmentation/' subject '/epimasks/alEC_rightWarped_ITKaffine.nii']};
+        elseif strcmp(ROI_flag,'alLeft')
+            ROI_masks = {[preprocesspathstem '/segmentation/' subject '/epimasks/alEC_leftWarped_ITKaffine.nii']};
+        end
     end
     
     % Specify where the GLM1 and GLM2 output is stored

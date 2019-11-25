@@ -117,23 +117,23 @@
 	
 		#----- AFFINE ITK and ANTS -----#
 		#left MTL for pmEC mask
-		antsApplyTransforms -d 3 \
-				-i ${pm_al_maskdir}/leftMTL_${subject}.nii.gz \
-				-r ${epi} \
-				-o ${pm_al_maskdir}/leftMTLWarped_${subject}.nii.gz \
-				-n MultiLabel \
-				-t [EPItoT1_ITK_affine_crosscorr.txt,1] \
-				-t [T1toT2_ANTS_0GenericAffine.mat,1] \
-				-v
+#!		antsApplyTransforms -d 3 \
+#!				-i ${pm_al_maskdir}/leftMTL_${subject}.nii.gz \
+#!				-r ${epi} \
+#!				-o ${pm_al_maskdir}/leftMTLWarped_${subject}.nii.gz \
+#!				-n MultiLabel \
+#!				-t [EPItoT1_ITK_affine_crosscorr.txt,1] \
+#!				-t [T1toT2_ANTS_0GenericAffine.mat,1] \
+#!				-v
 		#right MTL for pmEC mask
-		antsApplyTransforms -d 3 \
-				-i ${pm_al_maskdir}/rightMTL_${subject}.nii.gz \
-				-r ${epi} \
-				-o ${pm_al_maskdir}/rightMTLWarped_${subject}.nii.gz \
-				-n MultiLabel \
-				-t [EPItoT1_ITK_affine_crosscorr.txt,1] \
-				-t [T1toT2_ANTS_0GenericAffine.mat,1] \
-				-v
+#!		antsApplyTransforms -d 3 \
+#!				-i ${pm_al_maskdir}/rightMTL_${subject}.nii.gz \
+#!				-r ${epi} \
+#!				-o ${pm_al_maskdir}/rightMTLWarped_${subject}.nii.gz \
+#!				-n MultiLabel \
+#!				-t [EPItoT1_ITK_affine_crosscorr.txt,1] \
+#!				-t [T1toT2_ANTS_0GenericAffine.mat,1] \
+#!				-v
 
 		#right MTL original mask transformation code
 #!		antsApplyTransforms -d 3 \
@@ -153,9 +153,9 @@
 		#!fslmaths ${maskregdir}/LeftMTLmaskWarped_ITKaffine.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/LeftECmaskWarped_ITKaffine.nii -odt char
 		#!fslmaths ${maskregdir}/RightMTLmaskWarped_ITKaffine.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/RightECmaskWarped_ITKaffine.nii -odt char
 		
-		# pmEC mask extractrion
-		fslmaths ${pm_al_maskdir}/leftMTLWarped_${subject}.nii.gz -thr 14.5 -uthr 15.5 -bin ${maskregdir}/pmEC_leftWarped_ITKaffine.nii -odt char
-		fslmaths ${pm_al_maskdir}/rightMTLWarped_${subject}.nii.gz -thr 14.5 -uthr 15.5 -bin ${maskregdir}/pmEC_rightWarped_ITKaffine.nii -odt char
+		# pmEC mask extractrion 14.5,15.5, alEC extraction 13.5,14.5
+		fslmaths ${pm_al_maskdir}/leftMTLWarped_${subject}.nii.gz -thr 13.5 -uthr 14.5 -bin ${maskregdir}/alEC_leftWarped_ITKaffine.nii -odt char
+		fslmaths ${pm_al_maskdir}/rightMTLWarped_${subject}.nii.gz -thr 13.5 -uthr 14.5 -bin ${maskregdir}/alEC_rightWarped_ITKaffine.nii -odt char
 		
 		# make control masks of posterior hippocampus
 		#!fslmaths ${maskregdir}/LeftMTLmaskWarped_ITKaffine.nii.gz -thr 4.5 -uthr 5.5 -bin ${maskregdir}/LeftPostHCmaskWarped_ITKaffine.nii -odt char

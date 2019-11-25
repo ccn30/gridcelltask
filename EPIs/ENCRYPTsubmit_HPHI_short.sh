@@ -17,7 +17,7 @@
 #! The skylake/skylake-himem nodes have 32 CPUs (cores) each.
 #SBATCH --ntasks=1
 #! How much wallclock time will be required?
-#SBATCH --time=01:00:00
+#SBATCH --time=01:30:00
 #! What types of email messages do you wish to receive?
 #SBATCH --mail-type=FAIL
 #! Uncomment this to prevent the job from being requeued (e.g. if
@@ -80,7 +80,7 @@ then
 fi
 if [ "$clusterid" == "HPHI" ]
 then
-    module unload matlab/matlab2016a    
+    module unload matlab    
     module load matlab/matlab2017b
     module load freesurfer/6.0.0
     module load spm/spm12_6906

@@ -17,10 +17,10 @@ addpath('/applications/spm/spm12_6906')
 addpath('/home/ccn30/Documents/MATLAB/Add-Ons/Collections/Circular Statistics Toolbox (Directional Statistics)/code')
 
 % what type of mask to use - affine or SyN or control?
-warp_flag = 'affine'
+warp_flag = 'control'
 
-% use original [left,right,both] EC ROI or [pmLeft,pmRight] new posteromedial EC ROI mask?
-ROI_flag = 'pmLeft'
+% use original [left,right,both] EC ROI or [pmLeft,pmRight] new posteromedial EC ROI mask or control [PosHipp,alRight,alLeft] ROI mask?
+ROI_flag = 'alLeft'
 
 % 4,5,6,7 or 8 fold symmetry?
 xFold = '6'
@@ -37,7 +37,7 @@ mask_thresh = '0.4'
 regressor_flag = 'aligned_misaligned'
 
 % Name of output directory
-outdirname = 'gridCAT_pmEC02'
+outdirname = 'gridCAT_pmEC04'
 
 preprocesspathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data';
 taskpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/task_data';

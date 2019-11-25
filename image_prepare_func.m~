@@ -8,7 +8,7 @@ function image_prepare_func(pathstem,subjectvec,dateIDvec,seriesvec)
 subjectvec = {'29780','27734','28061','28428','29317','29321','29332','29336','29358','29382','29383'};
 dateIDvec = {'20191125_U-ID47173','20190902_U-ID46027','20190911_U-ID46160','20190903_U-ID46074','20190902_U-ID46030','20190902_U-ID46038','20190903_U-ID46058','20190903_U-ID46066','20190905_U-ID46106','20190911_U-ID46164','20190912_U-ID46168'};
 pathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images';
-seriesvec = [27,29,33,35,39];
+seriesvec = [5,21,23,27,29,33,35,39];
 %seriesvec = [4,5,21,23,27,29,33,35,39];
 %seriesvec=33;
 
@@ -94,12 +94,12 @@ for j = 1
                     copyfile('../DATA_*_00005.dcm');
                     cmd = 'dcm2niix -f pos_topup_all *.dcm';
                     system(cmd);
-                    cmd2 = 'fslmaths pos_topup_all -Tmean pos_topup';
+                    cmd2 = 'fslmaths pos_topup_all_c32 -Tmean pos_topup';
                     [status,~] = system(cmd2);
                     if status == 0
                         disp('** pos topup done **');
-                        delete('pos_topup_all.nii')
-                        delete('pos_topup_all.json')
+                        delete('pos_topup_all_c32.nii')
+                        delete('pos_topup_all_c32.json')
                     else
                         warning('pos topup issue');
                     end

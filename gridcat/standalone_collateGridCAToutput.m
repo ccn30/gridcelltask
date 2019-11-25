@@ -127,6 +127,12 @@ for subjIdx = 1:length(subjDirList)
             elseif contains(GLM2dirName, '02')
                 ROI_GLM2meanGridOriCalc = 'left';
                 dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_pmLeft_affine.txt'];
+            elseif contains(GLM2dirName, '03')
+                ROI_GLM2meanGridOriCalc = 'righ';
+                dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_alRight_control.txt'];
+            elseif contains(GLM2dirName, '04')
+                ROI_GLM2meanGridOriCalc = 'left';
+                dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_alLeft_control.txt'];
             end
              
         end

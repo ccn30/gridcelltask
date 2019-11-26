@@ -1,13 +1,13 @@
-function GCAP_logfile2eventTable(logfile, setAllDurationsToZero_flag, includeRotation_flag, minActiveTranslDur_sec)
-
+function GCAP_logfile2eventTable
+%(logfile, setAllDurationsToZero_flag, includeRotation_flag, minActiveTranslDur_sec)
 includeRotation_flag = 0;
 setAllDurationsToZero_flag = 0;
 minActiveTranslDur_sec = 0.01;
-subjectvec = {'27734','28061','28428','29317','29321','29332','29336','29358','29382','29383'};
+subjectvec = {'29780','27734','28061','28428','29317','29321','29332','29336','29358','29382','29383'};
 blocks = {'BlockA','BlockB','BlockC'};
 pathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/task_data';
 
-for i = 1:length(subjectvec)
+for i = 1%:length(subjectvec)
     
     for b = 1:3
         logfile = [pathstem '/' subjectvec{i} '/' blocks{b} '/movemenEventData.csv']

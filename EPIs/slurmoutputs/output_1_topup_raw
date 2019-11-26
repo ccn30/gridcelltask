@@ -1,4 +1,4 @@
-Mon Sep 30 11:23:58 BST 2019
+Tue Nov 26 17:31:11 GMT 2019
 working on file 1
 The workspace going into this is /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/ENCRYPT_preprocess_mainfunc_7T.m /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/ENCRYPT_subjects_parameters.m 1 HPHI raw topup
 
@@ -32,34 +32,30 @@ preprocessedpathstem =
 
     '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images'
 
->> >> >> Submitting the following command: ENCRYPT_preprocess_mainfunc_7T('topup','raw','HPHI',preprocessedpathstem,rawpathstem,subjects,1,fullid,basedir,blocksin,blocksin_folders,blocksout,minvols,dates,group)
+>> >> Submitting the following command: ENCRYPT_preprocess_mainfunc_7T('topup','raw','HPHI',preprocessedpathstem,rawpathstem,subjects,1,fullid,basedir,blocksin,blocksin_folders,blocksout,minvols,dates,group)
 >> 
 
-Current subject = 29358...
+Current subject = 29780...
 
 
 
- /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29358/structural.nii already exists, moving on...
+ /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29780/structural.nii already exists, moving on...
 
 
 
-Moving run1.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29358/Run_1.nii...
+ /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29780/INV2.nii already exists, moving on...
 
 
 
-Moving run2.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29358/Run_2.nii...
+Moving Series_035_cmrr_ep2d_bold_1.5x1.5x1_TrueForm.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29780/Run_3.nii...
 
 
 
-Moving run3.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29358/Run_3.nii...
+Moving pos_topup.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29780/Pos_topup.nii...
 
 
 
-Moving pos_topup.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29358/Pos_topup.nii...
-
-
-
-Moving neg_topup.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29358/Neg_topup.nii...
+Moving neg_topup.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29780/Neg_topup.nii...
 
 
 
@@ -71,7 +67,7 @@ Raw data copied to preprocessing directory! Now working on it.
 (___/(__)  (_/\/\_)  SPM12 - http://www.fil.ion.ucl.ac.uk/spm/
 
 
-SPM12: v6906                                       11:24:30 - 30/09/2019
+SPM12: v6906                                       17:31:29 - 26/11/2019
 ========================================================================
 Initialising SPM                        :                   ........done
 
@@ -86,10 +82,5 @@ ans =
 [Warning: Echo spacing not found with spm_vol - using .json file and manual
 calculations] 
 [> In module_topup_job_cluster (line 20)
-  In ENCRYPT_preprocess_mainfunc_7T (line 124)] 
+  In ENCRYPT_preprocess_mainfunc_7T (line 164)] 
 Calculating topup, this can take some time
-Calculation status: 0
-Topup results present in output dir, now applying topup
-Topup applied
->> Bye for now...
-

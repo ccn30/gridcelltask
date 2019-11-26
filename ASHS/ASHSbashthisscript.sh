@@ -6,8 +6,8 @@ scriptdir=${pathstem}/scripts/ASHS
 submit=${scriptdir}/ASHS_sba.sh
 
 # separate txt file with subject and date IDs are listed
-mysubjs=${pathstem}/master_subjsdeflist.txt
-
+#!mysubjs=${pathstem}/master_subjsdeflist.txt
+mysubjs=${pathstem}/mysubjs_deflist.txt
 # this script must be called from ASHS script dir where a slurmoutputs folder must be
 cd slurmoutputs
 

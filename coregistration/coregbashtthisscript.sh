@@ -6,9 +6,9 @@ scriptdir=${pathstem}/scripts/coregistration
 
 submit=${scriptdir}/coreg_submit.sh
 #!submit2=${scriptdir}/coreg_2_submit.sh
-mysubjs=${pathstem}/master_subjsdeflist.txt
+#!mysubjs=${pathstem}/master_subjsdeflist.txt
 #!subjID=29382/20190911_U-ID46164
-#!mysubjs=${pathstem}/mysubjs_deflist.txt
+mysubjs=${pathstem}/mysubjs_deflist.txt
 
 cd slurmoutputs
 

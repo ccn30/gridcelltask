@@ -1,0 +1,138 @@
+Tue Nov 26 08:10:53 GMT 2019
+working on file 1
+The workspace going into this is /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/ENCRYPT_preprocess_mainfunc_7T.m /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/ENCRYPT_subjects_parameters.m 1 HPHI raw skullstrip
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2017 The MathWorks, Inc.
+                   R2017b (9.3.0.713579) 64-bit (glnxa64)
+                             September 14, 2017
+
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+>> >> >> Path is /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs
+>> Function is ENCRYPT_preprocess_mainfunc_7T
+>> Subject definition function is /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/ENCRYPT_subjects_parameters.m
+>> Environment is HPHI
+>> Previous step is raw
+>> This step is skullstrip
+>> 
+do_definition_func =
+
+    '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/ENCRYPT_subjects_parameters.m'
+
+>> >> >> >> >> 
+rawpathstem =
+
+    '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images'
+
+>> 
+preprocessedpathstem =
+
+    '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images'
+
+>> >> Submitting the following command: ENCRYPT_preprocess_mainfunc_7T('skullstrip','raw','HPHI',preprocessedpathstem,rawpathstem,subjects,1,fullid,basedir,blocksin,blocksin_folders,blocksout,minvols,dates,group)
+>> 
+
+Current subject = 29780...
+
+
+
+Moving Series_005_mp2rage_sag_p3_0.75mm_UNI_Images.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29780/structural.nii...
+
+
+
+Moving Series_004_mp2rage_sag_p3_0.75mm_INV2.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29780/INV2.nii...
+
+
+
+Moving Series_023_cmrr_ep2d_bold_1.5x1.5x1_PatientSpec.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29780/Run_1.nii...
+
+
+
+Moving pos_topup.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29780/Pos_topup.nii...
+
+
+
+Moving neg_topup.nii to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29780/Neg_topup.nii...
+
+
+
+Raw data copied to preprocessing directory! Now working on it.
+
+ ___  ____  __  __                                            
+/ __)(  _ \(  \/  )                                           
+\__ \ )___/ )    (   Statistical Parametric Mapping           
+(___/(__)  (_/\/\_)  SPM12 - http://www.fil.ion.ucl.ac.uk/spm/
+
+
+SPM12: v6906                                       08:11:13 - 26/11/2019
+======================================================..done
+
+SPM present working directory:
+	/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridc..done
+
+SPM present working directory:
+	/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/slurmoutputs
+running SPM skullstrip
+
+
+------------------------------------------------------------------------
+Running job #1
+------------------------------------------------------------------------
+Running 'Segment'
+
+SPM12: spm_preproc_run (v6365)                     08:21:56 - 26/11/2019
+========================================================================
+Segment /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29780/structural.nii,1
+Completed                               :          08:28:31 - 26/11/2019
+Done    'Segment'
+Running 'Named File Selector'
+Done    'Named File Selector'
+Running 'Image Calculator'
+
+SPM12: spm_imcalc (v6124)                          08:28:31 - 26/11/2019
+========================================================================
+ImCalc Image: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29780/structural_skullstripped.nii
+Done    'Image Calculator'
+Running 'Image Calculator'
+
+SPM12: spm_imcalc (v6124)                          08:28:35 - 26/11/2019
+========================================================================
+Error: No such file or directory
+There was a problem writing to the header of
+  "/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images29780/structural_skullstripped_csf.nii"
+Failed  'Image Calculator'
+Error using nifti/create (line 26)
+Unable to write header for "/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images29780/structural_skullstripped_csf.nii".
+In file "/applications/spm/spm12_6906/@nifti/create.m" (v5451), function "create" at line 26.
+In file "/applications/spm/spm12_6906/spm_create_vol.m" (v6157), function "create_vol" at line 182.
+In file "/applications/spm/spm12_6906/spm_create_vol.m" (v6157), function "spm_create_vol" at line 13.
+In file "/applications/spm/spm12_6906/spm_write_vol.m" (v5731), function "spm_write_vol" at line 83.
+In file "/applications/spm/spm12_6906/spm_imcalc.m" (v6124), function "spm_imcalc" at line 215.
+In file "/applications/spm/spm12_6906/config/spm_cfg_imcalc.m" (v6536), function "my_spm_imcalc" at line 225.
+
+Running 'Image Calculator'
+
+SPM12: spm_imcalc (v6124)                          08:28:38 - 26/11/2019
+========================================================================
+Error: No such file or directory
+There was a problem writing to the header of
+  "/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images29780/binarised_native_structural_mask.nii"
+Failed  'Image Calculator'
+Error using nifti/create (line 26)
+Unable to write header for "/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images29780/binarised_native_structural_mask.nii".
+In file "/applications/spm/spm12_6906/@nifti/create.m" (v5451), function "create" at line 26.
+In file "/applications/spm/spm12_6906/spm_create_vol.m" (v6157), function "create_vol" at line 182.
+In file "/applications/spm/spm12_6906/spm_create_vol.m" (v6157), function "spm_create_vol" at line 13.
+In file "/applications/spm/spm12_6906/spm_write_vol.m" (v5731), function "spm_write_vol" at line 83.
+In file "/applications/spm/spm12_6906/spm_imcalc.m" (v6124), function "spm_imcalc" at line 215.
+In file "/applications/spm/spm12_6906/config/spm_cfg_imcalc.m" (v6536), function "my_spm_imcalc" at line 225.
+
+The following modules did not run:
+Failed: Image Calculator
+Failed: Image Calculator
+
+>> Bye for now...
+

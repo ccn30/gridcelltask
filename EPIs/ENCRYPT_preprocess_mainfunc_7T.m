@@ -119,7 +119,7 @@ switch step
             inputs{2, crun} = cellstr([pathstem blocksout{crun}{find(strcmp(blocksout{crun},'INV2'))} '.nii,1']);
             inputs{3, crun} = cellstr([pathstem blocksout{crun}{find(strcmp(blocksout{crun},'structural'))} '.nii']);
             inputs{4, crun} = 'structural_skullstripped';
-            inputs{5, crun} = cellstr([preprocessedpathstem subjects{crun} '/']);
+            inputs{5, crun} = cellstr([preprocessedpathstem '/' subjects{crun} '/']);
             if ~exist(inputs{5, crun}{1})
                 mkdir(inputs{5, crun}{1});
             end
@@ -157,14 +157,15 @@ switch step
             outpath = [preprocessedpathstem '/' subjects{crun} '/'];
             theseepis = find(strncmp(blocksout{crun},'Run',3));
             filestocorrect = cell(1,length(theseepis));
-            json_path = [rawpathstem '/' subjects{subjcnt} '/' fullid{subjcnt} '/' blocksin_folders{subjcnt}{2}];
+            json_path = [rawpathstem '/' subjects{subjcnt} '/' fullid{subjcnt} '/' blocksin_folders{subjcnt}{3}];
             for i = 1:length(theseepis)
                 filestocorrect{i} = [outpath blocksout{crun}{theseepis(i)} '.nii']; % pathstem to outpath temp
             end
             module_topup_job_cluster(base_image_path, reversed_image_path, outpath, minvols(crun), filestocorrect,json_path)
             if ~exist([outpath 'epi_topup_results_fieldcoef.nii'],'file')
                 error('Topup not successfully calculated!');
-            elseif ~exist([outpath 'topup_Run_3.nii'],'file')
+            % globbing with star may not work
+            elseif ~exist([outpath 'topup_Run_*.nii'],'file')
                 error('Topup not successfully applied!');
             end
             
@@ -220,9 +221,11 @@ switch step
                 filestorealign{i} = spm_select('ExtFPList',outpath,['^' prevStep blocksout{crun}{theseepis(i)} '.nii'],1:minvols(crun));
             end
             flags = struct;
-            flags.which = 0;
+            % 0 = no reslice, 1 = reslice but not first image, [2 1] =reslice to mean
+            %flags.which = 0;
             %flags.which = [2 1];
-            %flags.which = 1;
+            flags.which = 1;
+            
             try
                 spm_reslice(filestorealign,flags)
                 resliceworkedcorrectly(crun) = 1;

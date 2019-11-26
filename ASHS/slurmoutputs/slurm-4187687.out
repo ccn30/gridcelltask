@@ -1,0 +1,24 @@
+ModuleCmd_Load.c(208):ERROR:105: Unable to locate a modulefile for 'ASHS_FASTB'
+Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/ASHS/slurmoutputs.
+
+JobID: 4187687
+======
+Time: Tue Nov 26 08:23:47 GMT 2019
+Running on master node: wbic-cs-9
+Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/ASHS/slurmoutputs
+
+Nodes allocated:
+================
+wbic-cs-9
+
+numtasks=1, numnodes=1, mpi_tasks_per_node=1 (OMP_NUM_THREADS=1)
+
+Executing command:
+==================
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/ASHS/denoise.sh /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot 29780/20191125_U-ID47173
+
+Running DenoiseImage in:  /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29780
+
+Running for 3-dimensional images.
+
+*********10*********20*********slurmstepd: error: *** JOB 4187687 ON wbic-cs-9 CANCELLED AT 2019-11-26T10:23:57 DUE TO TIME LIMIT ***

@@ -1,0 +1,26 @@
+ModuleCmd_Load.c(208):ERROR:105: Unable to locate a modulefile for 'ASHS_FASTB'
+Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/ASHS/slurmoutputs.
+
+JobID: 4187684
+======
+Time: Tue Nov 26 08:19:50 GMT 2019
+Running on master node: wbic-cs-37
+Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/ASHS/slurmoutputs
+
+Nodes allocated:
+================
+wbic-cs-37
+
+numtasks=1, numnodes=1, mpi_tasks_per_node=1 (OMP_NUM_THREADS=1)
+
+Executing command:
+==================
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/ASHS/denoise.sh /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot 29358/20190905_U-ID46106
+
+Running DenoiseImage in:  /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29358
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/ASHS/denoise.sh: line 34: cd: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29358: No such file or directory
+
+Running for 3-dimensional images.
+
+ file /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29358/structural.nii does not exist . 
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/ASHS/denoise.sh: line 46:  5303 Segmentation fault      $antsroot/DenoiseImage -d 3 -i $wholeT1 -o $denoiseT1whole -v 1

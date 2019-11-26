@@ -1,4 +1,4 @@
-Wed Oct 23 15:32:14 BST 2019
+Tue Nov 26 15:29:19 GMT 2019
 working on file 1
 The workspace going into this is /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/ENCRYPT_preprocess_mainfunc_7T.m /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/ENCRYPT_subjects_parameters.m 1 HPHI  
 
@@ -11,11 +11,6 @@ The workspace going into this is /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcel
 To get started, type one of these: helpwin, helpdesk, or demo.
 For product information, visit www.mathworks.com.
  
-    ----------------------------------------------------
-	Your MATLAB license will expire in 7 days.
-	Please contact your system administrator or
-	MathWorks to renew this license.
-    ----------------------------------------------------
 >> >> >> Path is /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs
 >> Function is ENCRYPT_preprocess_mainfunc_7T
 >> Subject definition function is /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/ENCRYPT_subjects_parameters.m
@@ -35,16 +30,16 @@ rawpathstem =
 >> 
 preprocessedpathstem =
 
-    '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/spmtest'
+    '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images'
 
->> >> >> Submitting the following command: ENCRYPT_preprocess_mainfunc_7T('','','HPHI',preprocessedpathstem,rawpathstem,subjects,1,fullid,basedir,blocksin,blocksin_folders,blocksout,minvols,dates,group)
+>> >> Submitting the following command: ENCRYPT_preprocess_mainfunc_7T('','','HPHI',preprocessedpathstem,rawpathstem,subjects,1,fullid,basedir,blocksin,blocksin_folders,blocksout,minvols,dates,group)
 >>  ___  ____  __  __                                            
 / __)(  _ \(  \/  )                                           
 \__ \ )___/ )    (   Statistical Parametric Mapping           
 (___/(__)  (_/\/\_)  SPM12 - http://www.fil.ion.ucl.ac.uk/spm/
 
 
-SPM12: v6906                                       15:32:28 - 23/10/2019
+SPM12: v6906                                       15:29:35 - 26/11/2019
 ========================================================================
 Initialising SPM                        :                   ........done
 

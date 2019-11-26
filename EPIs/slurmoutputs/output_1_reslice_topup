@@ -1,4 +1,4 @@
-Mon Sep 30 12:09:59 BST 2019
+Tue Nov 26 15:52:16 GMT 2019
 working on file 1
 The workspace going into this is /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/ENCRYPT_preprocess_mainfunc_7T.m /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/ENCRYPT_subjects_parameters.m 1 HPHI topup reslice
 
@@ -32,14 +32,14 @@ preprocessedpathstem =
 
     '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images'
 
->> >> >> Submitting the following command: ENCRYPT_preprocess_mainfunc_7T('reslice','topup','HPHI',preprocessedpathstem,rawpathstem,subjects,1,fullid,basedir,blocksin,blocksin_folders,blocksout,minvols,dates,group)
+>> >> Submitting the following command: ENCRYPT_preprocess_mainfunc_7T('reslice','topup','HPHI',preprocessedpathstem,rawpathstem,subjects,1,fullid,basedir,blocksin,blocksin_folders,blocksout,minvols,dates,group)
 >>  ___  ____  __  __                                            
 / __)(  _ \(  \/  )                                           
 \__ \ )___/ )    (   Statistical Parametric Mapping           
 (___/(__)  (_/\/\_)  SPM12 - http://www.fil.ion.ucl.ac.uk/spm/
 
 
-SPM12: v6906                                       12:10:12 - 30/09/2019
+SPM12: v6906                                       15:52:32 - 26/11/2019
 ========================================================================
 Initialising SPM                        :                   ........done
 
@@ -47,8 +47,8 @@ SPM present working directory:
 	/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/slurmoutputs
 running reslice
 
-SPM12: spm_reslice (v5929)                         12:20:37 - 30/09/2019
+SPM12: spm_reslice (v5929)                         15:53:00 - 26/11/2019
 ========================================================================
-Completed                               :          12:26:28 - 30/09/2019
+Completed                               :          15:54:59 - 26/11/2019
 >> Bye for now...
 

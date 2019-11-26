@@ -10,17 +10,27 @@
 	echo $subject
 	
 	# set subject-wise paths
-	imagedirpath=${pathstem}/preprocessed_data/images/old_data/${subject}
-	T1path=${pathstem}/raw_data/images/${subjID}/mp2rage
-	N4T2=${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/N4Series_033_Highresolution_TSE_PAT2_100_c32.nii
+	#!imagedirpath=${pathstem}/preprocessed_data/images/old_data/${subject}
+	#!T1path=${pathstem}/raw_data/images/${subjID}/mp2rage
+	#!T2=${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/Series_033_Highresolution_TSE_PAT2_100_c32.nii
 	#!N4T2=${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/N4reorientSeries_033_Highresolution_TSE_PAT2_100_c32.nii	
+	imagedirpath=${pathstem}/preprocessed_data/images/${subject}
 	segdirpath=${pathstem}/preprocessed_data/segmentation/${subject}
 	coregdir=${segdirpath}/coregistration
 	maskregdir=${segdirpath}/epimasks
-	pm_al_maskdir=/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/pm-alEC_masks
-	#!runs_to_process=(1 2 3) - combine means after coregistering EPIs together?
-	#!runs_to_process=1
 
+	T1=${pathstem}/preprocessed_data/images/${subject}/***************************
+	T2=${pathstem}/raw_data/images/${subjID}/Series_039_Highresolution_TSE_PAT2_100_PatSpec/Series_039_Highresolution_TSE_PAT2_100_PatSpec.nii
+	N4T2=${pathstem}/raw_data/images/${subjID}/Series_039_Highresolution_TSE_PAT2_100_PatSpec/N4Series_039_Highresolution_TSE_PAT2_100_PatSpec
+	epi=${imagedirpath}/rtopup_Run_1_split0000.nii
+	
+	#!pm_al_maskdir=/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/pm-alEC_masks
+
+	# run N4BiasFieldCorrection (but done earlier in ASHS scripts)
+	#!N4BiasFieldCorrection -i ${T2} -o ${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/N4rSeries_033_Highresolution_TSE_PAT2_100_c32.nii
+	#!N4rT2=${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/N4rSeries_033_Highresolution_TSE_PAT2_100_c32.nii
+	#!echo "Ran N4BiasFieldCorrection -- ${N4rT2}"
+		
 	cd ${segdirpath}
 	pwd
 
@@ -36,8 +46,9 @@
 	cd ${coregdir}
 	pwd
 	
-#!	echo "EXECUTING t2 to t1 coreg: " $subject	
-#!	$antsroot/antsRegistrationSyNQuick.sh -d 3 -f ${N4T2} -m ${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii -o ${coregdir}/T1toT2_ANTS_
+	echo "EXECUTING t2 to t1 coreg: " $subject	
+	# N4 T2 and whole brain denoised reorientated T1
+	$antsroot/antsRegistrationSyNQuick.sh -d 3 -f ${N4T2} -m ${T1} -o ${coregdir}/T1toT2_ANTS_
 
 	#### ---------- COREGISTER EPIS TO T1 --------- ####
 	
@@ -47,7 +58,7 @@
 		
 		# run second time with skullstripped T1 instead of whole brain
 #!		echo "EXECUTING epi to T1 coregistration for subject ${subject} using:"
-		epi=${imagedirpath}/rtopup_Run_1_split0000.nii
+		
 		T1=${T1path}/denoiseRn4mag0000_PSIR_skulled_std_struc_brain.nii
 		echo "EPI: " $epi
 		echo "T1: " $T1

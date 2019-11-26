@@ -1,0 +1,49 @@
+ModuleCmd_Load.c(208):ERROR:105: Unable to locate a modulefile for 'ASHS_FASTB'
+Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/ASHS/slurmoutputs.
+
+JobID: 4188076
+======
+Time: Tue Nov 26 15:29:59 GMT 2019
+Running on master node: wbic-cs-18
+Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/ASHS/slurmoutputs
+
+Nodes allocated:
+================
+wbic-cs-18
+
+numtasks=1, numnodes=1, mpi_tasks_per_node=1 (OMP_NUM_THREADS=1)
+
+Executing command:
+==================
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/ASHS/ASHS_mainfun.sh /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot 29780/20191125_U-ID47173
+
+Running N4BiasFieldCorrection on:  /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/29780/20191125_U-ID47173/Series_039_Highresolution_TSE_PAT2_100_PatSpec.nii
+ file /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/29780/20191125_U-ID47173/Series_039_Highresolution_TSE_PAT2_100_PatSpec.nii does not exist . 
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/ASHS/ASHS_mainfun.sh: line 36: 21087 Segmentation fault      (core dumped) $antsroot/N4BiasFieldCorrection -d 3 -i ${T2} -o ${N4T2}
+>> N4BiasFieldCorrection FAIL
+mkdir: cannot create directory ‘/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/29780/ASHS’: No such file or directory
+Beginning ASHS for:  29780
+OUTPUT: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/29780/ASHS
+INPUT: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/29780/20191125_U-ID47173/Series_039_Highresolution_TSE_PAT2_100_PatSpec/N4Series_039_Highresolution_TSE_PAT2_100_PatSpec.nii
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/ASHS/ASHS_mainfun.sh: line 67: cd: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/29780/ASHS: No such file or directory
+ASHS started at 15:29:59
+ashs_main execution log
+  timestamp:   Tue Nov 26 15:29:59 GMT 2019
+  invocation:  /home/ccn30/privatemodules/ASHS/ashs-fastashs_beta/bin/ashs_main.sh -I 29780 -a /home/ccn30/ENCRYPT/atlases/magdeburgatlas -g /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29780/BETstructural_ANTSBrainExtractionBrain.nii.gz -f /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/29780/20191125_U-ID47173/Series_039_Highresolution_TSE_PAT2_100_PatSpec/N4Series_039_Highresolution_TSE_PAT2_100_PatSpec.nii -w /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/29780/ASHS
+  directory:   /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/29780/20191125_U-ID47173/Series_039_Highresolution_TSE_PAT2_100_PatSpec
+  environment:
+    ASHS_MPRAGE=/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29780/BETstructural_ANTSBrainExtractionBrain.nii.gz
+    ASHS_ROOT=/home/ccn30/privatemodules/ASHS/ashs-fastashs_beta
+    ASHS_SUBJID=29780
+    ASHS_TSE=/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/29780/20191125_U-ID47173/Series_039_Highresolution_TSE_PAT2_100_PatSpec/N4Series_039_Highresolution_TSE_PAT2_100_PatSpec.nii
+    ASHS_WORK=/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/29780/ASHS
+Atlas    : /home/ccn30/ENCRYPT/atlases/magdeburgatlas
+T1 Image : /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/29780/BETstructural_ANTSBrainExtractionBrain.nii.gz
+T2 Image : /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images/29780/20191125_U-ID47173/Series_039_Highresolution_TSE_PAT2_100_PatSpec/N4Series_039_Highresolution_TSE_PAT2_100_PatSpec.nii
+WorkDir  : /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/29780/ASHS
+Not using SGE or GNU parallel
+T2-weighted 2D fast spin echo MRI (-f) must be specified
+
+
+ ASHS completed for 29780 at 15:30:00, it took 0 days 0 hours 0 minutes and 1 seconds to complete 
+

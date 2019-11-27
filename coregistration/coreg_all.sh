@@ -1,5 +1,5 @@
 #!/bin/bash
-#! script to coregister masks in T2 space to EPI space - creates right/left/both EC only masks and right/left MTL masks
+# script to coregister masks in T2 space to EPI space - creates right/left/both EC only masks and right/left MTL masks
 	
 	export antsroot=/applications/ANTS/2.2.0/bin
 
@@ -10,31 +10,30 @@
 	echo $subject
 	
 	# set subject-wise paths
-	#!imagedirpath=${pathstem}/preprocessed_data/images/old_data/${subject}
-	#!T1path=${pathstem}/raw_data/images/${subjID}/mp2rage
-	#!T2=${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/Series_033_Highresolution_TSE_PAT2_100_c32.nii
-	#!N4T2=${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/N4reorientSeries_033_Highresolution_TSE_PAT2_100_c32.nii	
+#!	imagedirpath=${pathstem}/preprocessed_data/images/old_data/${subject}
+#!	T1path=${pathstem}/raw_data/images/${subjID}/mp2rage
+#!	T2=${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/Series_033_Highresolution_TSE_PAT2_100_c32.nii
+#!	N4T2=${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/N4reorientSeries_033_Highresolution_TSE_PAT2_100_c32.nii	
+	
+	# for new pTx pilot	
 	imagedirpath=${pathstem}/preprocessed_data/images/${subject}
 	segdirpath=${pathstem}/preprocessed_data/segmentation/${subject}
 	coregdir=${segdirpath}/coregistration
 	maskregdir=${segdirpath}/epimasks
 
-	T1=${pathstem}/preprocessed_data/images/${subject}/***************************
+	T1=${pathstem}/preprocessed_data/images/${subject}/structural.nii
 	T2=${pathstem}/raw_data/images/${subjID}/Series_039_Highresolution_TSE_PAT2_100_PatSpec/Series_039_Highresolution_TSE_PAT2_100_PatSpec.nii
-	N4T2=${pathstem}/raw_data/images/${subjID}/Series_039_Highresolution_TSE_PAT2_100_PatSpec/N4Series_039_Highresolution_TSE_PAT2_100_PatSpec
-	epi=${imagedirpath}/rtopup_Run_1_split0000.nii
+	N4T2=${pathstem}/raw_data/images/${subjID}/Series_039_Highresolution_TSE_PAT2_100_PatSpec/N4Series_039_Highresolution_TSE_PAT2_100_PatSpec.nii
+	epi=${imagedirpath}/topup_Run_1_split0000.nii
 	
 	#!pm_al_maskdir=/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/segmentation/pm-alEC_masks
-
-	# run N4BiasFieldCorrection (but done earlier in ASHS scripts)
-	#!N4BiasFieldCorrection -i ${T2} -o ${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/N4rSeries_033_Highresolution_TSE_PAT2_100_c32.nii
-	#!N4rT2=${pathstem}/raw_data/images/${subjID}/Series_033_Highresolution_TSE_PAT2_100/N4rSeries_033_Highresolution_TSE_PAT2_100_c32.nii
-	#!echo "Ran N4BiasFieldCorrection -- ${N4rT2}"
 		
 	cd ${segdirpath}
 	pwd
 
-	#### ---------- COREGISTER T2 TO T1 ---------- ####
+#################################################################
+# 		COREGISTER T2 to T1 (ANTS)			#	
+#################################################################
 	
 	if [ -f "${coregdir}" ]; then
 		echo "Coregistration directory exists"
@@ -47,21 +46,29 @@
 	pwd
 	
 	echo "EXECUTING t2 to t1 coreg: " $subject	
-	# N4 T2 and whole brain denoised reorientated T1
-	$antsroot/antsRegistrationSyNQuick.sh -d 3 -f ${N4T2} -m ${T1} -o ${coregdir}/T1toT2_ANTS_
+	# N4 T2 and whole brain denoised reorientated T1 (if using new MP2RAGE, don't denoise)
+#!	$antsroot/antsRegistrationSyNQuick.sh -d 3 -f ${N4T2} -m ${T1} -o ${coregdir}/T1toT2_ANTS_
 
-	#### ---------- COREGISTER EPIS TO T1 --------- ####
+	# to check affine only transformation
+
+#!	antsApplyTransforms -d 3 \
+#!			-i ${N4T2} \
+#!			-r ${T1} \
+#!			-o T2toT1Warped_affine.nii.gz \
+#!			-n Linear \
+#!			-t [T1toT2_ANTS_0GenericAffine.mat,1] \
+#!			-v
+
+#################################################################
+# 		COREGISTER EPIS to T1 (ANTS)			#	
+#################################################################
+# NB currently using ITK affine cross corr in GUI
 	
-	# will need to remove for loop if making average EPI across all runs and coregistering 4D time series to it
-	#!for this_run in ${runs_to_process[@]}
-	#!do
 		
 		# run second time with skullstripped T1 instead of whole brain
 #!		echo "EXECUTING epi to T1 coregistration for subject ${subject} using:"
-		
-		T1=${T1path}/denoiseRn4mag0000_PSIR_skulled_std_struc_brain.nii
-		echo "EPI: " $epi
-		echo "T1: " $T1
+#!		echo "EPI: " $epi
+#!		echo "T1: " $T1
 #!		antsRegistration \
 #!			--dimensionality 3 \
 #!			--float 0 \
@@ -88,9 +95,9 @@
 #!    			echo ">> EPI_REG FAIL: subject ${subject}/run ${this_run}"
 #!		fi
 		
-
-	#### ---------- COREGISTER ASHS OUTPUT TO EPIS AND MAKE EC MASKS --------- ####
-	# do affine mask transformation as well as diffeomorphic
+#################################################################
+# 	COREGISTER ASHS OUTPUT TO EPIS AND MAKE EC MASKS 	#	
+#################################################################
 		
 		if [ -f "${maskregdir}" ]; then
 			echo "Epi Mask directory exists"
@@ -103,6 +110,7 @@
 		# use same EPI as for T1 to EPI coregistration
 		
 		#----- DIFFEOMORPHIC SYN -----#
+		
 		#left MTL
 #!		antsApplyTransforms -d 3 \
 #!				-i ${segdirpath}/ASHS_corinputs/final/${subject}_3_left_lfseg_corr_nogray.nii.gz \
@@ -127,6 +135,26 @@
 #!				-v
 	
 		#----- AFFINE ITK and ANTS -----#
+		
+		#right MTL mask transformation 
+		antsApplyTransforms -d 3 \
+				-i ${segdirpath}/ASHS/final/${subject}_right_lfseg_corr_nogray.nii.gz \
+				-r ${epi} \
+				-o ${maskregdir}/RightMTLmaskWarped_ITKaffine.nii.gz \
+				-n MultiLabel \
+				-t [EPItoT1_ITKaffine_Run_1.txt,1] \
+				-t [T1toT2_ANTS_0GenericAffine.mat,1] \
+				-v
+		#left MTL mask transformation
+		antsApplyTransforms -d 3 \
+				-i ${segdirpath}/ASHS/final/${subject}_left_lfseg_corr_nogray.nii.gz \
+				-r ${epi} \
+				-o ${maskregdir}/LeftMTLmaskWarped_ITKaffine.nii.gz \
+				-n MultiLabel \
+				-t [EPItoT1_ITKaffine_Run_1.txt,1] \
+				-t [T1toT2_ANTS_0GenericAffine.mat,1] \
+				-v
+
 		#left MTL for pmEC mask
 #!		antsApplyTransforms -d 3 \
 #!				-i ${pm_al_maskdir}/leftMTL_${subject}.nii.gz \
@@ -156,34 +184,32 @@
 #!				-t [T1toT2_ANTS_0GenericAffine.mat,1] \
 #!				-v
 #!		
-		# create EC only masks
+		#----- CREATE EC ONLY MASKS -----#
+		
 		# diffeomorphic
-		#!fslmaths ${maskregdir}/LeftMTLmaskWarped_SyN.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/LeftECmaskWarped_SyN.nii.gz -odt char
-		#!fslmaths ${maskregdir}/RightMTLmaskWarped_SyN.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/RightECmaskWarped_SyN.nii.gz -odt char
+#!		fslmaths ${maskregdir}/LeftMTLmaskWarped_SyN.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/LeftECmaskWarped_SyN.nii.gz -odt char
+#!		fslmaths ${maskregdir}/RightMTLmaskWarped_SyN.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/RightECmaskWarped_SyN.nii.gz -odt char
+		
 		# affine
-		#!fslmaths ${maskregdir}/LeftMTLmaskWarped_ITKaffine.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/LeftECmaskWarped_ITKaffine.nii -odt char
-		#!fslmaths ${maskregdir}/RightMTLmaskWarped_ITKaffine.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/RightECmaskWarped_ITKaffine.nii -odt char
+		fslmaths ${maskregdir}/LeftMTLmaskWarped_ITKaffine.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/LeftECmaskWarped_ITKaffine.nii -odt char
+		fslmaths ${maskregdir}/RightMTLmaskWarped_ITKaffine.nii.gz -thr 8.5 -uthr 9.5 -bin ${maskregdir}/RightECmaskWarped_ITKaffine.nii -odt char
 		
 		# pmEC mask extractrion 14.5,15.5, alEC extraction 13.5,14.5
-		fslmaths ${pm_al_maskdir}/leftMTLWarped_${subject}.nii.gz -thr 13.5 -uthr 14.5 -bin ${maskregdir}/alEC_leftWarped_ITKaffine.nii -odt char
-		fslmaths ${pm_al_maskdir}/rightMTLWarped_${subject}.nii.gz -thr 13.5 -uthr 14.5 -bin ${maskregdir}/alEC_rightWarped_ITKaffine.nii -odt char
+#!		fslmaths ${pm_al_maskdir}/leftMTLWarped_${subject}.nii.gz -thr 13.5 -uthr 14.5 -bin ${maskregdir}/alEC_leftWarped_ITKaffine.nii -odt char
+#!		fslmaths ${pm_al_maskdir}/rightMTLWarped_${subject}.nii.gz -thr 13.5 -uthr 14.5 -bin ${maskregdir}/alEC_rightWarped_ITKaffine.nii -odt char
 		
 		# make control masks of posterior hippocampus
-		#!fslmaths ${maskregdir}/LeftMTLmaskWarped_ITKaffine.nii.gz -thr 4.5 -uthr 5.5 -bin ${maskregdir}/LeftPostHCmaskWarped_ITKaffine.nii -odt char
-		#!fslmaths ${maskregdir}/RightMTLmaskWarped_ITKaffine.nii.gz -thr 4.5 -uthr 5.5 -bin ${maskregdir}/RightPostHCmaskWarped_ITKaffine.nii -odt char
+#!		fslmaths ${maskregdir}/LeftMTLmaskWarped_ITKaffine.nii.gz -thr 4.5 -uthr 5.5 -bin ${maskregdir}/LeftPostHCmaskWarped_ITKaffine.nii -odt char
+#!		fslmaths ${maskregdir}/RightMTLmaskWarped_ITKaffine.nii.gz -thr 4.5 -uthr 5.5 -bin ${maskregdir}/RightPostHCmaskWarped_ITKaffine.nii -odt char
 	
 
 
 		cd ${maskregdir}
 		
-		if [ -f "LeftPostHCmaskWarped_ITKaffine.nii" ] && [ -f "RightPostHCmaskWarped_ITKaffine.nii" ]; then
+		if [ -f "LeftECmaskWarped_ITKaffine.nii" ] && [ -f "RightECmaskWarped_ITKaffine.nii" ]; then
 			echo ">> EC MASKS SUCCESSFULLY TRANSFORMED TO EPI SPACE: subject ${subject}"
 		else
 			echo ">> EC MASKS FAILED TRANSFORMATION: subject ${subject}"
 		fi
 		
 		cd ${pathstem}
-
-	#!done
-
-

@@ -2,6 +2,18 @@
 % By tec31 adapted by ccn30 08/19
 
 cnt = 0;
+% run 1-3 for realign reslice
+cnt = cnt + 1;
+subjects{cnt} = '29780';
+dates{cnt} = '20191125';
+fullid{cnt} = '20191125_U-ID47173';
+basedir{cnt} = 'ENCRYPT';
+blocksin_folders{cnt} = {'Series_005_mp2rage_sag_p3_0.75mm_UNI_Images','Series_004_mp2rage_sag_p3_0.75mm_INV2','Series_023_cmrr_ep2d_bold_1.5x1.5x1_PatientSpec','Series_029_cmrr_ep2d_bold_1.5x1.5x1_PatientSpecTrue','Series_035_cmrr_ep2d_bold_1.5x1.5x1_TrueForm','Series_023_cmrr_ep2d_bold_1.5x1.5x1_PatientSpec/topup','Series_021_cmrr_ep2d_bold_1.5x1.5x1_PatientSpec_inv'};
+blocksin{cnt} = {'Series_005_mp2rage_sag_p3_0.75mm_UNI_Images.nii','Series_004_mp2rage_sag_p3_0.75mm_INV2.nii','Series_023_cmrr_ep2d_bold_1.5x1.5x1_PatientSpec.nii','Series_029_cmrr_ep2d_bold_1.5x1.5x1_PatientSpecTrue.nii','Series_035_cmrr_ep2d_bold_1.5x1.5x1_TrueForm.nii','pos_topup.nii','neg_topup.nii'};
+blocksout{cnt} = {'structural','INV2','Run_1','Run_2','Run_3','Pos_topup','Neg_topup'};
+minvols(cnt) = 240;
+group(cnt) = 1;
+
 % run 3
 cnt = cnt + 1;
 subjects{cnt} = '29780';
@@ -26,17 +38,7 @@ blocksout{cnt} = {'structural','INV2','Run_2','Pos_topup','Neg_topup'};
 minvols(cnt) = 240;
 group(cnt) = 1;
 
-% run 1
-cnt = cnt + 1;
-subjects{cnt} = '29780';
-dates{cnt} = '20191125';
-fullid{cnt} = '20191125_U-ID47173';
-basedir{cnt} = 'ENCRYPT';
-blocksin_folders{cnt} = {'Series_005_mp2rage_sag_p3_0.75mm_UNI_Images','Series_004_mp2rage_sag_p3_0.75mm_INV2','Series_023_cmrr_ep2d_bold_1.5x1.5x1_PatientSpec','Series_023_cmrr_ep2d_bold_1.5x1.5x1_PatientSpec/topup','Series_021_cmrr_ep2d_bold_1.5x1.5x1_PatientSpec_inv'};
-blocksin{cnt} = {'Series_005_mp2rage_sag_p3_0.75mm_UNI_Images.nii','Series_004_mp2rage_sag_p3_0.75mm_INV2.nii','Series_023_cmrr_ep2d_bold_1.5x1.5x1_PatientSpec.nii','pos_topup.nii','neg_topup.nii'};
-blocksout{cnt} = {'structural','INV2','Run_1','Pos_topup','Neg_topup'};
-minvols(cnt) = 240;
-group(cnt) = 1;
+
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %1
 cnt = cnt + 1;

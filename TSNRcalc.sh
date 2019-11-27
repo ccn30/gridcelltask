@@ -3,40 +3,49 @@
 
 fsldir=/applications/fsl/fsl-5.0.10/bin
 pathstem=/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot
-mysubjs=${pathstem}/master_subjsdeflist.txt
+mysubjs=${pathstem}/mysubjs_deflist.txt
 
 for subject in `cat $mysubjs`
 do	
 	subj="$(cut -d'/' -f1 <<<"$subject")"	
-	bilateralmask=${pathstem}/preprocessed_data/segmentation/${subj}/epimasks/bothECmaskWarped_ITKaffine.nii
+#!	bilateralmask=${pathstem}/preprocessed_data/segmentation/${subj}/epimasks/bothECmaskWarped_ITKaffine.nii
 	leftECmask=${pathstem}/preprocessed_data/segmentation/${subj}/epimasks/LeftECmaskWarped_ITKaffine.nii
-	rightECmask=${pathstem}/preprocessed_data/segmentation/${subj}/epimasks/RightECmaskWarped_ITKaffine.nii
-	epi=${pathstem}/preprocessed_data/images/old_data/${subj}/rtopup_Run_1.nii
-	tsnr=${pathstem}/preprocessed_data/images/old_data/${subj}/tSNR
+	rightECmask=${pathstem}/preprocessed_data/segmentation/${subj}/epimasks/ManualEC_right.nii.gz
+	epirun1=${pathstem}/preprocessed_data/images/${subj}/rtopup_Run_1.nii
+	epirun2=${pathstem}/preprocessed_data/images/${subj}/rtopup_Run_2.nii
+	epirun3=${pathstem}/preprocessed_data/images/${subj}/rtopup_Run_3.nii	
+	tsnr=${pathstem}/preprocessed_data/images/${subj}/tSNR
 	
 	mkdir $tsnr
-
-	echo 'NEXT mean for '$subj
-	meanepi=${tsnr}/meanepi.nii
-	${fsldir}/fslmaths $epi -Tmean $meanepi
-	echo 'NEXT sd for '$subj
-	sdepi=${tsnr}/sdepi.nii
-	${fsldir}/fslmaths $epi -Tstd $sdepi
-	echo 'NEXT tSNR for '$subj
-	tSNRepi=${tsnr}/tSNR_epi_${subj}.nii	
-	${fsldir}/fslmaths $meanepi -div $sdepi $tSNRepi
-
-	# apply EC masks to tSNR maps
-	echo 'NEXT bilateral EC extraction for '$subj
-	${fsldir}/fslmaths $tSNRepi -mas $bilateralmask $tsnr/Bilateral_tSNR_${subj}.nii
-	if [ $? -eq 0 ]; then
-    		echo >> bilateralEC tSNR image COMPLETE	
-	else
-    		echo >> bilateral EC tSNR image FAIL
-	fi
 	
+	# make tSNR images
+	echo 'NEXT mean for '$subj
+	meanepi1=${tsnr}/meanepi_run1.nii
+	meanepi2=${tsnr}/meanepi_run2.nii
+	meanepi3=${tsnr}/meanepi_run3.nii
+#!	${fsldir}/fslmaths $epirun1 -Tmean $meanepi1
+#!	${fsldir}/fslmaths $epirun2 -Tmean $meanepi2
+#!	${fsldir}/fslmaths $epirun3 -Tmean $meanepi3
+	echo 'NEXT sd for '$subj
+	sdepi1=${tsnr}/sdepi_run1.nii
+	sdepi2=${tsnr}/sdepi_run2.nii
+	sdepi3=${tsnr}/sdepi_run3.nii
+#!	${fsldir}/fslmaths $epirun1 -Tstd $sdepi1
+#!	${fsldir}/fslmaths $epirun2 -Tstd $sdepi2
+#!	${fsldir}/fslmaths $epirun3 -Tstd $sdepi3
+	echo 'NEXT tSNR for '$subj
+	tSNRepi1=${tsnr}/tSNR_epi_run1.nii
+	tSNRepi2=${tsnr}/tSNR_epi_run2.nii	
+	tSNRepi3=${tsnr}/tSNR_epi_run3.nii		
+#!	${fsldir}/fslmaths $meanepi1 -div $sdepi1 $tSNRepi1
+#!	${fsldir}/fslmaths $meanepi2 -div $sdepi2 $tSNRepi2
+#!	${fsldir}/fslmaths $meanepi3 -div $sdepi3 $tSNRepi3
+
 	echo 'NEXT left EC extraction for '$subj
-	${fsldir}/fslmaths $tSNRepi -mas $leftECmask $tsnr/Left_tSNR_${subj}.nii
+	${fsldir}/fslmaths $tSNRepi1 -mas $leftECmask $tsnr/Left_tSNR_run1.nii
+	${fsldir}/fslmaths $tSNRepi2 -mas $leftECmask $tsnr/Left_tSNR_run2.nii
+	${fsldir}/fslmaths $tSNRepi3 -mas $leftECmask $tsnr/Left_tSNR_run3.nii
+
 	if [ $? -eq 0 ]; then
     		echo >> leftEC tSNR image COMPLETE	
 	else
@@ -44,7 +53,10 @@ do
 	fi
 	
 	echo 'NEXT right EC extraction for '$subj
-	${fsldir}/fslmaths $tSNRepi -mas $rightECmask $tsnr/Right_tSNR_${subj}.nii
+	${fsldir}/fslmaths $tSNRepi1 -mas $rightECmask $tsnr/Right_tSNR_run1.nii
+	${fsldir}/fslmaths $tSNRepi2 -mas $rightECmask $tsnr/Right_tSNR_run2.nii
+	${fsldir}/fslmaths $tSNRepi3 -mas $rightECmask $tsnr/Right_tSNR_run3.nii
+
 	if [ $? -eq 0 ]; then
     		echo >> rightEC tSNR image COMPLETE	
 	else

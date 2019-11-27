@@ -84,3 +84,8 @@ calculations]
 [> In module_topup_job_cluster (line 20)
   In ENCRYPT_preprocess_mainfunc_7T (line 164)] 
 Calculating topup, this can take some time
+Calculation status: 0
+Topup results present in output dir, now applying topup
+Topup applied
+>> Bye for now...
+

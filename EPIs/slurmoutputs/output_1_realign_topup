@@ -1,4 +1,4 @@
-Tue Nov 26 15:48:16 GMT 2019
+Wed Nov 27 11:21:21 GMT 2019
 working on file 1
 The workspace going into this is /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/ENCRYPT_preprocess_mainfunc_7T.m /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/ENCRYPT_subjects_parameters.m 1 HPHI topup realign
 
@@ -39,7 +39,7 @@ preprocessedpathstem =
 (___/(__)  (_/\/\_)  SPM12 - http://www.fil.ion.ucl.ac.uk/spm/
 
 
-SPM12: v6906                                       15:48:46 - 26/11/2019
+SPM12: v6906                                       11:21:55 - 27/11/2019
 ========================================================================
 Initialising SPM                        :                   ........done
 
@@ -47,24 +47,17 @@ SPM present working directory:
 	/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/slurmoutputs
 running realign
 
-SPM12: spm_realign (v6070)                         15:49:17 - 26/11/2019
+SPM12: spm_realign (v6070)                         11:32:25 - 27/11/2019
 ========================================================================
 Printing 'Graphics' figure to:
-  /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/slurmoutputs/spm_2019Nov26.ps
-Completed                               :          15:50:50 - 26/11/2019
+  /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/slurmoutputs/spm_2019Nov27.ps
+Completed                               :          11:36:34 - 27/11/2019
 
-ans = 
+ans =
 
-  240x1 struct array with fields:
+  1x3 cell array
 
-    fname
-    dim
-    dt
-    pinfo
-    mat
-    n
-    descrip
-    private
+    {240x1 struct}    {240x1 struct}    {240x1 struct}
 
 >> Bye for now...
 

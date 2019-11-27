@@ -12,8 +12,8 @@ subjs_def=${myscriptdir}/ENCRYPT_subjects_parameters.m
 #! for 29780 - run 3 times with order of run in subject parameters changing
 subjects_to_process=1
 
-prevstep=raw
-step=topup
+prevstep=topup
+step=realign
 
 jobIDs=""
 
@@ -40,7 +40,7 @@ done
 
 jobIDs=""
 prevstep=topup
-step=realign
+step=reslice
 for this_subj in ${subjects_to_process[@]}
 do 
 this_job_id=$(sbatch --parsable ${submit} ${prepare} ${func} ${subjs_def} ${this_subj} ${clusterid} ${prevstep} ${step})
@@ -62,8 +62,8 @@ fi
 done
 
 jobIDs=""
-prevstep=topup
-step=reslice
+prevstep=
+step=
 for this_subj in ${subjects_to_process[@]}
 do 
 this_job_id=$(sbatch --parsable ${submit} ${prepare} ${func} ${subjs_def} ${this_subj} ${clusterid} ${prevstep} ${step})

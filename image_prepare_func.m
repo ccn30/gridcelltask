@@ -174,22 +174,21 @@ for j = 1
 % end
 
 %% loop to iterate through preprocessed EPIS and masks
-% fsldir='/applications/fsl/fsl-5.0.10/bin/';
-% subjectvec = {'27734','28061','28428','29317','29321','29332','29336','29358','29382','29383'};
-% preprocesspathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data';
-% 
-% for subj = 1:length(subjectvec)
-%    subj
-%     % delete un-needed EPIS
-% %     for run = 1:3
-% %         disp(['Working on run ' num2str(run)]);
-% %         FOURDfile = [preprocesspathstem '/images/old_data/' subjectvec{subj} '/rtopup_Run_' num2str(run) '.nii'];
-% %         cmd = [fsldir 'fslsplit ' FOURDfile ' ' FOURDfile(1:end-4) '_split -t'];
-% %         system(cmd);
+fsldir='/applications/fsl/fsl-5.0.10/bin/';
+subjectvec = {'29780','27734','28061','28428','29317','29321','29332','29336','29358','29382','29383'};
+preprocesspathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data';
+ 
+for subj = 1%:length(subjectvec)
+    % split resliced image and delete un-needed EPIS
+    for run = 1:3
+        disp(['Working on run ' num2str(run)]);
+        FOURDfile = [preprocesspathstem '/images/' subjectvec{subj} '/rtopup_Run_' num2str(run) '.nii'];
+        cmd = [fsldir 'fslsplit ' FOURDfile ' ' FOURDfile(1:end-4) '_split -t'];
+        system(cmd);
 % %         delete([preprocesspathstem '/images/old_data/' subjectvec{subj} '/topup_Run_' num2str(run) '_split*.nii']);
 % %         delete([preprocesspathstem '/images/old_data/' subjectvec{subj} '/Run_' num2str(run) '_split*.nii']);
-% %     end
-%     
+    end
+
 %     % combine right and left EC masks - FOR POS HC
 %        rightEC = [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/RightPostHCmaskWarped_ITKaffine.nii']; 
 %        leftEC = [preprocesspathstem '/segmentation/' subjectvec{subj} '/epimasks/LeftPostHCmaskWarped_ITKaffine.nii'];

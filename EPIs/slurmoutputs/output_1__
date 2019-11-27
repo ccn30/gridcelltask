@@ -1,4 +1,4 @@
-Tue Nov 26 15:29:19 GMT 2019
+Wed Nov 27 11:55:17 GMT 2019
 working on file 1
 The workspace going into this is /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/ENCRYPT_preprocess_mainfunc_7T.m /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/EPIs/ENCRYPT_subjects_parameters.m 1 HPHI  
 
@@ -39,7 +39,7 @@ preprocessedpathstem =
 (___/(__)  (_/\/\_)  SPM12 - http://www.fil.ion.ucl.ac.uk/spm/
 
 
-SPM12: v6906                                       15:29:35 - 26/11/2019
+SPM12: v6906                                       11:55:32 - 27/11/2019
 ========================================================================
 Initialising SPM                        :                   ........done
 

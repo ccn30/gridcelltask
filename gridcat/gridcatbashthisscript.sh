@@ -8,7 +8,7 @@ submit=${scriptdir}/gridcatsubmit.sh
 prepare=${scriptdir}/gridcatprepare.sh
 func=${scriptdir}/GridCAT_mainfunc.m
 
-mysubjs=${pathstem}/master_subjsdeflist.txt
+mysubjs=${pathstem}/mysubjs_deflist.txt
 #!subjID=29382/20190911_U-ID46164
 
 cd slurmoutputs

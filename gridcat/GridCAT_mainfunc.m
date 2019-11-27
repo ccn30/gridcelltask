@@ -16,7 +16,7 @@ function GridCAT_mainfunc(subject,preprocesspathstem,taskpathstem,outdirname,ROI
 runs = {'BlockA','BlockB','BlockC'};
 TR = 2.53;
 xfold = str2double(xFold); %taken from input - xFold = str, xfold = numeric
-nScans = 238;
+nScans = 240;
 maskthresh=str2double(mask_thresh); %taken from input - mask_thresh = str, maskthresh = numeric
 
 % FLAGS
@@ -38,7 +38,8 @@ nuisance_flag = 'move';
         
         % specify functional scans
         for scan = 1:nScans
-            cfg.rawData.run(run).functionalScans(scan,1) = {[preprocesspathstem '/images/old_data/' subject '/rtopup_Run_' num2str(run) '_split' sprintf('%04d',scan-1) '.nii']};
+%            cfg.rawData.run(run).functionalScans(scan,1) = {[preprocesspathstem '/images/old_data/' subject '/rtopup_Run_' num2str(run) '_split' sprintf('%04d',scan-1) '.nii']};
+             cfg.rawData.run(run).functionalScans(scan,1) = {[preprocesspathstem '/images/' subject '/rtopup_Run_' num2str(run) '_split' sprintf('%04d',scan-1) '.nii']};
         end
         
         % specify event-table
@@ -48,7 +49,8 @@ nuisance_flag = 'move';
         if strcmp(nuisance_flag,'phys') == 1
             cfg.rawData.run(run).additionalRegressors_file = [preprocesspathstem '/regressors/' subject '/Run' num2str(run) '/Physio_regressors/multiple_regressors.txt'];
         elseif strcmp(nuisance_flag,'move') == 1
-            cfg.rawData.run(run).additionalRegressors_file = [preprocesspathstem '/images/old_data/' subject '/rp_topup_Run_' num2str(run) '.txt'];
+ %           cfg.rawData.run(run).additionalRegressors_file = [preprocesspathstem '/images/old_data/' subject '/rp_topup_Run_' num2str(run) '.txt'];
+            cfg.rawData.run(run).additionalRegressors_file = [preprocesspathstem '/images/' subject '/rp_topup_Run_' num2str(run) '.txt'];
         end
         
     end

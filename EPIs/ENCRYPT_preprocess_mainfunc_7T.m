@@ -221,10 +221,10 @@ switch step
                 filestorealign{i} = spm_select('ExtFPList',outpath,['^' prevStep blocksout{crun}{theseepis(i)} '.nii'],1:minvols(crun));
             end
             flags = struct;
-            % 0 = no reslice, 1 = reslice but not first image, [2 1] =reslice to mean
+            % 0 = no reslice just produce mean, 1 = reslice but not first image, [2 1] =reslice all and produce mean
             %flags.which = 0;
-            %flags.which = [2 1];
-            flags.which = 1;
+            flags.which = [2 1];
+            %flags.which = 1;
             
             try
                 spm_reslice(filestorealign,flags)

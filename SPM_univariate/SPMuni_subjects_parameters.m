@@ -41,16 +41,16 @@ cnt = 0;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %1
-cnt = cnt + 1;
-subjects{cnt} = '29358';
-dates{cnt} = '20190905';
-fullid{cnt} = '20190905_U-ID46106';
-basedir{cnt} = 'ENCRYPT';
-blocksin_folders{cnt} = {'mp2rage','Series_023_cmrr_ep2d_bold_1.5x1.5x1_run1','Series_027_cmrr_ep2d_bold_1.5x1.5x1_run2','Series_031_cmrr_ep2d_bold_1.5x1.5x1_run3','Series_023_cmrr_ep2d_bold_1.5x1.5x1_run1/topup','Series_021_cmrr_ep2d_bold_1.5x1.5x1_run1_inv'};
-blocksin{cnt} = {'n4mag0000_PSIR_skulled_std.nii','run1.nii','run2.nii','run3.nii','pos_topup.nii','neg_topup.nii'};
-blocksout{cnt} = {'structural','Run_1','Run_2','Run_3','Pos_topup','Neg_topup'};
-minvols(cnt) = 238;
-group(cnt) = 1;
+% cnt = cnt + 1;
+% subjects{cnt} = '29358';
+% dates{cnt} = '20190905';
+% fullid{cnt} = '20190905_U-ID46106';
+% basedir{cnt} = 'ENCRYPT';
+% blocksin_folders{cnt} = {'mp2rage','Series_023_cmrr_ep2d_bold_1.5x1.5x1_run1','Series_027_cmrr_ep2d_bold_1.5x1.5x1_run2','Series_031_cmrr_ep2d_bold_1.5x1.5x1_run3','Series_023_cmrr_ep2d_bold_1.5x1.5x1_run1/topup','Series_021_cmrr_ep2d_bold_1.5x1.5x1_run1_inv'};
+% blocksin{cnt} = {'n4mag0000_PSIR_skulled_std.nii','run1.nii','run2.nii','run3.nii','pos_topup.nii','neg_topup.nii'};
+% blocksout{cnt} = {'structural','Run_1','Run_2','Run_3','Pos_topup','Neg_topup'};
+% minvols(cnt) = 238;
+% group(cnt) = 1;
 %2
 cnt = cnt + 1;
 subjects{cnt} = '28061';

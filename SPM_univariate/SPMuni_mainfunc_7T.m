@@ -241,52 +241,43 @@ switch step
             error('failed at reslice');
         end
        
-      case 'smooth3'
+    case 'smooth3'
         % Smooth images by [3 3 2] FWHM
         nrun = 1; % enter the number of runs here - should be 1 if submitted in parallel, but retain the functionality to bundle subjects
         disp('running smoothing')
         smooth3workedcorrectly = zeros(1,nrun);
-%         jobfile = {[scriptdir 'module_smooth_job.m']};
-%         inputs = cell(2, nrun);
+%        jobfile = {[scriptdir 'module_smooth_job.m']};
+%        inputs = cell(2, nrun);
         for crun = subjcnt
             theseepis = find(strncmp(blocksout{crun},'Run',3));
-            %filestosmooth = cell(1,length(theseepis));
+%            filestosmooth = cell(1,length(theseepis));
             filestosmooth = {};
-%            filestosmooth_list = [];
-            outpath = [preprocessedpathstem '/' subjects{crun} '/'];  
+            filestosmooth_list = [];
+            outpath = [preprocessedpathstem '/' subjects{crun} '/'];
             for i = 1:length(theseepis)
                 for j = 1:minvols(subjcnt)
                     %filestosmooth = spm_select('ExtFPList',outpath,['^' prevStep blocksout{crun}{theseepis(i)} '.nii'],1:minvols(crun));
-                    filestosmooth{j} = [outpath 'rtopup_' blocksout{crun}{theseepis(i)} '.nii,' num2str(j)];
-                %end
-               %filestosmooth_list = [filestosmooth_list;filestosmooth{i}];
-            %end
-
-                    smooth.matlabbatch{1}.spm.spatial.smooth.data = filestosmooth';
-                    % Other
-                    smooth.matlabbatch{1}.spm.spatial.smooth.fwhm = [3 3 2];
-                    smooth.matlabbatch{1}.spm.spatial.smooth.dtype = 0;
-                    smooth.matlabbatch{1}.spm.spatial.smooth.im = 0;
-                    smooth.matlabbatch{1}.spm.spatial.smooth.prefix = 's';
-                    % Run
-                    spm('defaults','fmri');
-                    spm_jobman('initcfg');
-                    spm_jobman('run',smooth.matlabbatch);
-                    smooth3workedcorrectly(crun) = 1;
-                catch
-                    smooth3workedcorrectly(crun) = 0;
+                    filestosmooth{j,1} = [outpath 'rtopup_' blocksout{crun}{theseepis(i)} '.nii,' num2str(j)];
                 end
-                end
+                filestosmooth_list = [filestosmooth_list;filestosmooth];
             end
+            smooth.matlabbatch{1}.spm.spatial.smooth.data = filestosmooth_list;
+            % Other
+            smooth.matlabbatch{1}.spm.spatial.smooth.fwhm = [3 3 2];
+            smooth.matlabbatch{1}.spm.spatial.smooth.dtype = 0;
+            smooth.matlabbatch{1}.spm.spatial.smooth.im = 0;
+            smooth.matlabbatch{1}.spm.spatial.smooth.prefix = 's';
+            % Run
+            spm('defaults','fmri');
+            spm_jobman('initcfg');
+            spm_jobman('run',smooth.matlabbatch);
+              
         end
-        
-        if ~all(smooth3workedcorrectly)
-            error('failed at reslice');
-        end
+
         
         
 %___________________________________________________________________________________________________
-
+        
 %     case 'cat12'
 %         % Do cat12 normalisation of the structural to create deformation fields (works better than SPM segment deformation fields, which sometimes produce too-small brains)
 %         disp('running cat12 normalisation')

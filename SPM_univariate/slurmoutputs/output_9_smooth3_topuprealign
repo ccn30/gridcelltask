@@ -41,4 +41,19 @@ preprocessedpathstem =
 
 SPM12: v6906                                       15:07:49 - 21/01/2020
 ========================================================================
-Initialising SPM                        :                   ......
+Initialising SPM                        :                   ........done
+
+SPM present working directory:
+	/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/SPM_univariate/slurmoutputs
+running smoothing
+
+
+------------------------------------------------------------------------
+Running job #1
+------------------------------------------------------------------------
+Running 'Smooth'
+Done    'Smooth'
+Done
+
+>> Bye for now...
+

@@ -245,7 +245,6 @@ switch step
         % Smooth images by [3 3 2] FWHM
         nrun = 1; % enter the number of runs here - should be 1 if submitted in parallel, but retain the functionality to bundle subjects
         disp('running smoothing')
-        smooth3workedcorrectly = zeros(1,nrun);
 %        jobfile = {[scriptdir 'module_smooth_job.m']};
 %        inputs = cell(2, nrun);
         for crun = subjcnt
@@ -274,8 +273,56 @@ switch step
               
         end
 
-        
-        
+    case 'FirstLevelGLM'
+        nrun = 1; % enter the number of runs here - should be 1 if submitted in parallel, but retain the functionality to bundle subjects
+        disp('running SPM univariate analysis')
+        for crun = subjcnt
+            theseepis = find(strncmp(blocksout{crun},'Run',3));
+            filestoanalyse = cell(1,length(theseepis));
+            eventfiles = cell(1,length(theseepis));
+            onsets = cell(1,length(theseepis));
+            durations = cell(1,length(theseepis));
+            rpfiles = cell(1,length(theseepis));
+            
+            blocks = {'A','B','C'};
+            TR = 2.53;
+            
+            scansfilepath = [preprocessedpathstem '/' subjects{crun} '/'];            
+            eventfilepath = cellstr(['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/task_data/' subjects{crun} '/']);
+            outpath = cellstr(['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/SPM_univariate/' subjects{crun} '/']);
+         
+            for sess = 1:length(theseepis)
+                for j = 1:minvols(subjcnt)
+                    filestoanalyse{sess}{j,1} = [scansfilepath 'srtopup_' blocksout{crun}{theseepis(i)} '.nii,' num2str(j)];
+                end
+                
+                eventfiles{sess} = [eventfilepath 'Block' blocks{sess} '/eventTable_movemenEventData.txt'];
+                fid = fopen(eventfiles{sess});
+                data = textscan(fid, '%s  %f  %f %f','delimiter',';');
+                fclose(fid);
+                
+                onsets{sess} = data{2};
+                durations{sess} = data{3};
+                rpfiles{sess} = [scansfilepath 'rptopup_' blocksout{crun}{theseepis(i)} '.txt'];
+            end
+            jobfile = create_uni_SPM_Job(TR,subjects{crun},outpath,minvols{crun},filestoanalyse,onsets,durations,rpfiles);
+            spm('defaults', 'fMRI');
+            spm_jobman('initcfg')
+            SPMworkedcorrectly = zeros(1,nrun);
+            try
+                spm_jobman('run', jobfile);
+                SPMworkedcorrectly(crun) = 1;
+            catch
+                SPMworkedcorrectly(crun) = 0;
+            end
+            if ~all(SPMworkedcorrectly)
+            error('failed at SPM');
+            end
+        end
+        end
+end
+
+
 %___________________________________________________________________________________________________
         
 %     case 'cat12'

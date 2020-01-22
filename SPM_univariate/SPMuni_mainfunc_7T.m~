@@ -241,48 +241,89 @@ switch step
             error('failed at reslice');
         end
        
-      case 'smooth3'
+    case 'smooth3'
         % Smooth images by [3 3 2] FWHM
         nrun = 1; % enter the number of runs here - should be 1 if submitted in parallel, but retain the functionality to bundle subjects
         disp('running smoothing')
-        smooth3workedcorrectly = zeros(1,nrun);
-%         jobfile = {[scriptdir 'module_smooth_job.m']};
-%         inputs = cell(2, nrun);
+%        jobfile = {[scriptdir 'module_smooth_job.m']};
+%        inputs = cell(2, nrun);
         for crun = subjcnt
             theseepis = find(strncmp(blocksout{crun},'Run',3));
 %            filestosmooth = cell(1,length(theseepis));
             filestosmooth = {};
             filestosmooth_list = [];
-            outpath = [preprocessedpathstem '/' subjects{crun} '/'];  
-
-                for j = 1:minvols(subjcnt)*3
-                    for i = 1:length(theseepis)
+            outpath = [preprocessedpathstem '/' subjects{crun} '/'];
+            for i = 1:length(theseepis)
+                for j = 1:minvols(subjcnt)
                     %filestosmooth = spm_select('ExtFPList',outpath,['^' prevStep blocksout{crun}{theseepis(i)} '.nii'],1:minvols(crun));
-                    filestosmooth{1,j} = [outpath 'rtopup_' blocksout{crun}{theseepis(i)} '.nii,' num2str(j)]; 
-                    filestosmooth_list = [filestosmooth_list,filestosmooth{j}];
-                    end
+                    filestosmooth{j,1} = [outpath 'rtopup_' blocksout{crun}{theseepis(i)} '.nii,' num2str(j)];
                 end
-                smooth.matlabbatch{1}.spm.spatial.smooth.data = filestosmooth';
-                % Other
-                smooth.matlabbatch{1}.spm.spatial.smooth.fwhm = [3 3 2];
-                smooth.matlabbatch{1}.spm.spatial.smooth.dtype = 0;
-                smooth.matlabbatch{1}.spm.spatial.smooth.im = 0;
-                smooth.matlabbatch{1}.spm.spatial.smooth.prefix = 's';
-                % Run
-                spm('defaults','fmri');
-                spm_jobman('initcfg');
-                spm_jobman('run',smooth.matlabbatch);
- 
+                filestosmooth_list = [filestosmooth_list;filestosmooth];
             end
+            smooth.matlabbatch{1}.spm.spatial.smooth.data = filestosmooth_list;
+            % Other
+            smooth.matlabbatch{1}.spm.spatial.smooth.fwhm = [3 3 2];
+            smooth.matlabbatch{1}.spm.spatial.smooth.dtype = 0;
+            smooth.matlabbatch{1}.spm.spatial.smooth.im = 0;
+            smooth.matlabbatch{1}.spm.spatial.smooth.prefix = 's';
+            % Run
+            spm('defaults','fmri');
+            spm_jobman('initcfg');
+            spm_jobman('run',smooth.matlabbatch);
+              
         end
-        
-        if ~all(smooth3workedcorrectly)
-            error('failed at reslice');
-        end
-        
-        
-%___________________________________________________________________________________________________
 
+    case 'FirstLevelGLM'
+        nrun = 1; % enter the number of runs here - should be 1 if submitted in parallel, but retain the functionality to bundle subjects
+        disp('running SPM univariate analysis')
+        for crun = subjcnt
+            theseepis = find(strncmp(blocksout{crun},'Run',3));
+            filestoanalyse = cell(1,length(theseepis));
+            eventfiles = cell(1,length(theseepis));
+            onsets = cell(1,length(theseepis));
+            durations = cell(1,length(theseepis));
+            rpfiles = cell(1,length(theseepis));
+            
+            blocks = {'A','B','C'};
+            TR = 2.53;
+            
+            scansfilepath = [preprocessedpathstem '/' subjects{crun} '/'];            
+            eventfilepath = cellstr(['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/task_data/' subjects{crun} '/']);
+            outpath = cellstr(['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/SPM_univariate/' subjects{crun} '/']);
+         
+            for sess = 1:length(theseepis)
+                for j = 1:minvols(subjcnt)
+                    filestoanalyse{sess}{j,1} = [scansfilepath 'srtopup_' blocksout{crun}{theseepis(i)} '.nii,' num2str(j)];
+                end
+                
+                eventfiles{sess} = [eventfilepath 'Block' blocks{sess} '/eventTable_movemenEventData.txt'];
+                fid = fopen(eventfiles{sess});
+                data = textscan(fid, '%s  %f  %f %f','delimiter',';');
+                fclose(fid);
+                
+                onsets{sess} = data{2};
+                durations{sess} = data{3};
+                rpfiles{sess} = [scansfilepath 'rptopup_' blocksout{crun}{theseepis(i)} '.txt'];
+            end
+            jobfile = create_uni_SPM_Job(TR,subjects{crun},outpath,minvols{crun},filestoanalyse,onsets,durations,rpfiles);
+            spm('defaults', 'fMRI');
+            spm_jobman('initcfg')
+            SPMworkedcorrectly = zeros(1,nrun);
+            try
+                spm_jobman('run', jobfile);
+                SPMworkedcorrectly(crun) = 1;
+            catch
+                SPMworkedcorrectly(crun) = 0;
+            end
+            if ~all(SPMworkedcorrectly)
+            error(['failed at SPM']);
+        end
+        end
+end
+
+
+%___________________________________________________________________________________________________
+        
 %     case 'cat12'
 %         % Do cat12 normalisation of the structural to create deformation fields (works better than SPM segment deformation fields, which sometimes produce too-small brains)
 %         disp('running cat12 normalisation')

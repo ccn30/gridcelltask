@@ -10,10 +10,10 @@ subjs_def=${myscriptdir}/SPMuni_subjects_parameters.m
 #! subjects_to_process=($(seq 1 1 10))
 #!subjects_to_process=($(seq 1 1 3))
 #! for 29780 - run 3 times with order of run in subject parameters changing
-subjects_to_process=($(seq 1 1 9))
+subjects_to_process=($(seq 1 1 10))
 
-prevstep=topuprealign
-step=smooth3
+prevstep=
+step=FirstLevelGLM
 
 jobIDs=""
 

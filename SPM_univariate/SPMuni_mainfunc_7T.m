@@ -63,6 +63,10 @@ switch prevStep
         prevStep = 's3.*';
         smoothing = 3;
         pathstem = [preprocessedpathstem '/' subjects{subjcnt} '/'];
+    case 'FirstLevelGLM'
+        prevStep = 'srtopup+.*'
+        pathstem = [preprocessedpathstem '/' subjects{subjcnt} '/'];
+      
         
 end
 
@@ -288,12 +292,12 @@ switch step
             TR = 2.53;
             
             scansfilepath = [preprocessedpathstem '/' subjects{crun} '/'];            
-            eventfilepath = cellstr(['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/task_data/' subjects{crun} '/']);
-            outpath = cellstr(['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/SPM_univariate/' subjects{crun} '/']);
+            eventfilepath = ['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/task_data/' subjects{crun} '/'];
+            outpath = ['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/SPM_univariate/' subjects{crun} '/'];
          
             for sess = 1:length(theseepis)
                 for j = 1:minvols(subjcnt)
-                    filestoanalyse{sess}{j,1} = [scansfilepath 'srtopup_' blocksout{crun}{theseepis(i)} '.nii,' num2str(j)];
+                    filestoanalyse{sess}{j,1} = [scansfilepath 'srtopup_' blocksout{crun}{theseepis(sess)} '.nii,' num2str(j)];
                 end
                 
                 eventfiles{sess} = [eventfilepath 'Block' blocks{sess} '/eventTable_movemenEventData.txt'];
@@ -303,9 +307,9 @@ switch step
                 
                 onsets{sess} = data{2};
                 durations{sess} = data{3};
-                rpfiles{sess} = [scansfilepath 'rptopup_' blocksout{crun}{theseepis(i)} '.txt'];
+                rpfiles{sess} = [scansfilepath 'rp_topup_' blocksout{crun}{theseepis(sess)} '.txt'];
             end
-            jobfile = create_uni_SPM_Job(TR,subjects{crun},outpath,minvols{crun},filestoanalyse,onsets,durations,rpfiles);
+            jobfile = create_GLM1_SPM_job(TR,subjects{crun},outpath,minvols(crun),filestoanalyse,onsets,durations,rpfiles);
             spm('defaults', 'fMRI');
             spm_jobman('initcfg')
             SPMworkedcorrectly = zeros(1,nrun);
@@ -319,8 +323,10 @@ switch step
             error('failed at SPM');
             end
         end
-        end
 end
+end
+
+
 
 
 %___________________________________________________________________________________________________
@@ -565,6 +571,5 @@ end
 %         end
 
                
-end
-end
+
 

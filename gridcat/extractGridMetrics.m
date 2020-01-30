@@ -5,7 +5,7 @@
 
 function extractGridMetrics 
 
-subjectvec = {'27734','28061','28428','29317','29321','29332','29336','29358','29382','29383'};
+subjectvec = {'27734','28061','28428','29317','29321','29332','29336','29382','29383'};
 runvec = {'BlockA','BlockB','BlockC'};
 
 getVoxels = 1;
@@ -14,22 +14,22 @@ getPerformance = 0;
 % prepare output files
 %outfileall = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/group_pilot_results_leftEC6fold.txt';
 %resultsall = fopen(outfileall, 'w+');
-outfilematrix = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/gridCATbehaviourresults.csv';
+outfilematrix = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/gridCAT_SPMvox_results.csv';
 %resultsmatrix = fopen(outfilematrix,'w+');
 
 % header
 %fprintf(resultsall, '\n');
 
 % preallocate group_level variables for further analysis
-subjects = cell(10,1);
+subjects = cell(9,1);
 Responseone = cell(10,1);
 Responsetwo = cell(10,1);
 Responsethree = cell(10,1);
 MeanRTone = cell(10,1);
 MeanRTtwo = cell(10,1);
 MeanRTthree = cell(10,1);
-Voxels_ROI = cell(10,4);
-Voxels_NAN = cell(10,4);
+Voxels_ROI = cell(9,4);
+Voxels_NAN = cell(9,4);
 
 for subj = 1:length(subjectvec)
     
@@ -48,10 +48,10 @@ for subj = 1:length(subjectvec)
             
             if side == 3
                 % GRID CODE RESULTS
-                GCresult = fopen(['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/' Subject '/gridCAT_out03/GridCATmetrics_' Subject '_xfold_6_left.txt']);
+                GCresult = fopen(['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/' Subject '/gridCAT_final_pmRight6/GridCATmetrics_' Subject '_xfold_6_pmRight_affine.txt']);
                 tline = fgetl(GCresult);
             elseif side == 4
-                GCresult = fopen(['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/' Subject '/gridCAT_out04/GridCATmetrics_' Subject '_xfold_6_right.txt']);
+                GCresult = fopen(['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/' Subject '/gridCAT_final_pmLeft6/GridCATmetrics_' Subject '_xfold_6_pmLeft_affine.txt']);
                 tline = fgetl(GCresult);
             end
             
@@ -242,7 +242,7 @@ if getVoxels && getPerformance
         MeanRTone,MeanRTtwo,MeanRTthree];
 elseif getVoxels && getPerformance==0
      metricHeader = [{'Subject'},{'Voxels_ROI_LH'},{'Voxels_NaN_LH'},{'Voxels_ROI_RH'},{'Voxels_NaN_RH'}];
-     resultsmatrix = [subjects,str2double(Voxels_ROI(:,3)),str2double(Voxels_NAN(:,3)),str2double(Voxels_ROI(:,4)),str2double(Voxels_NAN(:,4))];
+     resultsmatrix = [subjects{:},str2double(Voxels_ROI(:,3)),str2double(Voxels_NAN(:,3)),str2double(Voxels_ROI(:,4)),str2double(Voxels_NAN(:,4))];
 end
 
 outputCSV = [metricHeader;resultsmatrix];

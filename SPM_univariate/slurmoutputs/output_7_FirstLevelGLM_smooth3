@@ -1,0 +1,99 @@
+Fri Jan 24 13:48:13 GMT 2020
+working on file 7
+The workspace going into this is /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/SPM_univariate/SPMuni_mainfunc_7T.m /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/SPM_univariate/SPMuni_subjects_parameters.m 7 HPHI smooth3 FirstLevelGLM
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2017 The MathWorks, Inc.
+                   R2017b (9.3.0.713579) 64-bit (glnxa64)
+                             September 14, 2017
+
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+>> >> >> Path is /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/SPM_univariate
+>> Function is SPMuni_mainfunc_7T
+>> Subject definition function is /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/SPM_univariate/SPMuni_subjects_parameters.m
+>> Environment is HPHI
+>> Previous step is smooth3
+>> This step is FirstLevelGLM
+>> 
+do_definition_func =
+
+    '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/SPM_univariate/SPMuni_subjects_parameters.m'
+
+>> >> >> >> >> 
+rawpathstem =
+
+    '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images'
+
+>> 
+preprocessedpathstem =
+
+    '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/old_data'
+
+>> >> Submitting the following command: SPMuni_mainfunc_7T('FirstLevelGLM','smooth3','HPHI',preprocessedpathstem,rawpathstem,subjects,7,fullid,basedir,blocksin,blocksin_folders,blocksout,minvols,dates,group)
+>>  ___  ____  __  __                                            
+/ __)(  _ \(  \/  )                                           
+\__ \ )___/ )    (   Statistical Parametric Mapping           
+(___/(__)  (_/\/\_)  SPM12 - http://www.fil.ion.ucl.ac.uk/spm/
+
+
+SPM12: v6906                                       13:48:25 - 24/01/2020
+========================================================================
+Initialising SPM                        :                   ........done
+
+SPM present working directory:
+	/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/SPM_univariate/slurmoutputs
+running SPM univariate analysis
+
+
+------------------------------------------------------------------------
+Running job #1
+------------------------------------------------------------------------
+Running 'fMRI model specification'
+
+SPM12: spm_fMRI_design (v5183)                     13:59:08 - 24/01/2020
+========================================================================
+Saving fMRI design                      :               ...SPM.mat saved
+
+SPM12: spm_fmri_spm_ui (v6088)                     13:59:09 - 24/01/2020
+========================================================================
+Mapping files                           :                        ...done
+Calculating globals                     :                        ...done
+Saving SPM configuration                :               ...SPM.mat saved
+Design reporting                        :                        ...done
+Saving SPM configuration                :               ...SPM.mat saved
+Completed                               :          13:59:42 - 24/01/2020
+Done    'fMRI model specification'
+Running 'Model estimation'
+
+SPM12: spm_spm (v6842)                             13:59:42 - 24/01/2020
+========================================================================
+
+SPM12: spm_est_non_sphericity (v6827)              13:59:44 - 24/01/2020
+========================================================================
+Chunk   1/15                            :                  ...processing                       ...doneChunk   2/15                            :                  ...processing                       ...doneChunk   3/15                            :                  ...processing                       ...doneChunk   4/15                            :                  ...processing                       ...doneChunk   5/15                            :                  ...processing                       ...doneChunk   6/15                            :                  ...processing                       ...doneChunk   7/15                            :                  ...processing                       ...doneChunk   8/15                            :                  ...processing                       ...doneChunk   9/15                            :                  ...processing                       ...doneChunk  10/15                            :                  ...processing                       ...doneChunk  11/15                            :                  ...processing                       ...doneChunk  12/15                            :                  ...processing                       ...doneChunk  13/15                            :                  ...processing                       ...doneChunk  14/15                            :                  ...processing                       ...doneChunk  15/15                            :                  ...processing                       ...done
+Temporal non-sphericity (293195 voxels) :             ...ReML estimation
+  ReML Block 1                
+  ReML Iteration 1                      :        ...5.299412e+00 [+4.25]
+  ReML Iteration 2                      :        ...2.975716e-04 [+4.50]
+  ReML Block 2                
+  ReML Iteration 1                      :        ...4.858269e+01 [+4.25]
+  ReML Iteration 2                      :        ...9.964664e-03 [+4.50]
+  ReML Block 3                
+  ReML Iteration 1                      :        ...3.233186e+01 [+4.25]
+  ReML Iteration 2                      :        ...4.775887e-03 [+4.50]
+
+SPM12: spm_spm (v6842)                             14:01:18 - 24/01/2020
+========================================================================
+Chunk   1/15                            :                  ...processing                       ...doneChunk   2/15                            :                  ...processing                       ...doneChunk   3/15                            :                  ...processing                       ...doneChunk   4/15                            :                  ...processing                       ...doneChunk   5/15                            :                  ...processing                       ...doneChunk   6/15                            :                  ...processing                       ...doneChunk   7/15                            :                  ...processing                       ...doneChunk   8/15                            :                  ...processing                       ...doneChunk   9/15                            :                  ...processing                       ...doneChunk  10/15                            :                  ...processing                       ...doneChunk  11/15                            :                  ...processing                       ...doneChunk  12/15                            :                  ...processing                       ...doneChunk  13/15                            :                  ...processing                       ...doneChunk  14/15                            :                  ...processing                       ...doneChunk  15/15                            :                  ...processing                       ...done
+Spatial non-sphericity (over scans)     :      ...estimating derivatives ...writing resels/voxel image                       ...done
+Saving SPM.mat                          :                     ...writing                       ...done
+Completed                               :          14:03:04 - 24/01/2020
+Done
+Done    'Model estimation'
+Done
+
+>> Bye for now...
+

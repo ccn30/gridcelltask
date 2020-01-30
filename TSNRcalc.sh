@@ -8,13 +8,15 @@ mysubjs=${pathstem}/mysubjs_deflist.txt
 for subject in `cat $mysubjs`
 do	
 	subj="$(cut -d'/' -f1 <<<"$subject")"	
-#!	bilateralmask=${pathstem}/preprocessed_data/segmentation/${subj}/epimasks/bothECmaskWarped_ITKaffine.nii
-	leftECmask=${pathstem}/preprocessed_data/segmentation/${subj}/epimasks/LeftECmaskWarped_ITKaffine.nii
-	rightECmask=${pathstem}/preprocessed_data/segmentation/${subj}/epimasks/ManualEC_right.nii.gz
-	epirun1=${pathstem}/preprocessed_data/images/${subj}/rtopup_Run_1.nii
-	epirun2=${pathstem}/preprocessed_data/images/${subj}/rtopup_Run_2.nii
-	epirun3=${pathstem}/preprocessed_data/images/${subj}/rtopup_Run_3.nii	
-	tsnr=${pathstem}/preprocessed_data/images/${subj}/tSNR
+	bilateralmask=${pathstem}/preprocessed_data/segmentation/${subj}/epimasks/pmEC_bothWarped_ITKaffine.nii
+	leftpmECmask=${pathstem}/preprocessed_data/segmentation/${subj}/epimasks/pmEC_leftWarped_ITKaffine.nii
+	rightpmECmask=${pathstem}/preprocessed_data/segmentation/${subj}/epimasks/pmEC_rightWarped_ITKaffine.nii
+	leftalECmask=${pathstem}/preprocessed_data/segmentation/${subj}/epimasks/alEC_leftWarped_ITKaffine.nii
+	rightalECmask=${pathstem}/preprocessed_data/segmentation/${subj}/epimasks/alEC_rightWarped_ITKaffine.nii
+	epirun1=${pathstem}/preprocessed_data/images/old_data/${subj}/rtopup_Run_1.nii
+	epirun2=${pathstem}/preprocessed_data/images/old_data/${subj}/rtopup_Run_2.nii
+	epirun3=${pathstem}/preprocessed_data/images/old_data/${subj}/rtopup_Run_3.nii	
+	tsnr=${pathstem}/preprocessed_data/images/old_data/${subj}/tSNR
 	
 	mkdir $tsnr
 	

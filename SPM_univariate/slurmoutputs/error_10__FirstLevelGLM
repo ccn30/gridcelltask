@@ -1,0 +1,5 @@
+{Index exceeds matrix dimensions.
+
+Error in SPMuni_mainfunc_7T (line 68)
+        pathstem = [preprocessedpathstem '/' subjects{subjcnt} '/'];
+} 

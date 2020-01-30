@@ -1,4 +1,4 @@
-Tue Jan 21 15:25:44 GMT 2020
+Fri Jan 24 15:32:19 GMT 2020
 working on file 4
 The workspace going into this is /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/SPM_univariate/SPMuni_mainfunc_7T.m /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/SPM_univariate/SPMuni_subjects_parameters.m 4 HPHI  
 
@@ -39,6 +39,11 @@ preprocessedpathstem =
 (___/(__)  (_/\/\_)  SPM12 - http://www.fil.ion.ucl.ac.uk/spm/
 
 
-SPM12: v6906                                       15:26:03 - 21/01/2020
+SPM12: v6906                                       15:32:31 - 24/01/2020
 ========================================================================
-Initialising SPM                        :                   ......
+Initialising SPM                        :                   ........done
+
+SPM present working directory:
+	/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/SPM_univariate/slurmoutputs
+>> Bye for now...
+

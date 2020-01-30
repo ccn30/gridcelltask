@@ -64,7 +64,7 @@ switch prevStep
         smoothing = 3;
         pathstem = [preprocessedpathstem '/' subjects{subjcnt} '/'];
     case 'FirstLevelGLM'
-        prevStep = 'srtopup+.*'
+        prevStep = 'srtopup_.*';
         pathstem = [preprocessedpathstem '/' subjects{subjcnt} '/'];
       
         
@@ -83,8 +83,6 @@ switch clusterid
         toolboxdir = '/imaging/tc02/toolboxes/';
         addpath(spmpath)
         spm fmri
-        scriptdir = '/group/language/data/thomascope/7T_SERPENT_pilot_analysis/';
-        freesurferpath = '/home/tc02/freesurfer/';
         
     case 'HPC'
 %         rawpathstem = '/rds/user/tec31/hpc-work/SERPENT/rawdata/';
@@ -104,9 +102,10 @@ switch clusterid
         fsldir = '/applications/fsl/fsl-5.0.10/';
         toolboxdir = '/home/tec31/toolboxes/'; % Needs fixing
         addpath(spmpath)
+        addpath('/home/ccn30/GridCAT');
         spm fmri
         scriptdir = '/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/SPM_univariate/';
-        freesurferpath = '/applications/freesurfer/freesurfer_6.0.0/';
+%        freesurferpath = '/applications/freesurfer/freesurfer_6.0.0/';
         
 end
 
@@ -244,7 +243,39 @@ switch step
         if ~all(resliceworkedcorrectly)
             error('failed at reslice');
         end
-       
+    
+      case 'cat12'
+%         % Do cat12 normalisation of the structural to create deformation fields (works better than SPM segment deformation fields, which sometimes produce too-small brains)
+%         disp('running cat12 normalisation')
+%         nrun = 1; % enter the number of runs here - should be 1 if submitted in parallel, but retain the functionality to bundle subjects
+%         jobfile = {[scriptdir 'module_cat12_normalise_job_cluster.m']};
+%         inputs = cell(1, nrun);
+%         for crun = subjcnt
+%             outpath = [preprocessedpathstem subjects{crun} '/'];
+%             inputs{1, crun} = cellstr([outpath 'structural_skullstripped_csf.nii']);
+%         end
+%         
+%         cat12workedcorrectly = zeros(1,nrun);
+%         jobs = repmat(jobfile, 1, 1);
+%         
+%         for crun = subjcnt
+%             spm('defaults', 'fMRI');
+%             spm_jobman('initcfg')
+%             try
+%                 spm_jobman('run', jobs, inputs{:,crun});
+%                 cat12workedcorrectly(crun) = 1;
+%             catch
+%                 cat12workedcorrectly(crun) = 0;
+%             end
+%         end
+%         
+%         if ~all(cat12workedcorrectly)
+%             error('failed at cat12');
+%         end
+
+
+        
+        
     case 'smooth3'
         % Smooth images by [3 3 2] FWHM
         nrun = 1; % enter the number of runs here - should be 1 if submitted in parallel, but retain the functionality to bundle subjects
@@ -284,8 +315,11 @@ switch step
             theseepis = find(strncmp(blocksout{crun},'Run',3));
             filestoanalyse = cell(1,length(theseepis));
             eventfiles = cell(1,length(theseepis));
+            eventLabels = cell(1,length(theseepis));
+            rawEventType = cell(1,length(theseepis));
             onsets = cell(1,length(theseepis));
             durations = cell(1,length(theseepis));
+            angles = cell(1,length(theseepis));
             rpfiles = cell(1,length(theseepis));
             
             blocks = {'A','B','C'};
@@ -293,23 +327,56 @@ switch step
             
             scansfilepath = [preprocessedpathstem '/' subjects{crun} '/'];            
             eventfilepath = ['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/task_data/' subjects{crun} '/'];
+            gridmetricspath = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/';
             outpath = ['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/SPM_univariate/' subjects{crun} '/'];
          
             for sess = 1:length(theseepis)
+                
                 for j = 1:minvols(subjcnt)
                     filestoanalyse{sess}{j,1} = [scansfilepath 'srtopup_' blocksout{crun}{theseepis(sess)} '.nii,' num2str(j)];
                 end
                 
-                eventfiles{sess} = [eventfilepath 'Block' blocks{sess} '/eventTable_movemenEventData.txt'];
+                % NEED TO CONCATENATE RUNS FOR PPI
+                
+                % get event timing information - retrospectively label translation events as aligned or misaligned by loading in
+                % estimated grid orientation from gridCAT
+                eventfiles{sess} = [eventfilepath 'Block' blocks{sess} '/eventTable_2_movemenEventData.txt'];
                 fid = fopen(eventfiles{sess});
-                data = textscan(fid, '%s  %f  %f %f','delimiter',';');
+                data = textscan(fid, '%s %f %f %f','delimiter',';');
                 fclose(fid);
                 
+                % extract info from event file
+                rawEventType{sess} = data{1};
                 onsets{sess} = data{2};
                 durations{sess} = data{3};
+                angles{sess} = data{4};
+                
+                % load in output_cArray containing grid metrics (inc. mean orientation per subject)
+                gridmetrics = load([gridmetricspath 'gridCAT_final_X_results_meanOri.mat']);
+                % get row and column where mean orientation is for current subject
+                [~,meanOriIndex] = find(strcmp(gridmetrics.output_cArray,'MeanOrientation_allRuns_righ_gridCAT_final_pmRight6'));
+                [subjIndex,~] = find(strcmp(gridmetrics.output_cArray,subjects{crun}));
+                
+                % create new variable for aligned/misaligned translation or rotation events
+                for i = 1:length(data{sess})
+                    
+                    if strcmp(rawEventType{sess}{i}, 'translation')
+                        eventAngleDiff = absAngDiff(angles{sess}(i),str2double(gridmetrics.output_cArray{subjIndex,meanOriIndex}),60);
+                       
+                        if -15 >= eventAngleDiff <= 15
+                            eventLabels{sess}(i,1) = 'translationAligned';
+                        else
+                            eventLabels{sess}(i,1) = 'translationMisaligned';                       
+                        end
+                        
+                    elseif strcmp(rawEventType{sess}{i}, 'rotation')
+                        eventLabels{sess}(i,1) = 'rotation';
+                    end
+                 
+                end
                 rpfiles{sess} = [scansfilepath 'rp_topup_' blocksout{crun}{theseepis(sess)} '.txt'];
             end
-            jobfile = create_GLM1_SPM_job(TR,subjects{crun},outpath,minvols(crun),filestoanalyse,onsets,durations,rpfiles);
+            jobfile = create_GLM1_SPM_job(TR,subjects{crun},outpath,minvols(crun),filestoanalyse,eventLabels,onsets,durations,rpfiles);
             spm('defaults', 'fMRI');
             spm_jobman('initcfg')
             SPMworkedcorrectly = zeros(1,nrun);

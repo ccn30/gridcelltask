@@ -15,12 +15,14 @@ allSubjGridcatData_dir = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/
 %GLM2findStr = 'gridCAT_out*';
 %GLM2findStr = 'gridCAT_phys*';
 %GLM2findStr = 'gridCAT_thresh*';
-GLM2findStr = 'gridCAT_pmEC*';
+%GLM2findStr = 'gridCAT_pmEC*';
+GLM2findStr = 'gridCAT_final_*';
 
 get_magnitude = 1;
 magnitude_showOnlyAllRunsAvg = 0;
 get_sStability = 1;
 get_tStability = 1;
+get_meanOri = 1;
 
 % -----------------------------------------------------------------
 
@@ -49,8 +51,10 @@ for subjIdx = 1:length(subjDirList)
 
         GLM2dirName = GLM2dirList(GLM2dirIdx).name;
         
-        if contains(GLM2findStr,'out')
+         if contains(GLM2findStr,'out')
             % for which ROI was the mean grid ori computed at GLM2?
+            % use first four letters of ROI from mask file name for strcmp later on 
+            
             if  contains(GLM2dirName, '01')
                 ROI_GLM2meanGridOriCalc = 'both';
                 dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics.txt'];
@@ -134,7 +138,52 @@ for subjIdx = 1:length(subjDirList)
                 ROI_GLM2meanGridOriCalc = 'left';
                 dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_alLeft_control.txt'];
             end
-             
+
+        elseif contains(GLM2findStr,'final')
+            
+            if  contains(GLM2dirName, 'pmRight')
+                ROI_GLM2meanGridOriCalc = 'righ';
+                
+                if contains(GLM2dirName, '4')
+                    dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_4_pmRight_affine.txt'];
+                elseif contains(GLM2dirName, '5')
+                    dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_5_pmRight_affine.txt'];
+                elseif contains(GLM2dirName, '6')
+                    dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_pmRight_affine.txt'];
+                elseif contains(GLM2dirName, '7')
+                    dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_7_pmRight_affine.txt'];
+                elseif contains(GLM2dirName, '8')
+                    dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_8_pmRight_affine.txt'];
+                end
+                
+            elseif contains(GLM2dirName, 'alRight')
+                ROI_GLM2meanGridOriCalc = 'righ';
+                dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_alRight_control.txt'];
+            
+            elseif contains(GLM2dirName, 'alLeft')
+                ROI_GLM2meanGridOriCalc = 'left';
+                dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_alLeft_control.txt'];
+            
+            elseif  contains(GLM2dirName, 'pmLeft')
+                ROI_GLM2meanGridOriCalc = 'left';
+                
+                if contains(GLM2dirName, '4')
+                    dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_4_pmLeft_affine.txt'];
+                elseif contains(GLM2dirName, '5')
+                    dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_5_pmLeft_affine.txt'];
+                elseif contains(GLM2dirName, '6')
+                    dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_pmLeft_affine.txt'];
+                elseif contains(GLM2dirName, '7')
+                    dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_7_pmLeft_affine.txt'];
+                elseif contains(GLM2dirName, '8')
+                    dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_8_pmLeft_affine.txt'];
+                end
+                
+            elseif contains(GLM2dirName, 'pmBoth')
+                ROI_GLM2meanGridOriCalc = 'both';
+                dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_pmBoth_affine.txt'];
+            end
+          
         end
 
         fid = fopen(dataFile);
@@ -152,7 +201,7 @@ for subjIdx = 1:length(subjDirList)
 
                     cellData = strsplit(lineData{3}, '_');
                     
-                    if contains(GLM2findStr,'pmEC')
+                    if contains(GLM2findStr,'pm') || contains(GLM2findStr, 'al')
                         ROI_gridMetricMask = cellData{2};
                     else
                         ROI_gridMetricMask = cellData{1};
@@ -176,7 +225,7 @@ for subjIdx = 1:length(subjDirList)
                 elseif strcmp(lineData{1}, 'Between-voxel grid orientation coherence within ROI') && get_sStability
 
                     cellData = strsplit(lineData{3},'-');
-                    if contains(GLM2findStr,'pmEC')
+                    if contains(GLM2findStr,'pm') || contains(GLM2findStr, 'al')
                         ROI_gridMetricMask = cellData{2};
                     else
                         ROI_gridMetricMask = cellData{1};
@@ -200,28 +249,47 @@ for subjIdx = 1:length(subjDirList)
 
 
                 elseif strcmp(lineData{1}, 'Within-voxel grid orientation coherence within ROI') && get_tStability
-
+                    
                     cellData = strsplit(lineData{3},'_');
-                    if contains(GLM2findStr,'pmEC')
+                    if contains(GLM2findStr,'pm') || contains(GLM2findStr, 'al')
                         ROI_gridMetricMask = cellData{2};
                     else
                         ROI_gridMetricMask = cellData{1};
                     end
-
+                    
                     if strncmp(ROI_gridMetricMask,ROI_GLM2meanGridOriCalc,4)
-
+                        
                         cellData = strsplit(lineData{4}, '_');
                         runA_str = cellData{3};
-
+                        
                         cellData = strsplit(lineData{5}, '_');
                         runB_str = cellData{3};
-
+                        
                         pcntStableVox = lineData{6};
-                        metricName = ['tStability_pcntStableVox_' runA_str 'VS' runB_str '_' ROI_gridMetricMask(1:4) '_' GLM2dirName];                    
+                        metricName = ['tStability_pcntStableVox_' runA_str 'VS' runB_str '_' ROI_gridMetricMask(1:4) '_' GLM2dirName];
                         [metricIdx, metricNameList] = getMetricIdx(metricName, metricNameList);
                         output_cArray{subjIdx, metricIdx} = pcntStableVox;
+                        
+                    end
+                    
+                elseif strcmp(lineData{1}, 'Mean grid orientation within ROI') && strcmp(lineData{5}, 'averaged across runs') && get_meanOri
+                    
+                    cellData = strsplit(lineData{3},'_');
+                    if contains(GLM2findStr,'pm') || contains(GLM2findStr, 'al')
+                        ROI_gridMetricMask = cellData{2};
+                    else
+                        ROI_gridMetricMask = cellData{1};
+                    end
+                    
+                    if strncmp(ROI_gridMetricMask, ROI_GLM2meanGridOriCalc, 4)
+
+                            meanOriWeighted = lineData{6};
+                            metricName = ['MeanOrientation_allRuns_' ROI_gridMetricMask(1:4) '_' GLM2dirName];                    
+                            [metricIdx, metricNameList] = getMetricIdx(metricName, metricNameList);
+                            output_cArray{subjIdx, metricIdx} = meanOriWeighted;
 
                     end
+                    
                 end
                 
                 tline = fgetl(fid);
@@ -238,7 +306,7 @@ end
 disp(' ');
 output_cArray = [['Subject' subjNameList]' [metricNameList; output_cArray]];
 
-filename = [GLM2findStr '_totalresults_v2'];
+filename = [GLM2findStr '_results_meanOri'];
 filename(filename=='*')='X';
 
 cell2csv([allSubjGridcatData_dir filesep filename '.csv'], output_cArray);

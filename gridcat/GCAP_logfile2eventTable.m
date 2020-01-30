@@ -1,16 +1,16 @@
 function GCAP_logfile2eventTable
 %(logfile, setAllDurationsToZero_flag, includeRotation_flag, minActiveTranslDur_sec)
-includeRotation_flag = 0;
+includeRotation_flag = 1;
 setAllDurationsToZero_flag = 0;
 minActiveTranslDur_sec = 0.01;
 subjectvec = {'29780','27734','28061','28428','29317','29321','29332','29336','29358','29382','29383'};
 blocks = {'BlockA','BlockB','BlockC'};
 pathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/task_data';
 
-for i = 1%:length(subjectvec)
+for i = 2:length(subjectvec)
     
     for b = 1:3
-        logfile = [pathstem '/' subjectvec{i} '/' blocks{b} '/movemenEventData.csv']
+        logfile = [pathstem '/' subjectvec{i} '/' blocks{b} '/movemenEventData.csv'];
         % clear all
         % load temp_nabvngnhbnuaper99949949
         
@@ -33,7 +33,7 @@ for i = 1%:length(subjectvec)
         
         % open new event table file
         [fpath, fname, ~] = fileparts(logfile);
-        newFilename = [fpath filesep 'eventTable_' fname '.txt'];
+        newFilename = [fpath filesep 'eventTable_2_' fname '.txt'];
         disp(' ');
         disp(['New event-table: ' newFilename]);
         fp_eventTable = fopen(newFilename, 'w+');

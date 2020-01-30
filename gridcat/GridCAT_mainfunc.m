@@ -16,16 +16,14 @@ function GridCAT_mainfunc(subject,preprocesspathstem,taskpathstem,outdirname,ROI
 runs = {'BlockA','BlockB','BlockC'};
 TR = 2.53;
 xfold = str2double(xFold); %taken from input - xFold = str, xfold = numeric
-nScans = 240;
+nScans = 238;
 maskthresh=str2double(mask_thresh); %taken from input - mask_thresh = str, maskthresh = numeric
 
 % FLAGS
 % calculate mean grid orientation within each run separately (0) or across all runs (1)
-orientationcalc_flag = 1;
+orientationcalc_flag = 0;
 % use physiology regressors (phys) or use movement parameters (move)
 nuisance_flag = 'move';
-% use 'left', 'right', or 'both' EC ROI in mask
-%ROI_flag = 'left';
 
 %for subj = 1:length(subjectvec)
     %% FUNCTIONAL SCANS, EVENT-TABLES, ADDITIONAL REGRESSORS
@@ -38,8 +36,8 @@ nuisance_flag = 'move';
         
         % specify functional scans
         for scan = 1:nScans
-%            cfg.rawData.run(run).functionalScans(scan,1) = {[preprocesspathstem '/images/old_data/' subject '/rtopup_Run_' num2str(run) '_split' sprintf('%04d',scan-1) '.nii']};
-             cfg.rawData.run(run).functionalScans(scan,1) = {[preprocesspathstem '/images/' subject '/rtopup_Run_' num2str(run) '_split' sprintf('%04d',scan-1) '.nii']};
+            cfg.rawData.run(run).functionalScans(scan,1) = {[preprocesspathstem '/images/old_data/' subject '/rtopup_Run_' num2str(run) '_split' sprintf('%04d',scan-1) '.nii']};
+%            cfg.rawData.run(run).functionalScans(scan,1) = {[preprocesspathstem '/images/' subject '/rtopup_Run_' num2str(run) '_split' sprintf('%04d',scan-1) '.nii']};
         end
         
         % specify event-table
@@ -49,8 +47,8 @@ nuisance_flag = 'move';
         if strcmp(nuisance_flag,'phys') == 1
             cfg.rawData.run(run).additionalRegressors_file = [preprocesspathstem '/regressors/' subject '/Run' num2str(run) '/Physio_regressors/multiple_regressors.txt'];
         elseif strcmp(nuisance_flag,'move') == 1
- %           cfg.rawData.run(run).additionalRegressors_file = [preprocesspathstem '/images/old_data/' subject '/rp_topup_Run_' num2str(run) '.txt'];
-            cfg.rawData.run(run).additionalRegressors_file = [preprocesspathstem '/images/' subject '/rp_topup_Run_' num2str(run) '.txt'];
+            cfg.rawData.run(run).additionalRegressors_file = [preprocesspathstem '/images/old_data/' subject '/rp_topup_Run_' num2str(run) '.txt'];
+ %           cfg.rawData.run(run).additionalRegressors_file = [preprocesspathstem '/images/' subject '/rp_topup_Run_' num2str(run) '.txt'];
         end
         
     end
@@ -108,7 +106,7 @@ nuisance_flag = 'move';
     
     % Include unused grid events in the model?
     %	0 ... grid events that are not used for this GLM will not be included in the model
-    %	1 ... grid events that are not used for this GLM will not be included in the model
+    %	1 ... grid events that are not used for this GLM will be included in the model
     cfg.GLM.keepUnusedGridEvents = 1;
     
     % Specify GLM1 using the current configuration (cfg)
@@ -164,6 +162,8 @@ nuisance_flag = 'move';
             cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/pmEC_rightWarped_ITKaffine.nii']};
         elseif strcmp(ROI_flag, 'pmLeft')
             cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/pmEC_leftWarped_ITKaffine.nii']};
+        elseif strcmp(ROI_flag, 'pmBoth')
+            cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/pmEC_bothWarped_ITKaffine.nii']};
         end
     elseif strcmp(warp_flag,'SyN')
         cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/bothECmaskWarped_SyN.nii']};
@@ -216,6 +216,8 @@ nuisance_flag = 'move';
             ROI_masks = {[preprocesspathstem '/segmentation/' subject '/epimasks/pmEC_rightWarped_ITKaffine.nii']};
         elseif strcmp(ROI_flag, 'pmLeft')
             ROI_masks = {[preprocesspathstem '/segmentation/' subject '/epimasks/pmEC_leftWarped_ITKaffine.nii']};
+        elseif strcmp(ROI_flag, 'pmBoth')
+            ROI_masks = {[preprocesspathstem '/segmentation/' subject '/epimasks/pmEC_bothWarped_ITKaffine.nii']};
         end
     elseif strcmp(warp_flag,'SyN')
             ROI_masks = {[preprocesspathstem '/segmentation/' subject '/epimasks/bothECmaskWarped_SyN.nii']};

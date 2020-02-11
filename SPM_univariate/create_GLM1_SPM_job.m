@@ -1,4 +1,4 @@
-function jobfile = create_GLM1_SPM_job(TR,subject,outpath,minvols,filestoanalyse,onsets,durations,rpfiles)
+function jobfile = create_GLM1_SPM_job(TR,subject,outpath,minvols,filestoanalyse,eventLabels,onsets,durations,rpfiles)
 %-----------------------------------------------------------------------
 % Job saved on 30-Sep-2019 12:01:11 by cfg_util (rev $Rev: 6460 $)
 % spm SPM - SPM12 (6906)
@@ -27,7 +27,7 @@ for run = 1:3
     end
     fprintf(fileID,'};\n');
     
-    % condition info
+    % condition info NEED TO MAKE MULTIPLE
     fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').cond.name = ''translation'';\n']);
     times = sprintf('%f; ',onsets{run}'); % print as a character vector separated by ;
     times = times(1:end-2); % remove last ; 

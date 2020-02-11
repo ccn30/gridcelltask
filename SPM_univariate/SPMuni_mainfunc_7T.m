@@ -15,7 +15,7 @@ function SPMuni_mainfunc_7T(step,prevStep,clusterid,preprocessedpathstem,rawpath
 % setenv('FSF_OUTPUT_FORMAT', 'nii'); % this to tell what the output type 
 % rawpathstem ='/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images';
 % preprocessedpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/old_data';
-%ENCRYPT_preprocess_mainfunc_7T('realign','topup','HPHI',preprocessedpathstem,rawpathstem,subjects,1,fullid,basedir,blocksin,blocksin_folders,blocksout,minvols,dates,group)
+% SPMuni_mainfunc_7T('PPI','','HPHI',preprocessedpathstem,rawpathstem,subjects,1,fullid,basedir,blocksin,blocksin_folders,blocksout,minvols,dates,group)
 
 switch prevStep
     % Here you specify the filenames that you search for after each step.
@@ -308,7 +308,7 @@ switch step
               
         end
 
-    case 'FirstLevelGLM'
+    case 'PPI'
         nrun = 1; % enter the number of runs here - should be 1 if submitted in parallel, but retain the functionality to bundle subjects
         disp('running SPM univariate analysis')
         for crun = subjcnt
@@ -338,8 +338,7 @@ switch step
                 
                 % NEED TO CONCATENATE RUNS FOR PPI
                 
-                % get event timing information - retrospectively label translation events as aligned or misaligned by loading in
-                % estimated grid orientation from gridCAT
+                % get task event timing information per each run (3 total)
                 eventfiles{sess} = [eventfilepath 'Block' blocks{sess} '/eventTable_2_movemenEventData.txt'];
                 fid = fopen(eventfiles{sess});
                 data = textscan(fid, '%s %f %f %f','delimiter',';');
@@ -353,29 +352,37 @@ switch step
                 
                 % load in output_cArray containing grid metrics (inc. mean orientation per subject)
                 gridmetrics = load([gridmetricspath 'gridCAT_final_X_results_meanOri.mat']);
-                % get row and column where mean orientation is for current subject
+                % get row and column locations where mean orientation is for current subject for right pmEC
                 [~,meanOriIndex] = find(strcmp(gridmetrics.output_cArray,'MeanOrientation_allRuns_righ_gridCAT_final_pmRight6'));
                 [subjIndex,~] = find(strcmp(gridmetrics.output_cArray,subjects{crun}));
                 
-                % create new variable for aligned/misaligned translation or rotation events
+                % create new variable for aligned/misaligned translation or rotation events by comparing each translation event angle to
+                % subject's mean grid orientation in 60 degree space
                 for i = 1:length(data{sess})
                     
                     if strcmp(rawEventType{sess}{i}, 'translation')
-                        eventAngleDiff = absAngDiff(angles{sess}(i),str2double(gridmetrics.output_cArray{subjIndex,meanOriIndex}),60);
-                       
-                        if -15 >= eventAngleDiff <= 15
-                            eventLabels{sess}(i,1) = 'translationAligned';
+                        %eventAngleDiff = absAngDiff(angles{sess}(i),str2double(gridmetrics.output_cArray{subjIndex,meanOriIndex}),60);
+                        % Matthias said this may not work as angles are in 360 degree space not 60 degrees, so use:
+                        
+                        alignment = cosd(6*(angles{sess}(i) - str2double(gridmetrics.output_cArray{subjIndex,meanOriIndex})));
+                        
+                        % alignment should be between -1 to 1, with ALIGNED events over 0 and MISALIGNED events below 0
+                        if alignment >= 0
+                            eventLabels{sess}{i,1} = 'translationAligned';
                         else
-                            eventLabels{sess}(i,1) = 'translationMisaligned';                       
+                            eventLabels{sess}{i,1} = 'translationMisaligned';                       
                         end
                         
                     elseif strcmp(rawEventType{sess}{i}, 'rotation')
-                        eventLabels{sess}(i,1) = 'rotation';
+                        eventLabels{sess}{i,1} = 'rotation';
                     end
                  
                 end
+                
                 rpfiles{sess} = [scansfilepath 'rp_topup_' blocksout{crun}{theseepis(sess)} '.txt'];
+            
             end
+            
             jobfile = create_GLM1_SPM_job(TR,subjects{crun},outpath,minvols(crun),filestoanalyse,eventLabels,onsets,durations,rpfiles);
             spm('defaults', 'fMRI');
             spm_jobman('initcfg')

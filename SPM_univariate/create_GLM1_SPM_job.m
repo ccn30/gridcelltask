@@ -18,12 +18,14 @@ fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.timing.RT = ' num2str(TR) ';
 fprintf(fileID,'matlabbatch{1}.spm.stats.fmri_spec.timing.fmri_t = 16;\n');
 fprintf(fileID,'matlabbatch{1}.spm.stats.fmri_spec.timing.fmri_t0 = 8;\n');
 
+%  REMOVE RUNS, INDEX OUT 0'S FROM CONDITION INFO VARIABLES VIA
+%  VARIABLE(ANY(VARIABLE,2))
 for run = 1:3
     
     % define scan locations
     fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').scans = {\n']);
     for i = 1:minvols
-        fprintf(fileID,['''' filestoanalyse{run}{i} '''\n']);
+        fprintf(fileID,['''' filestoanalyse{run}{i} '''\n']); % NEED TO ADD ALL SESSIONS HERE 
     end
     fprintf(fileID,'};\n');
     

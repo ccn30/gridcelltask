@@ -315,7 +315,7 @@ switch step
 
 % =========================================================================         
     case 'PPI'
-        nrun = 1; 
+        nrun = 1;
         disp('running SPM PPI analysis')
         
         for crun = subjcnt
@@ -331,104 +331,85 @@ switch step
             onsets = cell(1,length(theseepis));
             durations = cell(1,length(theseepis));
             angles = cell(1,length(theseepis));
-            rpfiles = cell(1,length(theseepis));    
+            rpfiles = cell(1,length(theseepis));
             data = {};
             blocks = {'A','B','C'};
             TR = 2.53;
             
             % set dir and file paths
-            scansfilepath = [preprocessedpathstem '/' subjects{crun} '/'];            
+            scansfilepath = [preprocessedpathstem '/' subjects{crun} '/'];
             eventfilepath = ['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/task_data/' subjects{crun} '/'];
             gridmetricspath = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/';
             outpath = ['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/SPM_univariate/' subjects{crun} '/'];
             
             % load in all data from each session (3 total)
+            
             for sess = 1:length(theseepis)
-                
                 % movement regressors
                 rpfiles{sess} = [scansfilepath 'rp_topup_' blocksout{crun}{theseepis(sess)} '.txt'];
-                
                 % EPIs
                 for j = 1:minvols(subjcnt)
                     filestoanalyse{sess}{j,1} = [scansfilepath 'srtopup_' blocksout{crun}{theseepis(sess)} '.nii,' num2str(j)];
                 end
-                
                 % task timing information per each run
                 eventfiles{sess} = [eventfilepath 'Block' blocks{sess} '/eventTable_2_movemenEventData.txt'];
                 fid = fopen(eventfiles{sess});
                 data{sess} = textscan(fid, '%s %f %f %f','delimiter',';');
-                fclose(fid);            
+                fclose(fid);
             end
             
             % concatenate sessions for PPI analysis
             
             % rp files
-            cd(eventfilepath)
-            cmd = ['cat ' rpfiles{1} ' ' rpfiles{2} ' ' rpfiles{3} ' > allMoveRegressors.txt'];
-            system(cmd)
-            rpfile = [eventfilepath 'allMoveRegressors.txt'];
-            
+            cmd = ['cat ' rpfiles{1} ' ' rpfiles{2} ' ' rpfiles{3} ' > ' eventfilepath '/allMoveRegressors.txt'];
+            system(cmd)            
+            rpfile = [eventfilepath 'allMoveRegressors.txt'];            
             % event files
             allEventData.labels = [data{1}{1};data{2}{1};data{3}{1}];
-            allEventData.durations = [data{1}{3};data{2}{3};data{3}{3}];
-            allEventData.angles = [data{1}{4};data{2}{4};data{3}{4}]; % of translation events in 360 degree space relative to environmental landmark
-            
+            allEventData.durations = [cell2mat(data{1}(3));cell2mat(data{2}(3));cell2mat(data{3}(3))];
+            allEventData.angles = [cell2mat(data{1}(4));cell2mat(data{2}(4));cell2mat(data{3}(4))]; % of translation events in 360 degree space relative to environmental landmark
             % For onsets, add length in secs of one run (TR*nVols) to onsets of second run and two lengths to third run
             % NB task truncates before EPI sequence ends
             RunTime = TR * minvols(subjcnt);
             allEventData.onsets = [cell2mat(data{1}(2)); cell2mat(data{2}(2)) + RunTime; cell2mat(data{3}(2)) + (2*RunTime)];
-
-            % extract task trial info from event file
-            rawEventType = cat(data{1}; % rotation or translation
-            onsets{sess} = data{2};
-            durations{sess} = data{3};
-            angles{sess} = data{4}; % angles of translation events in 360 degree space relative to environment landmark
             
             % load in output_cArray of grid metrics containing mean orientation per subject
             gridmetrics = load([gridmetricspath 'gridCAT_final_X_results_meanOri.mat']);
-            % get row and column locations where mean orientation is for current subject for right pmEC
+            % get row and column locations where mean orientation is for current subject **FOR RIGHT pmEC**
             [~,meanOriIndex] = find(strcmp(gridmetrics.output_cArray,'MeanOrientation_allRuns_righ_gridCAT_final_pmRight6'));
             [subjIndex,~] = find(strcmp(gridmetrics.output_cArray,subjects{crun}));
             
-            % create trial information variable for each conditon (aligned translation, misaligned translation and rotation)
+            % create separate variable for each conditon from allEventdata (aligned translation, misaligned translation and rotation)
             % identify aligned/misaligned events by comparing each translation event angle to subject's mean grid orientation in 60 degree space
             % per varibale: 1 = onset, 2 = duration
             
-            for i = 1:length(data{sess})
+            for i = 1:length(allEventData.labels)
                 
-                if strcmp(rawEventType{sess}{i}, 'translation')
+                if strcmp(allEventData.labels{i}, 'translation')
                     % alignment = absAngDiff(angles{sess}(i),str2double(gridmetrics.output_cArray{subjIndex,meanOriIndex}),60);
                     % Matthias said his absAngDiff func may not work as angles are in 360 degree space not 60 degrees, so use:
                     
-                    alignment = cosd(6*(angles{sess}(i) - str2double(gridmetrics.output_cArray{subjIndex,meanOriIndex})));
+                    alignment = cosd(6*(allEventData.angles(i) - str2double(gridmetrics.output_cArray{subjIndex,meanOriIndex})));
                     
                     % alignment should be between -1 to 1, with ALIGNED events over 0 and MISALIGNED events below 0
                     if alignment >= 0
-                        TranslationAligned{sess}{i,1} = onsets{sess}(i);
-                        TranslationAligned{sess}{i,2} = durations{sess}(i);
-                        TranslationAligned{sess}{i,3} = alignment; % record how aligned
-                    else
-                        TranslationMisaligned{sess}{i,1} = onsets{sess}(i);
-                        TranslationMisaligned{sess}{i,2} = durations{sess}(i);
-                        TranslationMisaligned{sess}{i,3} = alignment; % record how misaligned
+                        TranslationAligned.onsets(i,1) = allEventData.onsets(i);
+                        TranslationAligned.durations(i,1) = allEventData.durations(i);
+                        TranslationAligned.alignment(i,1) = alignment; % record how aligned
+                    elseif alignment <= 0
+                        TranslationMisaligned.onsets(i,1) = allEventData.onsets(i);
+                        TranslationMisaligned.durations(i,1) = allEventData.durations(i);
+                        TranslationMisaligned.alignment(i,1) = alignment; % record how aligned
                     end
                     
-                elseif strcmp(rawEventType{sess}{i}, 'rotation')
-                    Rotation{sess}{i,1} = onsets{sess}(i);
-                    Rotation{sess}{i,2} = durations{sess}(i);
+                elseif strcmp(allEventData.labels{i}, 'rotation')
+                    Rotation.onsets(i,1) = allEventData.onsets(i);
+                    Rotation.durations(i,1) = allEventData.durations(i);
                 end
                 
             end
             
-            % remove empty cells from event variables
-            emptycells = cellfun('isempty',TranslationAligned{sess});
-            TranslationAligned{sess}(all(emptycells,2),:) = [];
-            emptycells = cellfun('isempty',TranslationMisaligned{sess});
-            TranslationMisaligned{sess}(all(emptycells,2),:) = [];
-            emptycells = cellfun('isempty',Rotation{sess});
-            Rotation{sess}(all(emptycells,2),:) = [];
-            
-            %end % of sess for loop
+            % remove empty cells from event variables using any() in create_GLM1_SPM_job.m
             
             jobfile = create_GLM1_SPM_job(TR,subjects{crun},outpath,minvols(crun),filestoanalyse,TranslationAligned,TranslationMisaligned,Rotation,rpfile);
             spm('defaults', 'fMRI');
@@ -441,7 +422,7 @@ switch step
                 SPMworkedcorrectly(crun) = 0;
             end
             if ~all(SPMworkedcorrectly)
-            error('failed at SPM');
+                error('failed at SPM');
             end
         end
 end

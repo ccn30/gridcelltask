@@ -1,4 +1,4 @@
-function jobfile = create_GLM1_SPM_job(TR,subject,outpath,minvols,filestoanalyse,eventLabels,onsets,durations,rpfiles)
+function jobfile = create_GLM1_SPM_job(TR,subject,outpath,minvols,filestoanalyse,TranslationAligned,TranslationMisaligned,Rotation,rpfile)
 %-----------------------------------------------------------------------
 % Job saved on 30-Sep-2019 12:01:11 by cfg_util (rev $Rev: 6460 $)
 % spm SPM - SPM12 (6906)
@@ -27,20 +27,44 @@ for run = 1:3
     end
     fprintf(fileID,'};\n');
     
-    % condition info NEED TO MAKE MULTIPLE
-    fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').cond.name = ''translation'';\n']);
-    times = sprintf('%f; ',onsets{run}'); % print as a character vector separated by ;
-    times = times(1:end-2); % remove last ; 
-    fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').cond.onset = [' times '];\n']);
-    lengths = sprintf('%f; ',durations{run}');
+    % Condition info 
+    % rotations
+    fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').cond(1).name = ''Rotation'';\n']);
+    times = sprintf('%f; ', Rotation{run}{:,1}); % print as a character vector separated by ;
+    times = times(1:end-2); % remove last ; and ''
+    fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').cond(1).onset = [' times '];\n']);
+    lengths = sprintf('%f; ',Rotation{run}{:,2});
     lengths = lengths(1:end-2);
-    fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').cond.duration = [' lengths '];\n']);
+    fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').cond(1).duration = [' lengths '];\n']);
+    % translation aligned
+    fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').cond(2).name = ''TranslationAligned'';\n']);
+    times = sprintf('%f; ',TranslationAligned{run}{:,1}); % print as a character vector separated by ;
+    times = times(1:end-2); % remove last ; 
+    fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').cond(2).onset = [' times '];\n']);
+    lengths = sprintf('%f; ',TranslationAligned{run}{:,2});
+    lengths = lengths(1:end-2);
+    fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').cond(2).duration = [' lengths '];\n']);
+    % translation misaligned
+    fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').cond(3).name = ''TranslationMisaligned'';\n']);
+    times = sprintf('%f; ',TranslationMisaligned{run}{:,1}); % print as a character vector separated by ;
+    times = times(1:end-2); % remove last ; 
+    fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').cond(3).onset = [' times '];\n']);
+    lengths = sprintf('%f; ',TranslationMisaligned{run}{:,2});
+    lengths = lengths(1:end-2);
+    fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').cond(3).duration = [' lengths '];\n']);
+    
+    % standard settings
     fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').cond.tmod = 0;\n']);
     fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').cond.pmod = struct(''name'', {}, ''param'', {}, ''poly'', {});\n']);
     fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').cond.orth = 1;\n']);
     fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').multi = {''''};\n']);
-    fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').regress = struct(''name'', {}, ''val'', {});\n']);
-    fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').multi_reg = {''' rpfiles{run} '''};\n']);
+    
+    % Regressors: block effect to model 3 sessions (last one modeled by mean column of design matrix) and multi regressor rp file
+    fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').regress(1).name = ''Session 1'';\n']);
+    fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').regress(1).val = kron([1 0 0]'',ones(minvols,1));\n']);
+    fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').regress(2).name = ''Session 2'';\n']);
+    fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').regress(2).val = kron([0 1 0]'',ones(minvols,1));\n']);
+    fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').multi_reg = {''' rpfiles{run} '''};\n']); % need to concatenate
     fprintf(fileID,['matlabbatch{1}.spm.stats.fmri_spec.sess(' num2str(run) ').hpf = 128;\n']);
 
 end

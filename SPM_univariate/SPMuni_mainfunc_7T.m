@@ -8,6 +8,11 @@ function SPMuni_mainfunc_7T(step,prevStep,clusterid,preprocessedpathstem,rawpath
 % for example:
 % SPMuni_mainfunc_7T('PPI','','HPHI',preprocessedpathstem,rawpathstem,subjects,1,fullid,basedir,blocksin,blocksin_folders,blocksout,minvols,dates,group)
 
+% use these to debug (change steps in command)
+% rawpathstem ='/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images';
+% preprocessedpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/old_data';
+% SPMuni_mainfunc_7T('PPI','','HPHI',preprocessedpathstem,rawpathstem,subjects,1,fullid,basedir,blocksin,blocksin_folders,blocksout,minvols,dates,group)
+
 % inherited from Thomas Cope by Coco Newton 8.05.19
 
 %% Work out which file we're looking to work on now
@@ -16,9 +21,6 @@ function SPMuni_mainfunc_7T(step,prevStep,clusterid,preprocessedpathstem,rawpath
 % setenv('FSL_DIR',fsldir);  % this to tell where FSL folder is
 % setenv('FSLOUTPUTTYPE', 'NIFTI'); % this to tell what the output type 
 % setenv('FSF_OUTPUT_FORMAT', 'nii'); % this to tell what the output type 
-% rawpathstem ='/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images';
-% preprocessedpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/old_data';
-% SPMuni_mainfunc_7T('PPI','','HPHI',preprocessedpathstem,rawpathstem,subjects,1,fullid,basedir,blocksin,blocksin_folders,blocksout,minvols,dates,group)
 
 switch prevStep
     % Here you specify the filenames that you search for after each step.
@@ -327,10 +329,6 @@ switch step
             TranslationAligned = {};
             TranslationMisaligned = {};
             Rotation = {};
-            rawEventType = cell(1,length(theseepis));
-            onsets = cell(1,length(theseepis));
-            durations = cell(1,length(theseepis));
-            angles = cell(1,length(theseepis));
             rpfiles = cell(1,length(theseepis));
             data = {};
             blocks = {'A','B','C'};
@@ -340,7 +338,7 @@ switch step
             scansfilepath = [preprocessedpathstem '/' subjects{crun} '/'];
             eventfilepath = ['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/task_data/' subjects{crun} '/'];
             gridmetricspath = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/';
-            outpath = ['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/SPM_univariate/' subjects{crun} '/'];
+            outpath = ['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/SPM_univariate/' subjects{crun}];
             
             % load in all data from each session (3 total)
             
@@ -409,9 +407,16 @@ switch step
                 
             end
             
-            % remove empty cells from event variables using any() in create_GLM1_SPM_job.m
+            % remove 0's from variables
+            TranslationAligned.onsets(TranslationAligned.onsets==0)=[];
+            TranslationAligned.durations(TranslationAligned.durations==0)=[];
+            TranslationMisaligned.onsets(TranslationMisaligned.onsets==0)=[];
+            TranslationMisaligned.durations(TranslationMisaligned.durations==0)=[];
+            Rotation.onsets(Rotation.onsets==0)=[];
+            Rotation.durations(Rotation.durations==0)=[];
             
             jobfile = create_GLM1_SPM_job(TR,subjects{crun},outpath,minvols(crun),filestoanalyse,TranslationAligned,TranslationMisaligned,Rotation,rpfile);
+            %jobfile = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/SPM_univariate/SPM_jobfiles/test_job.m';
             spm('defaults', 'fMRI');
             spm_jobman('initcfg')
             SPMworkedcorrectly = zeros(1,nrun);

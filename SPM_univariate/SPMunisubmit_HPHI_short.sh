@@ -26,7 +26,7 @@
 #! For 6GB per CPU, set "-p skylake"; for 12GB per CPU, set "-p skylake-himem": 
 #!SBATCH -p skylake-himem
 #SBATCH --qos short.q
-#SBATCH --mem=6000
+#SBATCH --mem=8000
 
 # CHANGE ME IF YOU WANT TO BE EMAILED
 #SBATCH --mail-user=ccn30

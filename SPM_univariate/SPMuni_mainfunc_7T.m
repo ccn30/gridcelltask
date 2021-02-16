@@ -9,6 +9,7 @@ function SPMuni_mainfunc_7T(step,prevStep,clusterid,preprocessedpathstem,rawpath
 % SPMuni_mainfunc_7T('PPI','','HPHI',preprocessedpathstem,rawpathstem,subjects,1,fullid,basedir,blocksin,blocksin_folders,blocksout,minvols,dates,group)
 
 % use these to debug (change steps in command)
+% run SPM_uni_subjects_parameters.m
 % rawpathstem ='/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images';
 % preprocessedpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/old_data';
 % SPMuni_mainfunc_7T('PPI','','HPHI',preprocessedpathstem,rawpathstem,subjects,1,fullid,basedir,blocksin,blocksin_folders,blocksout,minvols,dates,group)
@@ -322,16 +323,24 @@ switch step
         
         for crun = subjcnt
             
-            % initialise variables
+            % preallocate variables
+            % temp
             theseepis = find(strncmp(blocksout{crun},'Run',3));
-            filestoanalyse = cell(1,length(theseepis));
+            rawEventType = cell(1,length(theseepis));
+            onsets = cell(1,length(theseepis));
+            durations = cell(1,length(theseepis));
+            angles = cell(1,length(theseepis));
             eventfiles = cell(1,length(theseepis));
-            TranslationAligned = {};
-            TranslationMisaligned = {};
-            Rotation = {};
+            % output
+            filestoanalyse = cell(1,length(theseepis));            
+            TransAligned = {};
+            TransMisaligned = {};
+            Rotation = {};            
             rpfiles = cell(1,length(theseepis));
-            data = {};
-            blocks = {'A','B','C'};
+            
+            % initialise
+            ROI_flag = 'pmRight6'; % choose which gridCAT output to use ie right or left pmEC, 6 fold model or other
+            blocks = {'A','B','C'}; % of three runs
             TR = 2.53;
             
             % set dir and file paths
@@ -343,79 +352,71 @@ switch step
             % load in all data from each session (3 total)
             
             for sess = 1:length(theseepis)
-                % movement regressors
+                
+                % MOVEMENT REGRESSORS
                 rpfiles{sess} = [scansfilepath 'rp_topup_' blocksout{crun}{theseepis(sess)} '.txt'];
+                
                 % EPIs
                 for j = 1:minvols(subjcnt)
                     filestoanalyse{sess}{j,1} = [scansfilepath 'srtopup_' blocksout{crun}{theseepis(sess)} '.nii,' num2str(j)];
                 end
-                % task timing information per each run
+                
+                % TASK TIMING INFORMATION
                 eventfiles{sess} = [eventfilepath 'Block' blocks{sess} '/eventTable_2_movemenEventData.txt'];
                 fid = fopen(eventfiles{sess});
-                data{sess} = textscan(fid, '%s %f %f %f','delimiter',';');
+                data = textscan(fid, '%s %f %f %f','delimiter',';');
                 fclose(fid);
-            end
-            
-            % concatenate sessions for PPI analysis
-            
-            % rp files
-            cmd = ['cat ' rpfiles{1} ' ' rpfiles{2} ' ' rpfiles{3} ' > ' eventfilepath '/allMoveRegressors.txt'];
-            system(cmd)            
-            rpfile = [eventfilepath 'allMoveRegressors.txt'];            
-            % event files
-            allEventData.labels = [data{1}{1};data{2}{1};data{3}{1}];
-            allEventData.durations = [cell2mat(data{1}(3));cell2mat(data{2}(3));cell2mat(data{3}(3))];
-            allEventData.angles = [cell2mat(data{1}(4));cell2mat(data{2}(4));cell2mat(data{3}(4))]; % of translation events in 360 degree space relative to environmental landmark
-            % For onsets, add length in secs of one run (TR*nVols) to onsets of second run and two lengths to third run
-            % NB task truncates before EPI sequence ends
-            RunTime = TR * minvols(subjcnt);
-            allEventData.onsets = [cell2mat(data{1}(2)); cell2mat(data{2}(2)) + RunTime; cell2mat(data{3}(2)) + (2*RunTime)];
-            
-            % load in output_cArray of grid metrics containing mean orientation per subject
-            gridmetrics = load([gridmetricspath 'gridCAT_final_X_results_meanOri.mat']);
-            % get row and column locations where mean orientation is for current subject **FOR RIGHT pmEC**
-            [~,meanOriIndex] = find(strcmp(gridmetrics.output_cArray,'MeanOrientation_allRuns_righ_gridCAT_final_pmRight6'));
-            [subjIndex,~] = find(strcmp(gridmetrics.output_cArray,subjects{crun}));
-            
-            % create separate variable for each conditon from allEventdata (aligned translation, misaligned translation and rotation)
-            % identify aligned/misaligned events by comparing each translation event angle to subject's mean grid orientation in 60 degree space
-            % per varibale: 1 = onset, 2 = duration
-            
-            for i = 1:length(allEventData.labels)
+                % extract relevant info
+                rawEventType{sess} = data{1};
+                onsets{sess} = data{2};
+                durations{sess} = data{3};
+                angles{sess} = data{4};                
                 
-                if strcmp(allEventData.labels{i}, 'translation')
-                    % alignment = absAngDiff(angles{sess}(i),str2double(gridmetrics.output_cArray{subjIndex,meanOriIndex}),60);
-                    % Matthias said his absAngDiff func may not work as angles are in 360 degree space not 60 degrees, so use:
+                % GRID METRICS FROM GRIDCAT i.e. estimated mean orientation per subject (in output_cArray variable)
+                gridmetrics = load([gridmetricspath 'gridCAT_final_X_results_meanOri.mat']);
+                % get row and column locations where mean orientation is for current subject **FOR CERTAIN ROI**
+                [~,meanOriIndex] = find(strcmp(gridmetrics.output_cArray,['MeanOrientation_allRuns_righ_gridCAT_final_' ROI_flag]));
+                [subjIndex,~] = find(strcmp(gridmetrics.output_cArray,subjects{crun}));
+                
+                % DETEMINE TRANSLATION EVENT ALIGNMENT 
+                % compare each translation event angle to subject's mean grid orientation in 60 degree space
+                for i = 1:length(rawEventType{sess})
                     
-                    alignment = cosd(6*(allEventData.angles(i) - str2double(gridmetrics.output_cArray{subjIndex,meanOriIndex})));
-                    
-                    % alignment should be between -1 to 1, with ALIGNED events over 0 and MISALIGNED events below 0
-                    if alignment >= 0
-                        TranslationAligned.onsets(i,1) = allEventData.onsets(i);
-                        TranslationAligned.durations(i,1) = allEventData.durations(i);
-                        TranslationAligned.alignment(i,1) = alignment; % record how aligned
-                    elseif alignment <= 0
-                        TranslationMisaligned.onsets(i,1) = allEventData.onsets(i);
-                        TranslationMisaligned.durations(i,1) = allEventData.durations(i);
-                        TranslationMisaligned.alignment(i,1) = alignment; % record how aligned
+                    if strcmp(rawEventType{sess}{i}, 'translation')
+                        % alignment = absAngDiff(angles{sess}(i),str2double(gridmetrics.output_cArray{subjIndex,meanOriIndex}),60);
+                        % Matthias said his absAngDiff func may not work as angles are in 360 degree space not 60 degrees, so use
+                        % cos(6 * (the event angle - the subject mean grid orientation))
+                        
+                        alignment = cosd(6*(angles{sess}(i) - str2double(gridmetrics.output_cArray{subjIndex,meanOriIndex})));
+                        
+                        % alignment should be between -1 to 1, with ALIGNED events over 0 and MISALIGNED events below 0
+                        if alignment >= 0
+                            TransAligned.onset{sess}(i) = onsets{sess}(i);
+                            TransAligned.duration{sess}(i) = durations{sess}(i);
+                        else
+                            TransMisaligned.onset{sess}(i) = onsets{sess}(i);
+                            TransMisaligned.duration{sess}(i) = durations{sess}(i);
+                        end
+                        
+                    elseif strcmp(rawEventType{sess}{i}, 'rotation')
+                        Rotation.onset{sess}(i) = onsets{sess}(i);
+                        Rotation.duration{sess}(i) = durations{sess}(i);
+                        
                     end
                     
-                elseif strcmp(allEventData.labels{i}, 'rotation')
-                    Rotation.onsets(i,1) = allEventData.onsets(i);
-                    Rotation.durations(i,1) = allEventData.durations(i);
                 end
                 
-            end
+                % remove 0's from variables
+                TransAligned.onset{sess}(TransAligned.onset{sess}==0)=[];
+                TransAligned.duration{sess}(TransAligned.duration{sess}==0)=[];
+                TransMisaligned.onset{sess}(TransMisaligned.onset{sess}==0)=[];
+                TransMisaligned.duration{sess}(TransMisaligned.duration{sess}==0)=[];
+                Rotation.onset{sess}(Rotation.onset{sess}==0)=[];
+                Rotation.duration{sess}(Rotation.duration{sess}==0)=[];
             
-            % remove 0's from variables
-            TranslationAligned.onsets(TranslationAligned.onsets==0)=[];
-            TranslationAligned.durations(TranslationAligned.durations==0)=[];
-            TranslationMisaligned.onsets(TranslationMisaligned.onsets==0)=[];
-            TranslationMisaligned.durations(TranslationMisaligned.durations==0)=[];
-            Rotation.onsets(Rotation.onsets==0)=[];
-            Rotation.durations(Rotation.durations==0)=[];
+            end                      
             
-            jobfile = create_GLM1_SPM_job(TR,subjects{crun},outpath,minvols(crun),filestoanalyse,TranslationAligned,TranslationMisaligned,Rotation,rpfile);
+            jobfile = create_GLM1_SPM_job(TR,subjects{crun},outpath,minvols(crun),filestoanalyse,TransAligned,TransMisaligned,Rotation,rpfiles);
             %jobfile = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/SPM_univariate/SPM_jobfiles/test_job.m';
             spm('defaults', 'fMRI');
             spm_jobman('initcfg')
@@ -427,7 +428,7 @@ switch step
                 SPMworkedcorrectly(crun) = 0;
             end
             if ~all(SPMworkedcorrectly)
-                error('failed at SPM');
+                error('failed at PPI');
             end
         end
 end

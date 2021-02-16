@@ -1,7 +1,7 @@
 #!/bin/bash
 #! submit gridcat to slurm
 
-pathstem=/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot
+pathstem=/lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot
 scriptdir=${pathstem}/scripts/gridcat
 
 submit=${scriptdir}/gridcatsubmit.sh

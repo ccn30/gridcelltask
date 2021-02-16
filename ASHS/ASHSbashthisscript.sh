@@ -1,14 +1,16 @@
 #!/bin/bash
 # submit ASHS to slurm
+# this script must be called from ASHS script dir where a slurmoutputs folder must be
+# this script calls ASHS_mainfunc and ASHS_sba
 
 pathstem=/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot
 scriptdir=${pathstem}/scripts/ASHS
 submit=${scriptdir}/ASHS_sba.sh
 
-# separate txt file with subject and date IDs are listed
+# separate txt file with subject and date IDs
 #!mysubjs=${pathstem}/master_subjsdeflist.txt
 mysubjs=${pathstem}/mysubjs_deflist.txt
-# this script must be called from ASHS script dir where a slurmoutputs folder must be
+
 cd slurmoutputs
 
 for subjID in `cat $mysubjs`

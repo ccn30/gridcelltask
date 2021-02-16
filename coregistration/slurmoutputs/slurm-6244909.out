@@ -1,0 +1,20 @@
+Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot/scripts/coregistration/slurmoutputs.
+
+JobID: 6244909
+======
+Time: Fri Feb  5 15:31:46 GMT 2021
+Running on master node: wbic-csm-2
+Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot/scripts/coregistration/slurmoutputs
+
+Nodes allocated:
+================
+wbic-csm-2
+
+numtasks=1, numnodes=1, mpi_tasks_per_node=1 (OMP_NUM_THREADS=1)
+
+Executing command:
+==================
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot/scripts/coregistration/coreg_MasksxEPI.sh 28428/20190903_U-ID46074
+
+******** starting 28428 ********
+Moving image '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot/raw_data/images?28428/20190903_U-ID46074/mp2rage/denoiseRn4mag0000_PSIR_skulled_std.nii' does not exist.  See usage: '/applications/ANTS/ANTs-2.3.4/install/bin/antsRegistrationSyN.sh -h 1'

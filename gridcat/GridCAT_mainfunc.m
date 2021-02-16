@@ -6,12 +6,23 @@
 % out01 = both EC, 6 fold
 % out02 = both EC, 7 fold, 03 = left EC 6 fold, 04 = right EC 6 fold, 05 =
 % both EC 4 fold, 06 = both posterior HC 6 fold
+% Feb 2021 adjusting paths here to run Maass masks
+
+% subjectvec = {'27734','28061','28428','29317','29321','29332','29336','29358','29382','29383'};
+% preprocesspathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot/preprocessed_data';
+% taskpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot/raw_data/task_data';
+% xFold = '6';
+% mask_thresh = '0.5';
+% warp_flag = 'affine';
+% ROI_flag = 'pmRight_Maass';
+% outdirname = 'gridCAT_Maass_pmRight6';
+% regressor_flag = 'pmod';
+% 
+% for i = 1:length(subjectvec)
+%     GridCAT_mainfunc_temp(subjectvec{i},preprocesspathstem,taskpathstem,outdirname,ROI_flag,warp_flag,xFold,mask_thresh,regressor_flag)
+% end
 
 function GridCAT_mainfunc(subject,preprocesspathstem,taskpathstem,outdirname,ROI_flag,warp_flag,xFold,mask_thresh,regressor_flag)
-
-%subjectvec = {'27734','28061','28428','29317','29321','29332','29336','29358','29382','29383'};
-%preprocesspathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data';
-%taskpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/task_data';
 
 runs = {'BlockA','BlockB','BlockC'};
 TR = 2.53;
@@ -28,7 +39,7 @@ nuisance_flag = 'move';
 %for subj = 1:length(subjectvec)
     %% FUNCTIONAL SCANS, EVENT-TABLES, ADDITIONAL REGRESSORS
     %subject = subjectvec{subj};
-    outpathstem = ['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/' subject '/' outdirname];
+    outpathstem = ['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot/results/' subject '/' outdirname];
     
     disp(['You are inside GridCAT_mainfunc, subject ' subject]);
     
@@ -164,6 +175,14 @@ nuisance_flag = 'move';
             cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/pmEC_leftWarped_ITKaffine.nii']};
         elseif strcmp(ROI_flag, 'pmBoth')
             cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/pmEC_bothWarped_ITKaffine.nii']};
+        elseif strcmp(ROI_flag, 'pmRight_Maass')
+            cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/coregistration/pmEC_rightMaassMaskxEPI.nii']};
+        elseif strcmp(ROI_flag, 'pmLeft_Maass')
+            cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/coregistration/pmEC_leftMaassMaskxEPI.nii']};
+        elseif strcmp(ROI_flag, 'alRight_Maass')
+            cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/coregistration/alEC_rightMaassMaskxEPI.nii']};
+        elseif strcmp(ROI_flag, 'alLeft_Maass')
+            cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/coregistration/alEC_leftMaassMaskxEPI.nii']};    
         end
     elseif strcmp(warp_flag,'SyN')
         cfg.GLM.GLM2_roiMask_calcMeanGridOri = {[preprocesspathstem '/segmentation/' subject '/epimasks/bothECmaskWarped_SyN.nii']};
@@ -218,6 +237,14 @@ nuisance_flag = 'move';
             ROI_masks = {[preprocesspathstem '/segmentation/' subject '/epimasks/pmEC_leftWarped_ITKaffine.nii']};
         elseif strcmp(ROI_flag, 'pmBoth')
             ROI_masks = {[preprocesspathstem '/segmentation/' subject '/epimasks/pmEC_bothWarped_ITKaffine.nii']};
+        elseif strcmp(ROI_flag, 'pmRight_Maass')
+            ROI_masks = {[preprocesspathstem '/segmentation/' subject '/coregistration/pmEC_rightMaassMaskxEPI.nii']};
+        elseif strcmp(ROI_flag, 'pmLeft_Maass')
+            ROI_masks = {[preprocesspathstem '/segmentation/' subject '/coregistration/pmEC_leftMaassMaskxEPI.nii']};
+        elseif strcmp(ROI_flag, 'alRight_Maass')
+            ROI_masks = {[preprocesspathstem '/segmentation/' subject '/coregistration/alEC_rightMaassMaskxEPI.nii']};
+        elseif strcmp(ROI_flag, 'alLeft_Maass')
+            ROI_masks = {[preprocesspathstem '/segmentation/' subject '/coregistration/alEC_leftMaassMaskxEPI.nii']};           
         end
     elseif strcmp(warp_flag,'SyN')
             ROI_masks = {[preprocesspathstem '/segmentation/' subject '/epimasks/bothECmaskWarped_SyN.nii']};

@@ -20,18 +20,18 @@
 #SBATCH --cpus-per-task=1
 #!SBATCH --mem-per-cpu=15000M
 #! How much wallclock time will be required?
-#SBATCH --time=01:30:00
+#SBATCH --time=08:00:00
 #! What types of email messages do you wish to receive?
-#SBATCH --mail-type=FAIL
+#!SBATCH --mail-type=FAIL
 #!SBATCH -p skylake-himem
 #SBATCH --qos short.q
-#SBATCH --mem=6000
+#SBATCH --mem=40000
 
 # CHANGE ME IF YOU WANT TO BE EMAILED
-#SBATCH --mail-user=ccn30
+#!SBATCH --mail-user=ccn30
 #! Uncomment this to prevent the job from being requeued (e.g. if
 #! interrupted by node failure or system downtime):
-#SBATCH --no-requeue
+#!SBATCH --no-requeue
 
 #! Do not change:
 #SBATCH -p wbic-cs
@@ -63,7 +63,7 @@ mpi_tasks_per_node=$(echo "$SLURM_TASKS_PER_NODE" | sed -e  's/^\([0-9][0-9]*\).
 . /etc/profile.d/modules.sh                # Leave this line (enables the module command)
 module purge                               # Removes all modules still loaded
 module load default-wbic                   # REQUIRED - loads the basic environment
-module load ANTS/2.2.0
+module load ANTS/2.3.4
 module unload fsl
 module load fsl/5.0.10
 
@@ -87,12 +87,12 @@ export I_MPI_PIN_ORDER=scatter # Adjacent domains have minimal sharing of caches
 scriptdir=${1}
 pathstem=${2}
 subjID=${3}
+func=${4}
 
 #! Work directory (i.e. where the job will run):
 workdir="$scriptdir/slurmoutputs"
 
-cd ${scriptdir}
-application="${scriptdir}/coreg_all.sh ${pathstem} ${subjID}"
+application="${func} ${subjID}"
 #!application="${scriptdir}/ants_test.sh ${pathstem} ${subjID}"
 CMD="${application}"
 

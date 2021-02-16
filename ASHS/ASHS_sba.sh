@@ -66,7 +66,7 @@ module load default-wbic                   # REQUIRED - loads the basic environm
 module unload fsl
 module load fsl/5.0.10
 module load itksnap-nowrap/3.6.0
-module load ASHS_FASTB
+#!module load ASHS_FASTB
 module load ANTS/2.2.0
 
 

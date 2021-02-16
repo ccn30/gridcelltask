@@ -1,0 +1,38 @@
+ModuleCmd_Load.c(208):ERROR:105: Unable to locate a modulefile for 'rhel7/default-peta4'
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/SPM_univariate/slurmoutputs
+wbic-cs-20
+Fri Feb 21 16:31:38 GMT 2020
+-------- freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0-2beb96c --------
+Setting up environment for FreeSurfer/FS-FAST (and FSL)
+FREESURFER_HOME   /applications/freesurfer/freesurfer_6.0.0
+FSFAST_HOME       /applications/freesurfer/freesurfer_6.0.0/fsfast
+FSF_OUTPUT_FORMAT nii.gz
+SUBJECTS_DIR      /applications/freesurfer/freesurfer_6.0.0/subjects
+MNI_DIR           /applications/freesurfer/freesurfer_6.0.0/mni
+-------- freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0-2beb96c --------
+Setting up environment for FreeSurfer/FS-FAST (and FSL)
+FREESURFER_HOME   /applications/freesurfer/freesurfer_6.0.0
+FSFAST_HOME       /applications/freesurfer/freesurfer_6.0.0/fsfast
+FSF_OUTPUT_FORMAT nii.gz
+SUBJECTS_DIR      /applications/freesurfer/freesurfer_6.0.0/subjects
+MNI_DIR           /applications/freesurfer/freesurfer_6.0.0/mni
+FSL_DIR           /applications/fsl/fsl-5.0.9
+Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/SPM_univariate/slurmoutputs.
+
+JobID: 4705949
+======
+Time: Fri Feb 21 16:31:38 GMT 2020
+Running on master node: wbic-cs-20
+Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/SPM_univariate/slurmoutputs
+/var/spool/slurm/slurmd/job4705949/slurm_script: line 150: generate_pbs_nodefile: command not found
+
+Nodes allocated:
+================
+
+
+numtasks=1, numnodes=1, mpi_tasks_per_node=1 (OMP_NUM_THREADS=1)
+
+Executing command:
+==================
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/SPM_univariate/SPMuni_prepare.sh /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/SPM_univariate/SPMuni_mainfunc_7T.m /lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/SPM_univariate/SPMuni_subjects_parameters.m 3 HPHI    >output_3__ 2>error_3__
+

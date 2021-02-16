@@ -1,0 +1,160 @@
+Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot/scripts/gridcat/slurmoutputs.
+
+JobID: 6260886
+======
+Time: Tue Feb 16 15:28:45 GMT 2021
+Running on master node: wbic-csm-4
+Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot/scripts/gridcat/slurmoutputs
+
+Nodes allocated:
+================
+wbic-csm-4
+
+numtasks=1, numnodes=1, mpi_tasks_per_node=1 (OMP_NUM_THREADS=1)
+
+Executing command:
+==================
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot/scripts/gridcat/gridcatprepare.sh 29317 /lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot/scripts/gridcat/GridCAT_mainfunc.m
+
+MATLAB is selecting SOFTWARE OPENGL rendering.
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2017 The MathWorks, Inc.
+                   R2017b (9.3.0.713579) 64-bit (glnxa64)
+                             September 14, 2017
+
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+>> >> >> Subject is 29317
+>> >> >> >> >> >> >> >> >> >> 
+warp_flag =
+
+    'affine'
+
+>> >> >> >> 
+ROI_flag =
+
+    'pmLeft_Maass'
+
+>> >> >> 
+xFold =
+
+    '6'
+
+>> >> >> 
+mask_thresh =
+
+    '0.5'
+
+>> >> >> >> >> >> >> >> 
+regressor_flag =
+
+    'pmod'
+
+>> >> >> 
+outdirname =
+
+    'gridCAT_Maass_pmLeft6'
+
+>> >> >> >> >> >> Submitting the following command: GridCAT_mainfunc('29317',preprocesspathstem,taskpathstem,outdirname,ROI_flag,warp_flag,xFold,mask_thresh,regressor_flag)
+>> You are inside GridCAT_mainfunc, subject 29317
+{Error using readEventTable (line 81)
+The following event-table seems to have a wrong format and could not be read:
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/task_data/29317/BlockA/eventTable_movemenEventData.txt
+
+Error in specifyGLM (line 28)
+    cfg.eventInfo.run(runIdx) =
+    readEventTable(cfg.rawData.run(runIdx).eventTable_file);
+
+Error in GridCAT_mainfunc (line 124)
+    specifyGLM(cfg);
+} 
+>> >> >> >> >> >> 
+warp_flag =
+
+    'affine'
+
+>> >> >> >> 
+ROI_flag =
+
+    'alLeft_Maass'
+
+>> >> >> 
+xFold =
+
+    '6'
+
+>> >> >> 
+mask_thresh =
+
+    '0.5'
+
+>> >> >> >> >> >> >> >> 
+regressor_flag =
+
+    'pmod'
+
+>> >> >> 
+outdirname =
+
+    'gridCAT_Maass_alLeft6'
+
+>> >> >> >> >> >> Submitting the following command: GridCAT_mainfunc('29317',preprocesspathstem,taskpathstem,outdirname,ROI_flag,warp_flag,xFold,mask_thresh,regressor_flag)
+>> You are inside GridCAT_mainfunc, subject 29317
+{Error using readEventTable (line 81)
+The following event-table seems to have a wrong format and could not be read:
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/task_data/29317/BlockA/eventTable_movemenEventData.txt
+
+Error in specifyGLM (line 28)
+    cfg.eventInfo.run(runIdx) =
+    readEventTable(cfg.rawData.run(runIdx).eventTable_file);
+
+Error in GridCAT_mainfunc (line 124)
+    specifyGLM(cfg);
+} 
+>> >> >> >> >> >> 
+warp_flag =
+
+    'affine'
+
+>> >> >> >> 
+ROI_flag =
+
+    'alRight_Maass'
+
+>> >> >> 
+xFold =
+
+    '6'
+
+>> >> >> 
+mask_thresh =
+
+    '0.5'
+
+>> >> >> >> >> >> >> >> 
+regressor_flag =
+
+    'pmod'
+
+>> >> >> 
+outdirname =
+
+    'gridCAT_Maass_alRight6'
+
+>> >> >> >> >> >> Submitting the following command: GridCAT_mainfunc('29317',preprocesspathstem,taskpathstem,outdirname,ROI_flag,warp_flag,xFold,mask_thresh,regressor_flag)
+>> You are inside GridCAT_mainfunc, subject 29317
+{Error using readEventTable (line 81)
+The following event-table seems to have a wrong format and could not be read:
+/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/task_data/29317/BlockA/eventTable_movemenEventData.txt
+
+Error in specifyGLM (line 28)
+    cfg.eventInfo.run(runIdx) =
+    readEventTable(cfg.rawData.run(runIdx).eventTable_file);
+
+Error in GridCAT_mainfunc (line 124)
+    specifyGLM(cfg);
+} 
+>> 

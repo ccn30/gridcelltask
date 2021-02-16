@@ -11,27 +11,29 @@ export antsroot=/applications/ANTS/2.2.0/bin
 subject="$(cut -d'/' -f1 <<<"$subjID")"
 rawpathstem=${pathstem}/raw_data/images/${subjID}
 #!preprocesspathstem=${pathstem}/preprocessed_data/segmentation/${subject}
-T1path=${pathstem}/preprocessed_data/images/${subject}
+#!T1path=${pathstem}/preprocessed_data/images/${subject}
 
 #------------------------------------------------------------------------#
 # Denoise the MP2RAGES = ${denoiseT1}					 #
 #------------------------------------------------------------------------#
 
-#!T1path=${rawpathstem}/mp2rage
+T2path=${rawpathstem}/Series_033_Highresolution_TSE_PAT2_100
 #!wholeT1=${T1path}/reorientn4mag0000_PSIR_skulled_std.nii
 #!brainT1=${T1path}/reorientn4mag0000_PSIR_skulled_std_struc_brain.nii
 
-wholeT1=${T1path}/structural.nii
+#!wholeT1=${T1path}/structural.nii
 #!brainT1=${T1path}/reorientn4mag0000_PSIR_skulled_std_struc_brain.nii
+T2=${T2path}/N4Series_033_Highresolution_TSE_PAT2_100_c32.nii
 
-echo "Running DenoiseImage in: " ${T1path}
+echo "Running DenoiseImage in: " ${T2path}
 
 #!denoiseT1brain=${T1path}/denoiseRn4mag0000_PSIR_skulled_std_struc_brain.nii
 #!denoiseT1whole=${T1path}/denoiseRn4mag0000_PSIR_skulled_std.nii
 #!denoiseT1brain=${T1path}/denoiseRn4mag0000_PSIR_skulled_std_struc_brain.nii
-denoiseT1whole=${T1path}/denoise_structural.nii
+#!denoiseT1whole=${T1path}/denoise_structural.nii
+denoiseT2=${T2path}/denoiseT2.nii
 
-cd ${T1path}
+cd ${T2path}
 
 #!if [ -f "${denoiseT1brain}" ]; then
 #!		echo $subject "already denoised brain"
@@ -42,7 +44,7 @@ cd ${T1path}
 if [ -f "${denoiseT1whole}" ]; then
 		echo $subject "already denoised whole"
 	else
-		$antsroot/DenoiseImage -d 3 -i $wholeT1 -o $denoiseT1whole -v 1
+		$antsroot/DenoiseImage -d 3 -i $T2 -o $denoiseT2 -v 1
 fi
 
 #!if [ -f "${denoiseT1brain}" && "${denoiseT1whole}" ]; then

@@ -1,0 +1,19 @@
+/var/spool/slurm/slurmd/job6244905/slurm_script: line 96: 29382/20190911_U-ID46164: No such file or directory
+Changed directory to /lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot/scripts/coregistration/slurmoutputs.
+
+JobID: 6244905
+======
+Time: Fri Feb  5 15:25:38 GMT 2021
+Running on master node: wbic-csm-4
+Current directory: /lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot/scripts/coregistration/slurmoutputs
+
+Nodes allocated:
+================
+wbic-csm-4
+
+numtasks=1, numnodes=1, mpi_tasks_per_node=1 (OMP_NUM_THREADS=1)
+
+Executing command:
+==================
+
+

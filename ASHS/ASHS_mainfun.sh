@@ -17,12 +17,12 @@ outputdir=${preprocesspathstem}/ASHS
 images=${pathstem}/preprocessed_data/images/${subject}
 
 #------------------------------------------------------------------------#
-# Make N4 bias corrected T2s = ${N4T2}					 #
+# Make N4 bias corrected T2s (= ${N4T2})				 #
 #------------------------------------------------------------------------#
 
 #!T2path=${rawpathstem}/Series_033_Highresolution_TSE_PAT2_100
 # tried reorient, didn't work:
-#!T2=${T2path}/reorientSeries_033_Highresolution_TSE_PAT2_100_c32.nii <- swaped z and y axes, not good
+#!T2=${T2path}/reorientSeries_033_Highresolution_TSE_PAT2_100_c32.nii <- swpaped z and y axes, not good
 #!T2=${T2path}/Series_033_Highresolution_TSE_PAT2_100_c32.nii
 T2path=${rawpathstem}/Series_039_Highresolution_TSE_PAT2_100_PatSpec
 T2=${T2path}/Series_039_Highresolution_TSE_PAT2_100_PatSpec.nii
@@ -43,6 +43,7 @@ fi
 #------------------------------------------------------------------------#
 # Run ASHS					 			 #
 #------------------------------------------------------------------------#
+
 #!T1path=${rawpathstem}/mp2rage
 #!wholeT1=${T1path}/reorientn4mag0000_PSIR_skulled_std.nii
 #!brainT1=${T1path}/reorientn4mag0000_PSIR_skulled_std_struc_brain.nii
@@ -62,7 +63,7 @@ fi
 
 echo "Beginning ASHS for: " $subject
 echo "OUTPUT:" $outputdir
-echo "INPUT:" $denoiseT1brain $N4T2
+echo "INPUT:" $T1brain $N4T2
 
 cd $outputdir
 
@@ -71,11 +72,13 @@ SECONDS=0
 start=(`date +%T`)
 echo "ASHS started at $start"
 
-# third ASHS run (corrected inputs but not reorientated T2s, skullstripped T1s)
+# run ASHS (N4 corrected but not reorientated T2s, skullstripped T1s)
 $ASHS_ROOT/bin/ashs_main.sh -I $subject -a $atlasdir -g ${T1brain} -f ${N4T2} -w ${outputdir}
 
 end=(`date +%T`)
 printf "\n\n ASHS completed for $subject at $end, it took $(($SECONDS/86400)) days $(($SECONDS/3600)) hours $(($SECONDS%3600/60)) minutes and $(($SECONDS%60)) seconds to complete \n\n"
+
+# previous input tests:
 
 # second ASHS run (corrected inputs, skullstripped T1}
 #!$ASHS_ROOT/bin/ashs_main.sh -I $subject'_2' -a $atlasdir -g ${denoiseT1brain} -f ${N4T2} -w ${outputdir}

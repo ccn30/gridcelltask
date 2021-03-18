@@ -1,4 +1,4 @@
-myscriptdir=/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/SPM_univariate
+myscriptdir=/lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot/scripts/SPM_univariate
 clusterid=HPHI
 
 submit=${myscriptdir}/SPMunisubmit_HPHI_short.sh
@@ -8,8 +8,8 @@ subjs_def=${myscriptdir}/SPMuni_subjects_parameters.m
 
 #! declare -a steporder=("raw" "skullstrip" "realign" "topup" "cat12")
 #! subjects_to_process=($(seq 1 1 10))
-#!subjects_to_process=1
-subjects_to_process=($(seq 1 1 9))
+subjects_to_process=1
+#!subjects_to_process=($(seq 1 1 9))
 
 prevstep=smooth3
 step=PPI

@@ -1,6 +1,5 @@
 %% Run PPI
 % RH, CN 03.2021
-% Matlab 2019a SPM v6906
 
 clear
 pathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot';
@@ -8,10 +7,11 @@ cd([ pathstem '/scripts/SPM_univariate']);
 spm('defaults', 'FMRI');
 
 Nscan = [238 238 238];
+jobfile = cellstr([pathstem '/scripts/SPM_univariate/batch_voi_job.m']);
 
-%% Create VOIs per run (note: could use SPM threshold to reduce voxels)
+%% Create VOIs per ROI/run (note: could use SPM threshold to reduce voxels)
+% right posteromedial EC
 for sess = 1:3 
-    jobfile = cellstr([pathstem '/scripts/SPM_univariate/batch_voi_job.m']);
     inputs = {};
     inputs{1} = cellstr([pathstem '/results/SPM_univariate/28428/SPM.mat']);
     inputs{2} = 3; % MUST MATCH EFFECTS OF INTEREST CONTRAST IN SPM.MAT FIL
@@ -21,15 +21,17 @@ for sess = 1:3
     spm_jobman('run', jobfile, inputs{:});
 end
 
+% left posteromedial EC
 for sess = 1:3
     inputs = {};
-    inputs{1} = cellstr('/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results/SPM_univariate/28428/SPM.mat');
-    inputs{2} = 3; % MUST MATCH EFFECTS OF INTEREST CONTRAST IN SPM.MAT FILE
-    inputs{3} = sprintf('%d',sess);
+    inputs{1} = cellstr([pathstem '/results/SPM_univariate/28428/SPM.mat']);
+    inputs{2} = 3; % MUST MATCH EFFECTS OF INTEREST CONTRAST IN SPM.MAT FIL
+    inputs{3} = sess; 
     inputs{4} = 'leftpmEC';
-    inputs{5} = cellstr('/lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot/preprocessed_data/segmentation/28428/epimasks/pmEC_leftWarped_ITKaffine.nii');
+    inputs{5} = cellstr([pathstem '/preprocessed_data/segmentation/28428/epimasks/pmEC_leftWarped_ITKaffine.nii']);
     spm_jobman('run', jobfile, inputs{:});
 end
+
 %% Batch PPI isn't very helpful, unless want to do de-convolution
 %% So just do PPI between pairs of ROIs
 cd stats

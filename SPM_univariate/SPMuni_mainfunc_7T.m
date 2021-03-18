@@ -10,8 +10,8 @@ function SPMuni_mainfunc_7T(step,prevStep,clusterid,preprocessedpathstem,rawpath
 
 % use these to debug (change steps in command)
 % run SPM_uni_subjects_parameters.m
-% rawpathstem ='/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/images';
-% preprocessedpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data/images/old_data';
+% rawpathstem ='/lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot/raw_data/images';
+% preprocessedpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot/preprocessed_data/images/old_data';
 % SPMuni_mainfunc_7T('PPI','','HPHI',preprocessedpathstem,rawpathstem,subjects,1,fullid,basedir,blocksin,blocksin_folders,blocksout,minvols,dates,group)
 
 % inherited from Thomas Cope by Coco Newton 8.05.19
@@ -176,7 +176,7 @@ switch step
                 angles{sess} = data{4};                
                 
                 % GRID METRICS FROM GRIDCAT i.e. estimated mean orientation per subject (in output_cArray variable)
-                gridmetrics = load([gridmetricspath 'gridCAT_final_X_results_meanOri.mat']);
+                gridmetrics = load([gridmetricspath '/$csv_result_files/gridCAT_final_X_results_meanOri.mat']);
                 % get row and column locations where mean orientation is for current subject **FOR CERTAIN ROI**
                 [~,meanOriIndex] = find(strcmp(gridmetrics.output_cArray,['MeanOrientation_allRuns_righ_gridCAT_final_' ROI_flag]));
                 [subjIndex,~] = find(strcmp(gridmetrics.output_cArray,subjects{crun}));
@@ -234,162 +234,162 @@ switch step
                 error('failed at PPI');
             end
         end
-end
+end % of switch
 end
 
 
 
 
 %============================ OLD CODE ===================================
-     case 'skullstrip'
-        prevStep = '';
-        pathstem = [preprocessedpathstem '/' subjects{subjcnt} '/'];
-    case 'realign'
-        prevStep = '';
-        pathstem = [preprocessedpathstem '/' subjects{subjcnt} '/'];
-    case 'topup'
-        prevStep = 'topup_.*';
-        pathstem = [preprocessedpathstem '/' subjects{subjcnt} '/'];
-    case 'topuprealign'
-        prevStep = 'rtopup_.*';
-        pathstem = [preprocessedpathstem '/' subjects{subjcnt} '/'];
-    
-        
-        case 'skullstrip'
-        % Skullstrip structural
-        nrun = 1; % enter the number of runs here - should be 1 if submitted in parallel, but retain the functionality to bundle subjects
-        
-        jobfile = {[scriptdir 'module_skullstrip_INV2_job_cluster.m']};
-        inputs = cell(2, nrun);
-        disp('running SPM skullstrip')
-        
-        for crun = subjcnt
-            inputs{1, crun} = cellstr([pathstem blocksout{crun}{find(strcmp(blocksout{crun},'structural'))} '.nii,1']);
-            inputs{2, crun} = cellstr([pathstem blocksout{crun}{find(strcmp(blocksout{crun},'INV2'))} '.nii,1']);
-            inputs{3, crun} = cellstr([pathstem blocksout{crun}{find(strcmp(blocksout{crun},'structural'))} '.nii']);
-            inputs{4, crun} = 'structural_skullstripped';
-            inputs{5, crun} = cellstr([preprocessedpathstem '/' subjects{crun} '/']);
-            if ~exist(inputs{5, crun}{1})
-                mkdir(inputs{5, crun}{1});
-            end
-            inputs{6, crun} = 'structural_skullstripped_csf';
-            inputs{7, crun} = cellstr([preprocessedpathstem subjects{crun} '/']);
-            inputs{8, crun} = cellstr([preprocessedpathstem subjects{crun} '/']);
-        end
-        
-        skullstripworkedcorrectly = zeros(1,nrun);
-        jobs = repmat(jobfile, 1, 1);
-        
-        for crun = subjcnt
-            spm('defaults', 'fMRI');
-            spm_jobman('initcfg')
-            try
-                spm_jobman('run', jobs, inputs{:,crun});
-                skullstripworkedcorrectly(crun) = 1;
-            catch
-                skullstripworkedcorrectly(crun) = 0;
-            end
-        end
-        
-        if ~all(skullstripworkedcorrectly)
-            error('failed at skullstrip');
-        end
-        
-% =========================================================================        
-    case 'topup'
-        % Apply topup to distortion correct the EPI
-        nrun = 1; % enter the number of runs here - should be 1 if submitted in parallel, but retain the functionality to bundle subjects
-        %topupworkedcorrectly = zeros(1,nrun);
-        for crun = subjcnt
-            disp('running topup') 
-            base_image_path = [pathstem blocksout{crun}{find(strcmp(blocksout{crun},'Pos_topup'))} '.nii'];
-            reversed_image_path = [pathstem blocksout{crun}{find(strcmp(blocksout{crun},'Neg_topup'))} '.nii'];
-            outpath = [preprocessedpathstem '/' subjects{crun} '/'];
-            theseepis = find(strncmp(blocksout{crun},'Run',3));
-            filestocorrect = cell(1,length(theseepis));
-            json_path = [rawpathstem '/' subjects{subjcnt} '/' fullid{subjcnt} '/' blocksin_folders{subjcnt}{3}];
-            for i = 1:length(theseepis)
-                filestocorrect{i} = [outpath blocksout{crun}{theseepis(i)} '.nii']; % pathstem to outpath temp
-            end
-            module_topup_job_cluster(base_image_path, reversed_image_path, outpath, minvols(crun), filestocorrect,json_path)
-            if ~exist([outpath 'epi_topup_results_fieldcoef.nii'],'file')
-                error('Topup not successfully calculated!');
-            % globbing with star may not work
-            elseif ~exist([outpath 'topup_Run_*.nii'],'file')
-                error('Topup not successfully applied!');
-            end
-            
-%             try
-%                 module_topup_job_cluster(base_image_path, reversed_image_path, outpath, minvols(crun), filestocorrect,json_path)
-%                 topupworkedcorrectly(crun) = 1;
-%             catch
-%                 topupworkedcorrectly(crun) = 0;
+%      case 'skullstrip'
+%         prevStep = '';
+%         pathstem = [preprocessedpathstem '/' subjects{subjcnt} '/'];
+%     case 'realign'
+%         prevStep = '';
+%         pathstem = [preprocessedpathstem '/' subjects{subjcnt} '/'];
+%     case 'topup'
+%         prevStep = 'topup_.*';
+%         pathstem = [preprocessedpathstem '/' subjects{subjcnt} '/'];
+%     case 'topuprealign'
+%         prevStep = 'rtopup_.*';
+%         pathstem = [preprocessedpathstem '/' subjects{subjcnt} '/'];
+%     
+%         
+%         case 'skullstrip'
+%         % Skullstrip structural
+%         nrun = 1; % enter the number of runs here - should be 1 if submitted in parallel, but retain the functionality to bundle subjects
+%         
+%         jobfile = {[scriptdir 'module_skullstrip_INV2_job_cluster.m']};
+%         inputs = cell(2, nrun);
+%         disp('running SPM skullstrip')
+%         
+%         for crun = subjcnt
+%             inputs{1, crun} = cellstr([pathstem blocksout{crun}{find(strcmp(blocksout{crun},'structural'))} '.nii,1']);
+%             inputs{2, crun} = cellstr([pathstem blocksout{crun}{find(strcmp(blocksout{crun},'INV2'))} '.nii,1']);
+%             inputs{3, crun} = cellstr([pathstem blocksout{crun}{find(strcmp(blocksout{crun},'structural'))} '.nii']);
+%             inputs{4, crun} = 'structural_skullstripped';
+%             inputs{5, crun} = cellstr([preprocessedpathstem '/' subjects{crun} '/']);
+%             if ~exist(inputs{5, crun}{1})
+%                 mkdir(inputs{5, crun}{1});
 %             end
-        end        
-%         if ~all(topupworkedcorrectly)
-%             error('failed at topup');
+%             inputs{6, crun} = 'structural_skullstripped_csf';
+%             inputs{7, crun} = cellstr([preprocessedpathstem subjects{crun} '/']);
+%             inputs{8, crun} = cellstr([preprocessedpathstem subjects{crun} '/']);
+%         end
+%         
+%         skullstripworkedcorrectly = zeros(1,nrun);
+%         jobs = repmat(jobfile, 1, 1);
+%         
+%         for crun = subjcnt
+%             spm('defaults', 'fMRI');
+%             spm_jobman('initcfg')
+%             try
+%                 spm_jobman('run', jobs, inputs{:,crun});
+%                 skullstripworkedcorrectly(crun) = 1;
+%             catch
+%                 skullstripworkedcorrectly(crun) = 0;
+%             end
+%         end
+%         
+%         if ~all(skullstripworkedcorrectly)
+%             error('failed at skullstrip');
+%         end
+%         
+% % =========================================================================        
+%     case 'topup'
+%         % Apply topup to distortion correct the EPI
+%         nrun = 1; % enter the number of runs here - should be 1 if submitted in parallel, but retain the functionality to bundle subjects
+%         %topupworkedcorrectly = zeros(1,nrun);
+%         for crun = subjcnt
+%             disp('running topup') 
+%             base_image_path = [pathstem blocksout{crun}{find(strcmp(blocksout{crun},'Pos_topup'))} '.nii'];
+%             reversed_image_path = [pathstem blocksout{crun}{find(strcmp(blocksout{crun},'Neg_topup'))} '.nii'];
+%             outpath = [preprocessedpathstem '/' subjects{crun} '/'];
+%             theseepis = find(strncmp(blocksout{crun},'Run',3));
+%             filestocorrect = cell(1,length(theseepis));
+%             json_path = [rawpathstem '/' subjects{subjcnt} '/' fullid{subjcnt} '/' blocksin_folders{subjcnt}{3}];
+%             for i = 1:length(theseepis)
+%                 filestocorrect{i} = [outpath blocksout{crun}{theseepis(i)} '.nii']; % pathstem to outpath temp
+%             end
+%             module_topup_job_cluster(base_image_path, reversed_image_path, outpath, minvols(crun), filestocorrect,json_path)
+%             if ~exist([outpath 'epi_topup_results_fieldcoef.nii'],'file')
+%                 error('Topup not successfully calculated!');
+%             % globbing with star may not work
+%             elseif ~exist([outpath 'topup_Run_*.nii'],'file')
+%                 error('Topup not successfully applied!');
+%             end
+%             
+% %             try
+% %                 module_topup_job_cluster(base_image_path, reversed_image_path, outpath, minvols(crun), filestocorrect,json_path)
+% %                 topupworkedcorrectly(crun) = 1;
+% %             catch
+% %                 topupworkedcorrectly(crun) = 0;
+% %             end
+%         end        
+% %         if ~all(topupworkedcorrectly)
+% %             error('failed at topup');
+% %         end
+% 
+% % =========================================================================         
+%     case 'realign'
+%         % Now realign the EPIs
+%         nrun = 1; % enter the number of runs here - should be 1 if submitted in parallel, but retain the functionality to bundle subjects
+%         realignworkedcorrectly = zeros(1,nrun);
+%         for crun = subjcnt
+%             disp('running realign')
+%             theseepis = find(strncmp(blocksout{crun},'Run',3));
+%             filestorealign = cell(1,length(theseepis));
+%             outpath = [preprocessedpathstem '/' subjects{crun} '/']; 
+%             for i = 1:length(theseepis)
+%                 filestorealign{i} = spm_select('ExtFPList',outpath,['^' prevStep blocksout{crun}{theseepis(i)} '.nii'],1:minvols(crun));
+%             end
+%             flags = struct;
+%             flags.fhwm = 3;
+%             try
+%                 spm_realign(filestorealign,flags)
+%                 realignworkedcorrectly(crun) = 1;
+%             catch
+%                 realignworkedcorrectly(crun) = 0;
+%             end
+%         end
+%         
+%         if ~all(realignworkedcorrectly)
+%             error('failed at realign');
+%         end
+%  
+%  % =========================================================================        
+%     case 'reslice'
+%         % Reslice the mean topup corrected image
+%         nrun = 1; % enter the number of runs here - should be 1 if submitted in parallel, but retain the functionality to bundle subjects
+%         disp('running reslice')
+%         resliceworkedcorrectly = zeros(1,nrun);
+%         for crun = subjcnt
+%             theseepis = find(strncmp(blocksout{crun},'Run',3));
+%             filestorealign = cell(1,length(theseepis));
+%             outpath = [preprocessedpathstem '/' subjects{crun} '/'];  
+%             for i = 1:length(theseepis)
+%                 filestorealign{i} = spm_select('ExtFPList',outpath,['^' prevStep blocksout{crun}{theseepis(i)} '.nii'],1:minvols(crun));
+%             end
+%             flags = struct;
+%             % 0 = no reslice just produce mean, 1 = reslice but not first image, [2 1] =reslice all and produce mean
+%             %flags.which = 0;
+%             flags.which = [2 1];
+%             %flags.which = 1;
+%             
+%             try
+%                 spm_reslice(filestorealign,flags)
+%                 resliceworkedcorrectly(crun) = 1;
+%             catch
+%                 resliceworkedcorrectly(crun) = 0;
+%             end
+%         end
+%         
+%         if ~all(resliceworkedcorrectly)
+%             error('failed at reslice');
 %         end
 
 % =========================================================================         
-    case 'realign'
-        % Now realign the EPIs
-        nrun = 1; % enter the number of runs here - should be 1 if submitted in parallel, but retain the functionality to bundle subjects
-        realignworkedcorrectly = zeros(1,nrun);
-        for crun = subjcnt
-            disp('running realign')
-            theseepis = find(strncmp(blocksout{crun},'Run',3));
-            filestorealign = cell(1,length(theseepis));
-            outpath = [preprocessedpathstem '/' subjects{crun} '/']; 
-            for i = 1:length(theseepis)
-                filestorealign{i} = spm_select('ExtFPList',outpath,['^' prevStep blocksout{crun}{theseepis(i)} '.nii'],1:minvols(crun));
-            end
-            flags = struct;
-            flags.fhwm = 3;
-            try
-                spm_realign(filestorealign,flags)
-                realignworkedcorrectly(crun) = 1;
-            catch
-                realignworkedcorrectly(crun) = 0;
-            end
-        end
-        
-        if ~all(realignworkedcorrectly)
-            error('failed at realign');
-        end
- 
- % =========================================================================        
-    case 'reslice'
-        % Reslice the mean topup corrected image
-        nrun = 1; % enter the number of runs here - should be 1 if submitted in parallel, but retain the functionality to bundle subjects
-        disp('running reslice')
-        resliceworkedcorrectly = zeros(1,nrun);
-        for crun = subjcnt
-            theseepis = find(strncmp(blocksout{crun},'Run',3));
-            filestorealign = cell(1,length(theseepis));
-            outpath = [preprocessedpathstem '/' subjects{crun} '/'];  
-            for i = 1:length(theseepis)
-                filestorealign{i} = spm_select('ExtFPList',outpath,['^' prevStep blocksout{crun}{theseepis(i)} '.nii'],1:minvols(crun));
-            end
-            flags = struct;
-            % 0 = no reslice just produce mean, 1 = reslice but not first image, [2 1] =reslice all and produce mean
-            %flags.which = 0;
-            flags.which = [2 1];
-            %flags.which = 1;
-            
-            try
-                spm_reslice(filestorealign,flags)
-                resliceworkedcorrectly(crun) = 1;
-            catch
-                resliceworkedcorrectly(crun) = 0;
-            end
-        end
-        
-        if ~all(resliceworkedcorrectly)
-            error('failed at reslice');
-        end
-
-% =========================================================================         
-      case 'cat12'
+%       case 'cat12'
 %         % Do cat12 normalisation of the structural to create deformation fields (works better than SPM segment deformation fields, which sometimes produce too-small brains)
 %         disp('running cat12 normalisation')
 %         nrun = 1; % enter the number of runs here - should be 1 if submitted in parallel, but retain the functionality to bundle subjects

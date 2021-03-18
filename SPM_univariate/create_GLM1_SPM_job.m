@@ -6,7 +6,7 @@ function jobfile = create_GLM1_SPM_job(TR,subject,outpath,minvols,filestoanalyse
 %-----------------------------------------------------------------------
 
 % create file to write to
-jobfile = ['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/scripts/SPM_univariate/SPM_jobfiles/SPM_GLM1_' num2str(subject) '_job.m'];
+jobfile = ['/lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot/scripts/SPM_univariate/SPM_jobfiles/SPM_GLM1_' num2str(subject) '_job.m'];
 fileID = fopen(jobfile,'w');
 
 %-----file contents start-----%

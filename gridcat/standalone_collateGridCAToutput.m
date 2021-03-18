@@ -10,13 +10,14 @@ clc
 % -----------------------------------------------------------------
 % SETTINGS
 
-allSubjGridcatData_dir = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/results';
+allSubjGridcatData_dir = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot/results';
 %GLM2findStr = 'gridCAT_regress*';
 %GLM2findStr = 'gridCAT_out*';
 %GLM2findStr = 'gridCAT_phys*';
 %GLM2findStr = 'gridCAT_thresh*';
 %GLM2findStr = 'gridCAT_pmEC*';
-GLM2findStr = 'gridCAT_final_*';
+%GLM2findStr = 'gridCAT_final_*';
+GLM2findStr = 'gridCAT_Maass_*';
 
 get_magnitude = 1;
 magnitude_showOnlyAllRunsAvg = 0;
@@ -51,9 +52,9 @@ for subjIdx = 1:length(subjDirList)
 
         GLM2dirName = GLM2dirList(GLM2dirIdx).name;
         
-         if contains(GLM2findStr,'out')
+        if contains(GLM2findStr,'out')
             % for which ROI was the mean grid ori computed at GLM2?
-            % use first four letters of ROI from mask file name for strcmp later on 
+            % use first four letters of ROI from mask file name for strcmp later on
             
             if  contains(GLM2dirName, '01')
                 ROI_GLM2meanGridOriCalc = 'both';
@@ -95,16 +96,16 @@ for subjIdx = 1:length(subjDirList)
             elseif contains(GLM2dirName, '03')
                 ROI_GLM2meanGridOriCalc = 'both';
                 dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_both_affine.txt'];
-             elseif contains(GLM2dirName, '04')
+            elseif contains(GLM2dirName, '04')
                 ROI_GLM2meanGridOriCalc = 'Left';
                 dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_left_affine.txt'];
-             elseif contains(GLM2dirName, '05')
+            elseif contains(GLM2dirName, '05')
                 ROI_GLM2meanGridOriCalc = 'Righ';
                 dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_right_affine.txt'];
             end
             
         elseif contains(GLM2findStr,'phys')
-           
+            
             if  contains(GLM2dirName, '01')
                 ROI_GLM2meanGridOriCalc = 'Righ';
                 dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_right_affine.txt'];
@@ -138,7 +139,7 @@ for subjIdx = 1:length(subjDirList)
                 ROI_GLM2meanGridOriCalc = 'left';
                 dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_alLeft_control.txt'];
             end
-
+            
         elseif contains(GLM2findStr,'final')
             
             if  contains(GLM2dirName, 'pmRight')
@@ -159,11 +160,11 @@ for subjIdx = 1:length(subjDirList)
             elseif contains(GLM2dirName, 'alRight')
                 ROI_GLM2meanGridOriCalc = 'righ';
                 dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_alRight_control.txt'];
-            
+                
             elseif contains(GLM2dirName, 'alLeft')
                 ROI_GLM2meanGridOriCalc = 'left';
                 dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_alLeft_control.txt'];
-            
+                
             elseif  contains(GLM2dirName, 'pmLeft')
                 ROI_GLM2meanGridOriCalc = 'left';
                 
@@ -183,8 +184,37 @@ for subjIdx = 1:length(subjDirList)
                 ROI_GLM2meanGridOriCalc = 'both';
                 dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_pmBoth_affine.txt'];
             end
-          
-        end
+            
+        elseif contains(GLM2findStr,'Maass')
+            
+            if  contains(GLM2dirName, 'pmRight')
+                ROI_GLM2meanGridOriCalc = 'righ';
+                
+                if contains(GLM2dirName, '4')
+                    %dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_4_pmRight_affine.txt'];
+                elseif contains(GLM2dirName, '5')
+                    %dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_5_pmRight_affine.txt'];
+                elseif contains(GLM2dirName, '6')
+                    dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_pmRight_Maass_affine.txt'];
+                elseif contains(GLM2dirName, '7')
+                    %dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_7_pmRight_affine.txt'];
+                elseif contains(GLM2dirName, '8')
+                    %dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_8_pmRight_affine.txt'];
+                end
+                
+            elseif contains(GLM2dirName, 'alRight')
+                ROI_GLM2meanGridOriCalc = 'righ';
+                dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_alRight_Maass_affine.txt'];
+                
+            elseif contains(GLM2dirName, 'alLeft')
+                ROI_GLM2meanGridOriCalc = 'left';
+                dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_alLeft_Maass_affine.txt'];
+                
+            elseif  contains(GLM2dirName, 'pmLeft')
+                ROI_GLM2meanGridOriCalc = 'left';
+                dataFile = [subjDir filesep GLM2dirName filesep 'GridCATmetrics_' subjNameList{subjIdx} '_xfold_6_pmLeft_Maass_affine.txt'];
+            end
+        end % of GLM2dir loop
 
         fid = fopen(dataFile);
         
@@ -201,7 +231,8 @@ for subjIdx = 1:length(subjDirList)
 
                     cellData = strsplit(lineData{3}, '_');
                     
-                    if contains(GLM2findStr,'pm') || contains(GLM2findStr, 'al')
+                    %if contains(GLM2findStr,'pm') || contains(GLM2findStr,'al') %Pre Maass masks
+                    if contains(GLM2dirName,'pm') || contains(GLM2dirName, 'al')
                         ROI_gridMetricMask = cellData{2};
                     else
                         ROI_gridMetricMask = cellData{1};
@@ -215,7 +246,8 @@ for subjIdx = 1:length(subjDirList)
                         if ~magnitude_showOnlyAllRunsAvg || (magnitude_showOnlyAllRunsAvg && ~contains(run_str, 'allRuns'))
 
                             GCmagnitude = lineData{6};                    
-                            metricName = ['GCmagnitude_' run_str '_' ROI_gridMetricMask(1:4) '_' GLM2dirName];                    
+                            %metricName = ['GCmagnitude_' run_str '_' ROI_gridMetricMask(1:4) '_' GLM2dirName];   % pre Maass masks   
+                            metricName = ['GCmagnitude_' run_str '_' ROI_gridMetricMask(1:4) '_' GLM2dirName([15,16])];
                             [metricIdx, metricNameList] = getMetricIdx(metricName, metricNameList);
                             output_cArray{subjIdx, metricIdx} = GCmagnitude;
 
@@ -225,7 +257,8 @@ for subjIdx = 1:length(subjDirList)
                 elseif strcmp(lineData{1}, 'Between-voxel grid orientation coherence within ROI') && get_sStability
 
                     cellData = strsplit(lineData{3},'-');
-                    if contains(GLM2findStr,'pm') || contains(GLM2findStr, 'al')
+                     %if contains(GLM2findStr,'pm') || contains(GLM2findStr, 'al')
+                    if contains(GLM2dirName,'pm') || contains(GLM2dirName, 'al')
                         ROI_gridMetricMask = cellData{2};
                     else
                         ROI_gridMetricMask = cellData{1};
@@ -237,12 +270,12 @@ for subjIdx = 1:length(subjDirList)
                         run_str = cellData{3};
 
                         zRayleigh = lineData{5};
-                        metricName = ['sStability_zRay_' run_str '_' ROI_gridMetricMask(1:4) '_' GLM2dirName];                    
+                        metricName = ['sStability_zRay_' run_str '_' ROI_gridMetricMask(1:4) '_' GLM2dirName([15,16])];                    
                         [metricIdx, metricNameList] = getMetricIdx(metricName, metricNameList);
                         output_cArray{subjIdx, metricIdx} = zRayleigh;
 
                         pRayleigh = lineData{6};
-                        metricName = ['sStability_pRay_' run_str '_' ROI_gridMetricMask(1:4) '_' GLM2dirName];                    
+                        metricName = ['sStability_pRay_' run_str '_' ROI_gridMetricMask(1:4) '_' GLM2dirName([15,16])];                    
                         [metricIdx, metricNameList] = getMetricIdx(metricName, metricNameList);
                         output_cArray{subjIdx, metricIdx} = pRayleigh;
                     end
@@ -251,7 +284,8 @@ for subjIdx = 1:length(subjDirList)
                 elseif strcmp(lineData{1}, 'Within-voxel grid orientation coherence within ROI') && get_tStability
                     
                     cellData = strsplit(lineData{3},'_');
-                    if contains(GLM2findStr,'pm') || contains(GLM2findStr, 'al')
+                     %if contains(GLM2findStr,'pm') || contains(GLM2findStr, 'al')
+                    if contains(GLM2dirName,'pm') || contains(GLM2dirName, 'al')
                         ROI_gridMetricMask = cellData{2};
                     else
                         ROI_gridMetricMask = cellData{1};
@@ -266,7 +300,7 @@ for subjIdx = 1:length(subjDirList)
                         runB_str = cellData{3};
                         
                         pcntStableVox = lineData{6};
-                        metricName = ['tStability_pcntStableVox_' runA_str 'VS' runB_str '_' ROI_gridMetricMask(1:4) '_' GLM2dirName];
+                        metricName = ['tStability_pcntStableVox_' runA_str 'VS' runB_str '_' ROI_gridMetricMask(1:4) '_' GLM2dirName([15,16])];
                         [metricIdx, metricNameList] = getMetricIdx(metricName, metricNameList);
                         output_cArray{subjIdx, metricIdx} = pcntStableVox;
                         
@@ -275,7 +309,8 @@ for subjIdx = 1:length(subjDirList)
                 elseif strcmp(lineData{1}, 'Mean grid orientation within ROI') && strcmp(lineData{5}, 'averaged across runs') && get_meanOri
                     
                     cellData = strsplit(lineData{3},'_');
-                    if contains(GLM2findStr,'pm') || contains(GLM2findStr, 'al')
+                     %if contains(GLM2findStr,'pm') || contains(GLM2findStr, 'al')
+                    if contains(GLM2dirName,'pm') || contains(GLM2dirName, 'al')
                         ROI_gridMetricMask = cellData{2};
                     else
                         ROI_gridMetricMask = cellData{1};
@@ -284,7 +319,7 @@ for subjIdx = 1:length(subjDirList)
                     if strncmp(ROI_gridMetricMask, ROI_GLM2meanGridOriCalc, 4)
 
                             meanOriWeighted = lineData{6};
-                            metricName = ['MeanOrientation_allRuns_' ROI_gridMetricMask(1:4) '_' GLM2dirName];                    
+                            metricName = ['MeanOrientation_allRuns_' ROI_gridMetricMask(1:4) '_' GLM2dirName([15,16])];                    
                             [metricIdx, metricNameList] = getMetricIdx(metricName, metricNameList);
                             output_cArray{subjIdx, metricIdx} = meanOriWeighted;
 
@@ -306,14 +341,14 @@ end
 disp(' ');
 output_cArray = [['Subject' subjNameList]' [metricNameList; output_cArray]];
 
-filename = [GLM2findStr '_results_meanOri'];
+filename = [GLM2findStr '_results'];
 filename(filename=='*')='X';
 
-cell2csv([allSubjGridcatData_dir filesep filename '.csv'], output_cArray);
-save(    [allSubjGridcatData_dir filesep filename '.mat'], 'output_cArray');
+cell2csv([allSubjGridcatData_dir '/$csv_result_files' filesep filename '.csv'], output_cArray);
+save(    [allSubjGridcatData_dir '/$csv_result_files' filesep filename '.mat'], 'output_cArray');
 
 disp(' ');
-disp(['data saved to: ' allSubjGridcatData_dir filesep filename '.mat']);
+disp(['data saved to: ' allSubjGridcatData_dir '/$csv_result_files' filesep filename '.mat']);
 
 %%
 function [metricIdx, metricNameList] = getMetricIdx(metricName, metricNameList)

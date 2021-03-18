@@ -77,8 +77,8 @@ regressor_flag = 'pmod'
 % Name of output directory
 outdirname = 'gridCAT_Maass_alLeft6'
 
-preprocesspathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data';
-taskpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/task_data';
+preprocesspathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot/preprocessed_data';
+taskpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot/raw_data/task_data';
 
 dofunc=sprintf('%s(%s,%s,%s,%s,%s,%s,%s,%s,%s)',af,'''${subject}''','preprocesspathstem','taskpathstem','outdirname','ROI_flag','warp_flag','xFold','mask_thresh','regressor_flag');
 disp(['Submitting the following command: ' dofunc])
@@ -111,8 +111,8 @@ regressor_flag = 'pmod'
 % Name of output directory
 outdirname = 'gridCAT_Maass_alRight6'
 
-preprocesspathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/preprocessed_data';
-taskpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot/raw_data/task_data';
+preprocesspathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot/preprocessed_data';
+taskpathstem = '/lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot/raw_data/task_data';
 
 dofunc=sprintf('%s(%s,%s,%s,%s,%s,%s,%s,%s,%s)',af,'''${subject}''','preprocesspathstem','taskpathstem','outdirname','ROI_flag','warp_flag','xFold','mask_thresh','regressor_flag');
 disp(['Submitting the following command: ' dofunc])

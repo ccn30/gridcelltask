@@ -11,7 +11,7 @@ Nscan = [238 238 238];
 
 %% Create VOIs per run (note: could use SPM threshold to reduce voxels)
 for sess = 1:3 
-    jobfile = cellstr([pathstem '/scripts/SPM_univariate/batch_voi_job.m']);
+    jobfile = cellstr([pathstem '/scripts/SPM_univariate/batch_voi_job.m'];
     inputs = {};
     inputs{1} = cellstr([pathstem '/results/SPM_univariate/28428/SPM.mat']);
     inputs{2} = 3; % MUST MATCH EFFECTS OF INTEREST CONTRAST IN SPM.MAT FIL

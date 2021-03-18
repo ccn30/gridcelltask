@@ -2,7 +2,7 @@
 # script to calculate tSNR images of preprocessed EPIS and then create tSNR maps using EC masks
 
 fsldir=/applications/fsl/fsl-5.0.10/bin
-pathstem=/lustre/scratch/wbic-beta/ccn30/ENCRYPT/gridcellpilot
+pathstem=/lustre/scratch/wbic-beta/ccn30/ENCRYPT/fMRI/gridcellpilot
 mysubjs=${pathstem}/mysubjs_deflist.txt
 
 for subject in `cat $mysubjs`
